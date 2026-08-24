@@ -1,0 +1,3 @@
+-r vendor/Kronos-master/requirements.txt
+openai==3.3.1
+yfinance==1.6.0

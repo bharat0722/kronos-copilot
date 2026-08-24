@@ -1,0 +1,13 @@
+.env.local
+.venv/
+__pycache__/
+*.py[cod]
+
+# Runtime/generated data
+data/
+outputs/
+
+# Third-party Kronos source
+vendor/
+
+docs/pdf_qa/

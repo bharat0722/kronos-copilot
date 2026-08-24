@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f5f7" />
+    <title>Kronos Copilot</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('kronos-theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (systemDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+    <link rel="stylesheet" href="./dashboard.css?v=10" />
+    <script src="./dashboard.js?v=10" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#market-controls">Skip to market controls</a>
+
+    <header class="app-bar">
+      <div class="app-bar__inner">
+        <div class="brand-block">
+          <span class="brand-mark" aria-hidden="true">K</span>
+          <div>
+            <p class="brand-name">Kronos Copilot</p>
+            <p class="brand-subtitle">India market forecasting</p>
+          </div>
+        </div>
+
+        <div class="system-status" aria-label="System status">
+          <div class="system-status__item">
+            <span class="system-status__label">Forecast</span>
+            <strong>Local</strong>
+          </div>
+          <div class="appearance-switch" role="group" aria-label="Appearance">
+            <button id="theme-light" class="appearance-switch__button" type="button" aria-pressed="true" title="Light appearance" aria-label="Light appearance">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4 12H2m20 0h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"></path></svg>
+            </button>
+            <button id="theme-dark" class="appearance-switch__button" type="button" aria-pressed="false" title="Dark appearance" aria-label="Dark appearance">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 14.4A7.7 7.7 0 0 1 9.6 4a8 8 0 1 0 10.4 10.4Z"></path></svg>
+            </button>
+            <span id="theme-status" class="sr-only" aria-live="polite">Light appearance</span>
+          </div>
+          <div class="readiness" id="readiness-indicator" data-tone="ready">
+            <span class="readiness__dot" aria-hidden="true"></span>
+            <span id="readiness-text">Ready</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section id="market-controls" class="control-surface" aria-labelledby="controls-title">
+        <div class="control-surface__heading">
+          <div>
+            <h1 id="controls-title">Create a market forecast</h1>
+            <p>Choose an Indian exchange and run a local forecast on recent Yahoo Finance market bars.</p>
+          </div>
+          <span id="local-note" class="local-note">About 5 trading days <span aria-hidden="true">→</span> Next 75 market bars</span>
+        </div>
+
+        <div class="control-grid">
+          <fieldset class="control-group mode-group">
+            <legend>Mode</legend>
+            <div class="segmented-control">
+              <input id="mode-live" name="forecast-mode" type="radio" value="live" checked />
+              <label for="mode-live">Live forecast</label>
+              <input id="mode-validation" name="forecast-mode" type="radio" value="validation" />
+              <label for="mode-validation">Model validation</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control-group source-group">
+            <legend>Data source</legend>
+            <div class="segmented-control">
+              <input id="source-live" name="source-mode" type="radio" value="live" checked />
+              <label for="source-live">Yahoo market</label>
+              <input id="source-csv" name="source-mode" type="radio" value="csv" />
+              <label for="source-csv">CSV upload</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control-group horizon-group">
+            <legend>Forecast horizon</legend>
+            <div class="segmented-control">
+              <input id="horizon-24" name="forecast-horizon" type="radio" value="24" />
+              <label for="horizon-24">2h</label>
+              <input id="horizon-75" name="forecast-horizon" type="radio" value="75" checked />
+              <label for="horizon-75">Session</label>
+              <input id="horizon-120" name="forecast-horizon" type="radio" value="120" />
+              <label for="horizon-120">Extended</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control-group exchange-group" id="exchange-control">
+            <legend>Exchange</legend>
+            <div class="segmented-control">
+              <input id="exchange-nse" name="exchange" type="radio" value="NSE" checked />
+              <label for="exchange-nse">NSE</label>
+              <input id="exchange-bse" name="exchange" type="radio" value="BSE" />
+              <label for="exchange-bse">BSE</label>
+            </div>
+          </fieldset>
+
+          <form id="live-form" class="command-area" novalidate>
+            <label class="field-label" for="ticker-input">Company or ticker</label>
+            <div class="ticker-command">
+              <div class="search-field">
+                <input id="ticker-input" name="ticker" type="text" value="RELIANCE" maxlength="80" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Search RELIANCE, MIC Electronics, Toyam Sports..." role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="symbol-search-list" aria-describedby="ticker-help selected-symbol-help" />
+                <span id="symbol-search-spinner" class="search-spinner" aria-hidden="true"></span>
+                <div id="symbol-search-list" class="search-results" role="listbox" aria-label="Company search results" hidden></div>
+              </div>
+              <button id="live-forecast-button" class="button button--primary forecast-button" type="submit">
+                <span class="button-spinner" aria-hidden="true"></span>
+                <span class="button-label">Run forecast</span>
+              </button>
+            </div>
+            <p id="ticker-help" class="field-help">Search by company name or NSE/BSE ticker. Exchange suffixes are handled automatically.</p>
+            <p id="selected-symbol-help" class="field-help selected-symbol-help" aria-live="polite"></p>
+          </form>
+
+          <form id="csv-form" class="command-area command-area--csv" hidden novalidate>
+            <label class="field-label" for="csv-input">Market data CSV</label>
+            <div class="ticker-command">
+              <input id="csv-input" type="file" accept=".csv,text/csv" aria-describedby="csv-help" />
+              <button id="csv-forecast-button" class="button button--primary forecast-button" type="submit" disabled>
+                <span class="button-spinner" aria-hidden="true"></span>
+                <span class="button-label">Run CSV forecast</span>
+              </button>
+            </div>
+            <p id="csv-help" class="field-help">Requires timestamps, OHLC, volume, amount, and 400 valid market bars.</p>
+          </form>
+        </div>
+
+        <div class="quick-row" id="quick-tickers" aria-label="Quick ticker choices">
+          <span class="quick-row__label">Quick select</span>
+          <button class="quick-ticker" type="button" data-ticker="RELIANCE" aria-pressed="true">RELIANCE</button>
+          <button class="quick-ticker" type="button" data-ticker="TCS" aria-pressed="false">TCS</button>
+          <button class="quick-ticker" type="button" data-ticker="HDFCBANK" aria-pressed="false">HDFCBANK</button>
+          <button class="quick-ticker" type="button" data-ticker="INFY" aria-pressed="false">INFY</button>
+        </div>
+
+        <div id="request-status" class="request-status" data-tone="ready" role="status" aria-live="polite" aria-atomic="true">
+          <span class="request-status__indicator" aria-hidden="true"></span>
+          <span id="request-status-text">Loading the latest saved forecast.</span>
+        </div>
+      </section>
+
+      <section id="error-panel" class="error-panel" aria-labelledby="error-title" hidden>
+        <div>
+          <p class="eyebrow">Forecast unavailable</p>
+          <h2 id="error-title">We could not complete that request.</h2>
+          <p id="error-message">Check the ticker and try again.</p>
+        </div>
+        <div class="error-actions">
+          <button id="retry-button" class="button button--secondary" type="button">Try again</button>
+          <button id="switch-exchange-button" class="button button--secondary" type="button">Switch exchange</button>
+          <button id="error-csv-button" class="button button--text" type="button">Upload CSV</button>
+        </div>
+      </section>
+
+      <section id="empty-state" class="empty-state" aria-labelledby="empty-title">
+        <div class="empty-state__chart" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div>
+          <p class="eyebrow">Ready for local inference</p>
+          <h2 id="empty-title">Choose a symbol to create the first forecast.</h2>
+          <p>No forecast values are shown until Kronos-base completes a request.</p>
+        </div>
+      </section>
+
+      <section id="forecast-result" class="result-region" aria-labelledby="result-symbol" hidden>
+        <div id="previous-result-label" class="previous-result-label" hidden>Previous forecast</div>
+
+        <div class="result-headline">
+          <div class="result-identity">
+            <div class="symbol-line"><h2 id="result-symbol">-</h2><span id="result-exchange" class="exchange-badge">-</span></div>
+            <p id="result-source" class="result-source">-</p>
+            <p id="yahoo-meta" class="result-meta">-</p>
+          </div>
+          <div id="direction-summary" class="direction-summary" data-direction="neutral">
+            <span id="direction-icon" class="direction-icon" aria-hidden="true">→</span>
+            <div><span id="direction-label" class="direction-label">Neutral forecast</span><strong id="movement-value">0.00%</strong></div>
+          </div>
+          <div class="headline-prices">
+            <div><span>Last observed</span><strong id="last-close">-</strong></div>
+            <span class="price-arrow" aria-hidden="true">→</span>
+            <div><span>Forecast final</span><strong id="final-close">-</strong></div>
+          </div>
+        </div>
+
+        <article class="chart-panel" aria-labelledby="chart-title">
+          <div class="chart-header">
+            <div><p id="chart-eyebrow" class="eyebrow">Observed and predicted candles</p><h3 id="chart-title"><span id="chart-symbol">-</span> price chart</h3></div>
+            <div class="chart-actions">
+              <div class="chart-view-switch" role="group" aria-label="Chart view">
+                <button id="chart-candles" type="button" aria-pressed="true">Candles</button>
+                <button id="chart-line" type="button" aria-pressed="false">Price</button>
+              </div>
+            </div>
+            <span class="chart-interval"><span id="chart-interval">Each point = 5 minutes</span><span class="info-dot" tabindex="0" role="img" aria-label="Each observed point summarizes one five-minute Yahoo Finance market bar. Each forecast point represents one predicted five-minute trading period.">i</span></span>
+          </div>
+          <div class="chart-legend" aria-label="Chart legend">
+            <span><i class="legend-candle legend-candle--observed" aria-hidden="true"></i><span id="legend-observed">Observed candles</span></span>
+            <span><i class="legend-candle legend-candle--forecast" aria-hidden="true"></i><span id="legend-forecast">Kronos predicted candles</span></span>
+            <span id="legend-actual-item" hidden><i class="legend-actual" aria-hidden="true"></i>Actual future</span>
+            <span><i class="legend-volume" aria-hidden="true"></i>Volume</span>
+            <span><i class="legend-boundary" aria-hidden="true"></i>Forecast boundary</span>
+          </div>
+          <div class="chart-time-window" aria-label="Chart time window">
+            <span id="chart-observed-window">Observed: -</span>
+            <span id="chart-forecast-window">Forecast: -</span>
+          </div>
+          <div id="chart-container" class="chart-container">
+            <canvas id="forecast-chart" role="img" aria-labelledby="chart-title chart-summary"></canvas>
+            <div id="chart-loading" class="chart-loading" hidden>
+              <span class="large-spinner" aria-hidden="true"></span>
+              <strong id="chart-loading-title">Running Kronos-base locally</strong>
+              <span>Previous result remains labeled until the new forecast is complete.</span>
+            </div>
+          </div>
+          <p id="chart-summary" class="sr-only">No forecast chart is available yet.</p>
+        </article>
+
+        <div class="metric-grid" aria-label="Forecast details">
+          <article class="metric-card"><span>Forecast range</span><strong id="forecast-range">-</strong><small>Projected close low to high</small></article>
+          <article class="metric-card"><span>Forecast horizon</span><strong id="forecast-horizon">Next 75 market bars</strong><small id="forecast-horizon-detail">Equivalent to one full trading session · 6h 15m of trading · Closed-market hours skipped</small></article>
+          <article class="metric-card"><span>Model context</span><strong id="record-counts">400 input bars</strong><small>Kronos reads recent five-minute market history</small></article>
+          <article class="metric-card"><span>Chart context</span><strong id="chart-context">Latest bars</strong><small id="chart-context-detail">Displayed from the 400 bars used by Kronos</small></article>
+          <article class="metric-card"><span>Created</span><strong id="forecast-time">-</strong><small id="forecast-date">Local time</small></article>
+        </div>
+
+        <section id="validation-panel" class="validation-panel" aria-labelledby="validation-title" hidden>
+          <div>
+            <p class="eyebrow">Model validation</p>
+            <h3 id="validation-title">Kronos prediction vs hidden actual future</h3>
+          </div>
+          <div class="validation-grid">
+            <span><small>MAE</small><strong id="validation-mae">-</strong></span>
+            <span><small>RMSE</small><strong id="validation-rmse">-</strong></span>
+            <span><small>Final error</small><strong id="validation-final-error">-</strong></span>
+            <span><small>Direction</small><strong id="validation-direction">-</strong></span>
+          </div>
+        </section>
+      </section>
+
+      <section class="model-ai-grid" aria-label="Model and explanation details">
+        <article class="model-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">Forecast model</p><h2>Kronos-base</h2></div>
+            <span class="local-badge"><i aria-hidden="true"></i>Running locally</span>
+          </div>
+          <p id="model-copy" class="panel-copy">Kronos reads 400 past five-minute bars and predicts 75 future five-minute bars.</p>
+          <dl class="model-facts">
+            <div><dt>Model input</dt><dd id="model-observed">400 input bars</dd></div>
+            <div><dt>Forecast output</dt><dd id="model-forecast">75 bars</dd></div>
+            <div><dt>Inference time</dt><dd id="model-runtime">-</dd></div>
+            <div><dt>Run source</dt><dd id="model-cache">Fresh run</dd></div>
+            <div><dt>Model source</dt><dd id="model-name">NeoQuasar/Kronos-base</dd></div>
+          </dl>
+        </article>
+        <article class="ai-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">AI explanation</p><h2>Plain-language context</h2></div>
+            <span id="explanation-badge" class="explanation-badge">Optional</span>
+          </div>
+          <div class="ai-trust-notice">
+            <strong>Forecast generated locally by Kronos-base</strong>
+            <span>AI explains this result only. It does not generate or change the forecast.</span>
+            <small>Research demonstration only · Not financial advice</small>
+          </div>
+          <div id="explanation-content" class="explanation-content" aria-live="polite"><p id="explanation-text">Run a forecast to request a concise explanation.</p></div>
+          <div class="explanation-actions">
+            <button id="explain-button" class="button button--secondary" type="button" disabled>
+              <span class="button-spinner" aria-hidden="true"></span><span class="button-label">Explain forecast</span>
+            </button>
+            <span id="explanation-status" class="field-help">The forecast works without this optional step.</span>
+          </div>
+        </article>
+      </section>
+
+      <p class="disclaimer">Research demonstration only. Forecasts are estimates, not financial advice or a guarantee of market movement. Yahoo Finance market data may be delayed.</p>
+    </main>
+  </body>
+</html>
