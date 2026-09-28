@@ -23,6 +23,13 @@
     searchTimer: null,
     activeSearchIndex: -1,
     chartMode: 'candles',
+    pipelineSequence: 0,
+    newsSequence: 0,
+    newsController: null,
+    agentSnapshotId: null,
+    agentSequence: 0,
+    agentRunning: false,
+    agentAvailable: true,
   };
 
   const elements = {};
@@ -41,7 +48,7 @@
       'result-exchange', 'result-source', 'direction-summary', 'direction-icon', 'direction-label',
       'yahoo-meta',
       'movement-value', 'last-close', 'final-close', 'chart-symbol', 'chart-interval',
-      'chart-eyebrow', 'chart-candles', 'chart-line', 'legend-observed', 'legend-forecast', 'legend-actual-item',
+      'chart-eyebrow', 'chart-candles', 'chart-line', 'chart-bollinger', 'legend-observed', 'legend-forecast', 'legend-actual-item',
       'chart-container', 'chart-loading', 'chart-loading-title', 'forecast-chart', 'chart-summary',
       'forecast-range', 'forecast-horizon', 'forecast-horizon-detail', 'record-counts',
       'chart-context', 'chart-context-detail', 'chart-observed-window', 'chart-forecast-window',
@@ -50,6 +57,14 @@
       'validation-panel', 'validation-mae', 'validation-rmse', 'validation-final-error', 'validation-direction',
       'explanation-badge', 'explanation-content', 'explanation-text', 'explain-button',
       'explanation-status', 'retry-button', 'switch-exchange-button', 'error-csv-button',
+      'news-section', 'news-status', 'news-provider-label', 'news-updated', 'news-refresh', 'news-count',
+      'news-positive', 'news-negative', 'news-list', 'news-uncertainty', 'news-impact-panel',
+      'news-impact-confidence', 'news-raw-view', 'news-impact-value', 'news-final-view',
+      'news-impact-context', 'news-impact-why', 'news-impact-risk', 'news-impact-event',
+      'news-impact-support', 'news-impact-contradict', 'news-impact-flags',
+      'news-evidence-reference', 'lan-access-dialog', 'lan-access-form', 'lan-access-code',
+      'lan-access-error', 'lan-access-cancel',
+      'agent-section', 'agent-run', 'agent-status',
     ].forEach((id) => { elements[id] = byId(id); });
   }
 
@@ -445,7 +460,9 @@
     elements['error-panel'].hidden = true;
     elements['chart-loading'].hidden = true;
     if (initial) syncControlsToResult(result);
+    window.kronosProfessionalChart?.setEventMarkers([]);
     renderResult(result, false);
+    resetAgents();
     resetExplanation('The forecast works without this optional step.');
     setReadiness('ready', 'Ready');
     setRequestStatus('ready', initial
@@ -453,6 +470,347 @@
       : `Forecast complete for ${result.normalized_symbol}. All visible results were updated together.`);
     updateForecastButtons();
     loadCachedExplanation(result.summary_fingerprint, requestId || state.requestSequence);
+    if (!initial) loadPipelineStatus();
+    loadNews(result);
+  }
+
+  function renderPipelineStatus(payload) {
+    const symbol = document.getElementById('pipeline-symbol');
+    if (symbol) symbol.textContent = payload.symbol ? `Latest capture · ${payload.symbol}` : 'No capture yet';
+    const labels = {
+      source: 'Yahoo Finance source', bronze: 'Provider-native snapshot', silver: 'Validated market bars',
+      gold: 'Technicals and forecast references', intelligence: 'Kronos / technicals / agents',
+      news: 'Tavily web news · Yahoo/RSS fallback available',
+      agents: 'Runs only when requested',
+    };
+    document.querySelectorAll('.pipeline-stage').forEach((card) => {
+      const name = card.dataset.stage;
+      const stage = payload.stages?.[name] || {};
+      const status = stage.status || 'STALE';
+      card.dataset.status = status;
+      card.querySelector('[data-role="status"]').textContent = status;
+      card.querySelector('[data-role="rows"]').textContent = name === 'agents'
+        ? `${stage.agents_completed || 0}/3 agents`
+        : stage.rows == null ? 'No rows' : `${Number(stage.rows).toLocaleString('en-IN')} rows`;
+      card.querySelector('[data-role="updated"]').textContent = stage.last_update ? shortDateTimeLabel(stage.last_update) : 'No update';
+      card.querySelector('[data-role="latency"]').textContent = stage.latency_ms == null ? 'Latency -' : `Latency ${stage.latency_ms} ms`;
+      const note = [...(stage.errors || []), ...(stage.warnings || [])][0] || labels[name] || '';
+      const detail = name === 'news'
+        ? `${note} · ${stage.events_processed || 0} events · ${stage.impact_status || 'NOT_EVALUATED'} impact · ${stage.requests || 0} requests · ${stage.credits || 0} credits`
+        : name === 'agents' ? `${note} · ${stage.agents_completed || 0}/3 completed · ${stage.openai_available ? 'OpenAI configured' : 'OpenAI unavailable'}`
+        : note;
+      card.querySelector('[data-role="message"]').textContent = stage.cache_status === 'hit' && !stage.errors?.length && !stage.warnings?.length
+        ? `${detail} · cached` : detail;
+    });
+  }
+
+  async function loadPipelineStatus() {
+    const sequence = ++state.pipelineSequence;
+    try {
+      const payload = await fetchJson('/api/pipeline');
+      if (sequence === state.pipelineSequence) renderPipelineStatus(payload);
+    } catch {
+      if (sequence === state.pipelineSequence) renderPipelineStatus({ stages: {
+        source: { status: 'FAILED', errors: ['Local pipeline status is unavailable'] },
+      } });
+    }
+  }
+
+  function newsMarkers(result, events) {
+    const observed = result.chart?.observed || [];
+    const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' });
+    const used = new Set();
+    return events.flatMap((event) => {
+      const published = Date.parse(event.published_at);
+      if (!Number.isFinite(published)) return [];
+      const bar = observed.find((point) => {
+        const time = Date.parse(point.timestamp);
+        return Number.isFinite(time) && time >= published && time - published <= 5 * 60 * 1000
+          && day.format(time) === day.format(published);
+      });
+      if (!bar || used.has(bar.timestamp)) return [];
+      used.add(bar.timestamp);
+      return [{ timestamp: bar.timestamp, label: 'News' }];
+    }).slice(0, 4);
+  }
+
+  function newsAge(timestamp) {
+    if (!timestamp) return 'Publication time unavailable';
+    const published = Date.parse(timestamp);
+    if (!Number.isFinite(published)) return 'Publication time unavailable';
+    const elapsed = Math.max(0, Date.now() - published);
+    if (elapsed < 60 * 1000) return 'Just now';
+    if (elapsed < 60 * 60 * 1000) return `${Math.floor(elapsed / 60000)} min ago`;
+    const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' });
+    if (day.format(published) === day.format(Date.now() - 24 * 60 * 60 * 1000)) return 'Yesterday';
+    if (elapsed < 24 * 60 * 60 * 1000) return `${Math.floor(elapsed / 3600000)} hr ago`;
+    return shortDateTimeLabel(timestamp);
+  }
+
+  function renderNews(payload, result) {
+    renderNewsImpact(payload, result);
+    const events = Array.isArray(payload.events) ? payload.events : [];
+    const list = elements['news-list'];
+    list.replaceChildren();
+    for (const event of events) {
+      let url;
+      try { url = new URL(event.url); } catch { continue; }
+      if (url.protocol !== 'https:') continue;
+      const row = document.createElement('li');
+      row.className = 'news-item';
+      const detail = document.createElement('div');
+      const provider = document.createElement('span');
+      provider.className = 'news-item__provider';
+      provider.textContent = event.provenance?.provider === 'Tavily' ? 'Tavily web news'
+        : event.provenance?.provider === 'Google News RSS' ? 'RSS' : 'Yahoo Finance';
+      const link = document.createElement('a');
+      link.className = 'news-item__title';
+      link.href = url.href;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = event.title;
+      const meta = document.createElement('p');
+      meta.className = 'news-item__meta';
+      const publishedLabel = event.published_at
+        ? `${newsAge(event.published_at)} · ${shortDateTimeLabel(event.published_at)}`
+        : 'Publication time unavailable';
+      meta.textContent = `${event.source} · ${publishedLabel} · ${event.event_type}`;
+      detail.append(provider, link, meta);
+      if (event.summary) {
+        const excerpt = document.createElement('p');
+        excerpt.className = 'news-item__summary';
+        excerpt.textContent = `Source excerpt: ${event.summary}`;
+        detail.append(excerpt);
+      }
+      const cue = document.createElement('span');
+      cue.className = 'news-item__cue';
+      cue.dataset.tone = event.sentiment === 'positive_cue' ? 'positive' : event.sentiment === 'negative_cue' ? 'negative' : 'neutral';
+      cue.textContent = event.sentiment === 'positive_cue' ? 'Positive headline cue'
+        : event.sentiment === 'negative_cue' ? 'Negative headline cue'
+          : event.sentiment === 'mixed' ? 'Mixed headline cues'
+            : event.sentiment === 'uncertain' ? 'Time unverified · context only' : 'Neutral context';
+      row.append(detail, cue);
+      list.append(row);
+    }
+    list.hidden = !list.childElementCount;
+    elements['news-count'].textContent = String(list.childElementCount);
+    elements['news-positive'].textContent = String(payload.positive_evidence?.length || 0);
+    elements['news-negative'].textContent = String(payload.negative_evidence?.length || 0);
+    const sources = payload.providers_used || [];
+    elements['news-provider-label'].textContent = sources.includes('Tavily') ? 'Live web news via Tavily'
+      : sources.includes('Yahoo Finance via yfinance') ? 'Yahoo fallback'
+        : sources.includes('Google News RSS') ? 'RSS fallback' : 'No source-linked item';
+    elements['news-updated'].textContent = payload.retrieved_at
+      ? `Retrieved ${shortDateTimeLabel(payload.retrieved_at)}${payload.cache_status === 'hit' ? ' · cached' : ''}`
+      : 'No recent update';
+    elements['news-status'].textContent = payload.status === 'STALE'
+      ? (events.length ? 'Showing cached source reports; live news is unavailable.' : 'No verified recent evidence. Live news is unavailable.')
+      : payload.status === 'UNAVAILABLE' ? 'No verified recent evidence. News source is unavailable.'
+        : payload.message || 'No verified recent evidence.';
+    elements['news-uncertainty'].textContent = payload.uncertainty || 'Source headlines are not independently verified.';
+    window.kronosProfessionalChart?.setEventMarkers(newsMarkers(result, events));
+    loadPipelineStatus();
+  }
+
+  function resetAgents(message = 'Waiting for a matching evidence snapshot.') {
+    state.agentSequence += 1;
+    state.agentSnapshotId = null;
+    state.agentAvailable = true;
+    elements['agent-section'].hidden = !state.currentResult || state.currentResult.mode === 'validation';
+    elements['agent-status'].textContent = message;
+    elements['agent-run'].disabled = true;
+    document.querySelectorAll('.agent-card').forEach((card) => {
+      card.querySelector('[data-role="status"]').textContent = 'Not run';
+      card.querySelector('[data-role="argument"]').textContent = 'No analysis yet.';
+      card.querySelector('[data-role="evidence"]').replaceChildren();
+      card.querySelector('[data-role="limitations"]').textContent = '';
+      card.querySelector('[data-role="confidence"]').textContent = '';
+      card.querySelector('[data-role="time"]').textContent = '';
+    });
+  }
+
+  function renderAgents(payload) {
+    state.agentAvailable = payload.available !== false;
+    const complete = Object.values(payload.agents || {}).filter((entry) => entry.report).length;
+    elements['agent-status'].textContent = payload.status === 'UNAVAILABLE'
+      ? 'AI Research Team unavailable. The forecast and evidence remain available.'
+      : complete === 3 ? `${payload.status === 'CACHED' ? 'Saved' : 'New'} analysis for this evidence snapshot.`
+        : complete ? `${complete} of 3 analyses available. Unfinished agents can be retried.`
+          : 'Ready to analyze the saved evidence.';
+    elements['agent-run'].disabled = state.agentRunning || !state.agentAvailable;
+    document.querySelectorAll('.agent-card').forEach((card) => {
+      const kind = card.dataset.agent;
+      const entry = payload.agents?.[kind] || {};
+      const report = entry.report;
+      card.querySelector('[data-role="status"]').textContent = entry.status === 'CACHED' ? 'Saved'
+        : entry.status === 'SUCCESS' ? 'Complete' : entry.status === 'AGENT_FAILED' ? 'Failed'
+          : entry.status === 'CANCELLED' ? 'Cancelled' : 'Not run';
+      const argument = kind === 'risk'
+        ? (report?.risk_factors?.map((item) => item.text).join(' ') || (report ? 'Risk assessment unknown.' : 'No analysis yet.'))
+        : report?.argument || 'No analysis yet.';
+      card.querySelector('[data-role="argument"]').textContent = argument;
+      const evidence = card.querySelector('[data-role="evidence"]');
+      evidence.replaceChildren();
+      const factors = kind === 'risk' ? report?.risk_factors : report?.key_factors;
+      (factors || []).slice(0, 3).forEach((factor) => {
+        const item = document.createElement('li');
+        item.textContent = `${factor.text} [${factor.evidence_ids.join(', ')}]`;
+        evidence.append(item);
+      });
+      card.querySelector('[data-role="limitations"]').textContent = report?.limitations?.length
+        ? `Limitations: ${report.limitations.slice(0, 2).join(' · ')}` : '';
+      const confidence = kind === 'risk' ? report?.confidence_in_risk_assessment : report?.confidence_in_argument;
+      card.querySelector('[data-role="confidence"]').textContent = Number.isFinite(confidence)
+        ? `Argument confidence: ${Math.round(confidence * 100)}% · not prediction accuracy` : '';
+      card.querySelector('[data-role="time"]').textContent = entry.analyzed_at
+        ? `${entry.cached ? 'Saved' : 'Analyzed'} ${shortDateTimeLabel(entry.analyzed_at)}` : '';
+    });
+  }
+
+  async function loadCachedAgents(snapshotId) {
+    const sequence = state.agentSequence;
+    try {
+      const payload = await fetchJson(`/api/agents/result?id=${encodeURIComponent(snapshotId)}`);
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) renderAgents(payload);
+    } catch {
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId)
+        elements['agent-status'].textContent = 'Saved AI analysis could not be loaded.';
+    }
+  }
+
+  async function runAgents() {
+    const snapshotId = state.agentSnapshotId;
+    if (!snapshotId || state.agentRunning) return;
+    state.agentRunning = true;
+    elements['agent-run'].disabled = true;
+    elements['agent-run'].dataset.loading = 'true';
+    elements['agent-status'].textContent = 'Analyzing saved evidence. Forecast values will not change.';
+    const sequence = state.agentSequence;
+    try {
+      const payload = await fetchJson('/api/agents/run', { method: 'POST',
+        headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ snapshot_id: snapshotId }) });
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) renderAgents(payload);
+    } catch (error) {
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId)
+        elements['agent-status'].textContent = error.message || 'AI Research Team unavailable.';
+    } finally {
+      state.agentRunning = false;
+      elements['agent-run'].dataset.loading = 'false';
+      if (state.agentSnapshotId) elements['agent-run'].disabled = !state.agentAvailable;
+      loadPipelineStatus();
+    }
+  }
+
+  function renderNewsImpact(payload, result) {
+    const panel = elements['news-impact-panel'];
+    const impact = payload.news_impact;
+    const outlook = payload.research_outlook;
+    if (!impact || !outlook || !payload.evidence_snapshot_id || payload.symbol !== result.normalized_symbol ||
+        payload.forecast_fingerprint !== result.summary_fingerprint) {
+      panel.hidden = true;
+      resetAgents();
+      return;
+    }
+    panel.hidden = false;
+    if (state.agentSnapshotId !== payload.evidence_snapshot_id) {
+      const changed = Boolean(state.agentSnapshotId);
+      resetAgents(changed ? 'Evidence changed. Rerun analysis.' : 'Saved evidence is ready.');
+      state.agentSnapshotId = payload.evidence_snapshot_id;
+      elements['agent-run'].disabled = false;
+      loadCachedAgents(payload.evidence_snapshot_id);
+    }
+    const label = (value) => String(value || '-').replaceAll('_', ' ').toLowerCase().replace(/^./, (first) => first.toUpperCase());
+    elements['news-raw-view'].textContent = label(outlook.raw_kronos_view);
+    elements['news-impact-value'].textContent = `${label(impact.status)} · ${Number(impact.score) >= 0 ? '+' : ''}${Number(impact.score).toFixed(2)}`;
+    elements['news-impact-value'].dataset.tone = impact.score > 0 ? 'positive' : impact.score < 0 ? 'negative' : 'neutral';
+    elements['news-final-view'].textContent = label(outlook.preliminary_research_view);
+    elements['news-impact-confidence'].textContent = `Evidence agreement: ${label(outlook.confidence)} · ${label(outlook.confidence_change)} · uncalibrated`;
+    const contextTime = outlook.model_as_of ? ` · Model context: ${shortDateTimeLabel(outlook.model_as_of)}` : '';
+    elements['news-impact-context'].textContent = `Technicals: ${label(outlook.technical_view)} · Regime: ${label(outlook.regime)} · ${impact.qualifying_events || 0} qualifying events from ${impact.articles_processed || 0} stories${contextTime}`;
+    elements['news-impact-why'].textContent = outlook.why;
+    elements['news-impact-risk'].textContent = `Primary risk: ${outlook.primary_risk}.`;
+    const reference = elements['news-evidence-reference'];
+    reference.replaceChildren();
+    reference.hidden = false;
+    if (payload.evidence_snapshot_id) {
+      const link = document.createElement('a');
+      link.href = `/api/evidence-snapshot?id=${encodeURIComponent(payload.evidence_snapshot_id)}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = `Evidence snapshot ${payload.evidence_snapshot_id.slice(0, 12)}`;
+      reference.append(link);
+    } else {
+      reference.textContent = 'Joined evidence snapshot unavailable.';
+    }
+    for (const [target, values] of [[elements['news-impact-support'], outlook.supporting_evidence],
+      [elements['news-impact-contradict'], outlook.contradicting_evidence]]) {
+      target.replaceChildren();
+      for (const value of values || []) {
+        const row = document.createElement('li');
+        row.textContent = value;
+        target.append(row);
+      }
+      if (!target.childElementCount) {
+        const row = document.createElement('li');
+        row.textContent = 'No qualifying signal';
+        target.append(row);
+      }
+    }
+    const flags = (impact.uncertainty_flags || []).slice(0, 4).map(label);
+    elements['news-impact-flags'].hidden = !flags.length;
+    elements['news-impact-flags'].textContent = flags.length ? `Uncertainty: ${flags.join(' · ')}` : '';
+    const main = (impact.events || []).filter((event) => Math.abs(Number(event.impact)) > 0)
+      .sort((a, b) => Math.abs(Number(b.impact)) - Math.abs(Number(a.impact)))[0];
+    const link = elements['news-impact-event'];
+    let eventUrl;
+    try { eventUrl = main ? new URL(main.url) : null; } catch { eventUrl = null; }
+    link.hidden = !eventUrl || eventUrl.protocol !== 'https:';
+    if (!link.hidden) {
+      link.href = eventUrl.href;
+      link.textContent = `Main evidence: ${main.headline}`;
+    } else {
+      link.removeAttribute('href');
+    }
+  }
+
+  async function loadNews(result, refresh = false) {
+    const section = elements['news-section'];
+    section.hidden = false;
+    state.newsController?.abort();
+    const sequence = ++state.newsSequence;
+    window.kronosProfessionalChart?.setEventMarkers([]);
+    elements['news-list'].replaceChildren();
+    elements['news-count'].textContent = '0';
+    elements['news-positive'].textContent = '0';
+    elements['news-negative'].textContent = '0';
+    elements['news-updated'].textContent = '-';
+    elements['news-provider-label'].textContent = 'Checking sources';
+    if (!/\.(NS|BO)$/i.test(result.normalized_symbol || '')) {
+      renderNews({ status: 'NOT_APPLICABLE', events: [], message: 'News context is available for NSE/BSE company forecasts only.' }, result);
+      elements['news-refresh'].disabled = true;
+      return;
+    }
+    const controller = new AbortController();
+    state.newsController = controller;
+    section.setAttribute('aria-busy', 'true');
+    elements['news-refresh'].disabled = true;
+    elements['news-status'].textContent = 'Checking recent source-linked reports.';
+    try {
+      const query = new URLSearchParams({ symbol: result.normalized_symbol, name: result.company_name || '' });
+      if (refresh) query.set('refresh', '1');
+      const payload = await fetchJson(`/api/news?${query}`, { signal: controller.signal });
+      if (sequence === state.newsSequence && state.currentResult === result) renderNews(payload, result);
+    } catch (error) {
+      if (error.name !== 'AbortError' && sequence === state.newsSequence && state.currentResult === result) {
+        renderNews({ status: 'UNAVAILABLE', events: [], message: 'No verified recent evidence.' }, result);
+      }
+    } finally {
+      if (sequence === state.newsSequence) {
+        section.removeAttribute('aria-busy');
+        elements['news-refresh'].disabled = false;
+        state.newsController = null;
+      }
+    }
   }
 
   function currentLiveKey() {
@@ -519,13 +877,66 @@
     return state.pending;
   }
 
-  async function fetchJson(url, options = {}) {
-    const response = await fetch(url, { cache: 'no-store', ...options });
+  let unlockPromise = null;
+
+  function requestLanAccess() {
+    if (unlockPromise) return unlockPromise;
+    unlockPromise = new Promise((resolve, reject) => {
+      const dialog = elements['lan-access-dialog'];
+      const form = elements['lan-access-form'];
+      const code = elements['lan-access-code'];
+      const error = elements['lan-access-error'];
+      const cancelButton = elements['lan-access-cancel'];
+      let finished = false;
+      const finish = (ok) => {
+        if (finished) return;
+        finished = true;
+        form.removeEventListener('submit', submit);
+        cancelButton.removeEventListener('click', cancel);
+        dialog.removeEventListener('cancel', cancel);
+        dialog.close();
+        code.value = '';
+        unlockPromise = null;
+        if (ok) resolve(); else reject(new Error('Laptop actions remain locked.'));
+      };
+      const cancel = (event) => { event.preventDefault(); finish(false); };
+      const submit = async (event) => {
+        event.preventDefault();
+        error.hidden = true;
+        try {
+          const response = await fetch('/api/session', { method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ access_code: code.value }), cache: 'no-store' });
+          if (response.ok) { finish(true); return; }
+          const payload = await response.json();
+          error.textContent = payload.error || 'Access code was not accepted.';
+          error.hidden = false;
+        } catch {
+          error.textContent = 'Cannot reach the laptop server.';
+          error.hidden = false;
+        }
+      };
+      form.addEventListener('submit', submit);
+      cancelButton.addEventListener('click', cancel);
+      dialog.addEventListener('cancel', cancel);
+      dialog.showModal();
+      code.focus();
+    });
+    return unlockPromise;
+  }
+
+  async function fetchJson(url, options = {}, retried = false) {
+    const response = await fetch(url, { cache: 'no-store', ...options,
+      headers: { 'X-Kronos-Request': 'dashboard', ...(options.headers || {}) } });
     let payload;
     try {
       payload = await response.json();
     } catch {
       payload = {};
+    }
+    if (response.status === 401 && payload.code === 'AUTH_REQUIRED' && !retried) {
+      await requestLanAccess();
+      return fetchJson(url, options, true);
     }
     if (!response.ok) throw new Error(payload.error || 'The local server could not complete the request.');
     return payload;
@@ -924,7 +1335,9 @@
   }
 
   function drawChart(result) {
+    if (window.kronosProfessionalChart?.render(result, state.chartMode, Boolean(elements['chart-bollinger']?.checked))) return;
     const canvas = elements['forecast-chart'];
+    canvas.hidden = false;
     const container = elements['chart-container'];
     const observed = (result.chart?.observed || []).filter((point) => Number.isFinite(Number(point.close)));
     const forecast = (result.chart?.forecast || []).filter((point) => Number.isFinite(Number(point.close)));
@@ -1137,12 +1550,19 @@
     elements['theme-dark'].addEventListener('click', () => setTheme('dark', true));
     elements['chart-candles'].addEventListener('click', () => setChartMode('candles'));
     elements['chart-line'].addEventListener('click', () => setChartMode('line'));
+    elements['chart-bollinger']?.addEventListener('change', () => {
+      if (state.currentResult && !elements['forecast-result'].hidden) drawChart(state.currentResult);
+    });
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
       if (!localStorage.getItem('kronos-theme')) setTheme(event.matches ? 'dark' : 'light');
     });
     elements['live-form'].addEventListener('submit', runLiveForecast);
     elements['csv-form'].addEventListener('submit', runCsvForecast);
     elements['explain-button'].addEventListener('click', requestExplanation);
+    elements['agent-run'].addEventListener('click', runAgents);
+    elements['news-refresh'].addEventListener('click', () => {
+      if (state.currentResult) loadNews(state.currentResult, true);
+    });
     elements['retry-button'].addEventListener('click', retryLastAttempt);
     elements['switch-exchange-button'].addEventListener('click', switchExchange);
     elements['error-csv-button'].addEventListener('click', showCsvMode);
@@ -1229,6 +1649,7 @@
     updateQuickTickerState();
     updateForecastButtons();
     loadInitialDashboard();
+    loadPipelineStatus();
     window.kronosDashboard = {
       getState: () => ({
         phase: state.phase,

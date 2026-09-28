@@ -14,11 +14,26 @@
         document.documentElement.style.colorScheme = theme;
       })();
     </script>
-    <link rel="stylesheet" href="./dashboard.css?v=10" />
-    <script src="./dashboard.js?v=10" defer></script>
+    <link rel="stylesheet" href="./dashboard.css?v=15" />
+    <script src="./vendor/lightweight-charts-5.2.1.js" defer></script>
+    <script src="./professional-chart.js?v=1" defer></script>
+    <script src="./dashboard.js?v=16" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#market-controls">Skip to market controls</a>
+    <dialog id="lan-access-dialog" class="lan-access-dialog" aria-labelledby="lan-access-title">
+      <form id="lan-access-form">
+        <h2 id="lan-access-title">Unlock laptop actions</h2>
+        <p>Enter the local access code configured on this laptop to run forecasts and fetch news.</p>
+        <label for="lan-access-code">Access code</label>
+        <input id="lan-access-code" type="password" autocomplete="off" required minlength="12" />
+        <p id="lan-access-error" role="alert" hidden></p>
+        <div class="lan-access-dialog__actions">
+          <button id="lan-access-cancel" type="button">Cancel</button>
+          <button type="submit">Unlock</button>
+        </div>
+      </form>
+    </dialog>
 
     <header class="app-bar">
       <div class="app-bar__inner">
@@ -199,6 +214,7 @@
                 <button id="chart-candles" type="button" aria-pressed="true">Candles</button>
                 <button id="chart-line" type="button" aria-pressed="false">Price</button>
               </div>
+              <label class="chart-indicator-toggle"><input id="chart-bollinger" type="checkbox" /> Bollinger</label>
             </div>
             <span class="chart-interval"><span id="chart-interval">Each point = 5 minutes</span><span class="info-dot" tabindex="0" role="img" aria-label="Each observed point summarizes one five-minute Yahoo Finance market bar. Each forecast point represents one predicted five-minute trading period.">i</span></span>
           </div>
@@ -208,12 +224,19 @@
             <span id="legend-actual-item" hidden><i class="legend-actual" aria-hidden="true"></i>Actual future</span>
             <span><i class="legend-volume" aria-hidden="true"></i>Volume</span>
             <span><i class="legend-boundary" aria-hidden="true"></i>Forecast boundary</span>
+            <span title="EMA overlays use the same analytical context as Gold technical evidence">Analytical EMA20 / EMA50</span>
           </div>
           <div class="chart-time-window" aria-label="Chart time window">
             <span id="chart-observed-window">Observed: -</span>
             <span id="chart-forecast-window">Forecast: -</span>
           </div>
           <div id="chart-container" class="chart-container">
+            <div id="professional-chart" class="professional-chart" aria-hidden="true" hidden></div>
+            <div id="prediction-region" class="prediction-region" aria-hidden="true" hidden>
+              <span class="prediction-boundary-label">Kronos prediction starts</span>
+              <span class="prediction-region-label">Predicted</span>
+            </div>
+            <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true" hidden></div>
             <canvas id="forecast-chart" role="img" aria-labelledby="chart-title chart-summary"></canvas>
             <div id="chart-loading" class="chart-loading" hidden>
               <span class="large-spinner" aria-hidden="true"></span>
@@ -222,6 +245,8 @@
             </div>
           </div>
           <p id="chart-summary" class="sr-only">No forecast chart is available yet.</p>
+          <p id="chart-quality-note" class="chart-quality-note" role="status" hidden></p>
+          <a class="chart-attribution" href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">Charts by TradingView</a>
         </article>
 
         <div class="metric-grid" aria-label="Forecast details">
@@ -244,6 +269,70 @@
             <span><small>Direction</small><strong id="validation-direction">-</strong></span>
           </div>
         </section>
+      </section>
+
+      <section id="news-section" class="news-section" aria-labelledby="news-title" hidden>
+        <div class="news-heading">
+          <div><p class="eyebrow">External evidence</p><h2 id="news-title">News &amp; events</h2></div>
+          <div class="news-actions"><span id="news-provider-label" class="news-provider-label">Checking sources</span><span id="news-updated">-</span><button id="news-refresh" class="button button--secondary" type="button">Refresh news</button></div>
+        </div>
+        <p id="news-status" class="news-status" role="status" aria-live="polite">Checking recent linked reports.</p>
+        <div id="news-impact-panel" class="news-impact" aria-labelledby="news-impact-title" hidden>
+          <div class="news-impact__heading"><h3 id="news-impact-title">Research outlook</h3><span id="news-impact-confidence">Confidence: uncalibrated</span></div>
+          <div class="news-impact__views">
+            <div><span>Raw Kronos forecast</span><strong id="news-raw-view">-</strong></div>
+            <div><span>News impact</span><strong id="news-impact-value">-</strong></div>
+            <div><span>Preliminary research view</span><strong id="news-final-view">-</strong></div>
+          </div>
+          <p id="news-impact-context" class="news-impact__context"></p>
+          <div class="news-impact__why"><h4>Why this view?</h4><p id="news-impact-why"></p><p id="news-impact-risk"></p><p id="news-evidence-reference" class="news-impact__context" hidden></p></div>
+          <div class="news-impact__evidence">
+            <div><h4>Supports</h4><ul id="news-impact-support"></ul></div>
+            <div><h4>Contradicts</h4><ul id="news-impact-contradict"></ul></div>
+          </div>
+          <p id="news-impact-flags" class="news-impact__flags" hidden></p>
+          <a id="news-impact-event" class="news-impact__event" href="#" target="_blank" rel="noopener noreferrer" hidden></a>
+          <p class="news-impact__caveat">Rule-based headline evidence, not measured price impact. Confidence is qualitative, not a probability; news has not been historically validated as improving accuracy.</p>
+        </div>
+        <div class="news-evidence" aria-label="News evidence summary">
+          <div><strong id="news-count">0</strong><span>Recent events</span></div>
+          <div><strong id="news-positive">0</strong><span>Positive evidence cues</span></div>
+          <div><strong id="news-negative">0</strong><span>Negative evidence cues</span></div>
+        </div>
+        <ul id="news-list" class="news-list" aria-label="Recent source-linked events"></ul>
+        <p id="news-uncertainty" class="news-uncertainty">Headlines are source-reported; market impact is not independently verified.</p>
+      </section>
+
+      <section id="agent-section" class="agent-section" aria-labelledby="agent-title" hidden>
+        <div class="agent-heading">
+          <div><p class="eyebrow">Evidence interpretation</p><h2 id="agent-title">AI Research Team</h2></div>
+          <button id="agent-run" class="button button--secondary" type="button" disabled>
+            <span class="button-spinner" aria-hidden="true"></span><span class="button-label">Run AI Research Team</span>
+          </button>
+        </div>
+        <p id="agent-status" class="agent-status" role="status" aria-live="polite">Waiting for a matching evidence snapshot.</p>
+        <div class="agent-grid">
+          <article class="agent-card" data-agent="bull"><div class="agent-card__top"><h3>Bull Case</h3><span data-role="status">Not run</span></div><p class="agent-card__prompt">Why this could go up</p><p data-role="argument">No analysis yet.</p><ul data-role="evidence"></ul><small data-role="limitations"></small><small data-role="confidence"></small><small data-role="time"></small></article>
+          <article class="agent-card" data-agent="bear"><div class="agent-card__top"><h3>Bear Case</h3><span data-role="status">Not run</span></div><p class="agent-card__prompt">Why this could go down</p><p data-role="argument">No analysis yet.</p><ul data-role="evidence"></ul><small data-role="limitations"></small><small data-role="confidence"></small><small data-role="time"></small></article>
+          <article class="agent-card" data-agent="risk"><div class="agent-card__top"><h3>Risk Review</h3><span data-role="status">Not run</span></div><p class="agent-card__prompt">What could make this analysis wrong</p><p data-role="argument">No analysis yet.</p><ul data-role="evidence"></ul><small data-role="limitations"></small><small data-role="confidence"></small><small data-role="time"></small></article>
+        </div>
+        <p class="agent-disclosure">AI analysts interpret saved evidence. They do not modify the raw forecast or deterministic indicators. Argument confidence is not prediction accuracy or a price probability.</p>
+      </section>
+
+      <section id="pipeline-section" class="pipeline-section" aria-labelledby="pipeline-title">
+        <div class="pipeline-heading">
+          <div><p class="eyebrow">Local data flow</p><h2 id="pipeline-title">Pipeline health</h2></div>
+          <span id="pipeline-symbol" class="pipeline-symbol">No capture yet</span>
+        </div>
+        <div id="pipeline-stages" class="pipeline-stages" aria-live="polite">
+          <article class="pipeline-stage" data-stage="source"><div class="pipeline-stage__top"><h3>Source</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">No local capture yet</p></article>
+          <article class="pipeline-stage" data-stage="bronze"><div class="pipeline-stage__top"><h3>Bronze</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Provider-native snapshot</p></article>
+          <article class="pipeline-stage" data-stage="silver"><div class="pipeline-stage__top"><h3>Silver</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Validated market bars</p></article>
+          <article class="pipeline-stage" data-stage="gold"><div class="pipeline-stage__top"><h3>Gold</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Technicals and forecast references</p></article>
+          <article class="pipeline-stage" data-stage="intelligence"><div class="pipeline-stage__top"><h3>Intelligence</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Kronos / technicals / agents</p></article>
+          <article class="pipeline-stage" data-stage="news"><div class="pipeline-stage__top"><h3>Web news · Tavily</h3><span class="pipeline-status" data-role="status">UNAVAILABLE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Yahoo/RSS fallback remains available</p></article>
+          <article class="pipeline-stage" data-stage="agents"><div class="pipeline-stage__top"><h3>AI Research Team</h3><span class="pipeline-status" data-role="status">UNAVAILABLE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Runs only when requested</p></article>
+        </div>
       </section>
 
       <section class="model-ai-grid" aria-label="Model and explanation details">

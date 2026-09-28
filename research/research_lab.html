@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kronos Copilot Research Lab</title>
+    <style>
+      body { background:#f5f6f8; color:#1f252c; font-family:Inter, "Segoe UI", system-ui, sans-serif; margin:0; }
+      main { margin:0 auto; max-width:980px; padding:32px 20px; }
+      h1 { font-size:28px; margin:0 0 8px; }
+      section { background:#fff; border:1px solid #d9dee5; border-radius:8px; margin-top:18px; padding:18px; }
+      code, pre { font-family:"Cascadia Mono", Consolas, monospace; }
+      pre { background:#f0f2f5; border-radius:6px; overflow:auto; padding:12px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Kronos Copilot Research Lab</h1>
+      <p>Phase 1 benchmark mode evaluates Kronos against simple baselines with walk-forward windows. It is separate from the live dashboard.</p>
+      <section>
+        <h2>Inspect A Run</h2>
+        <form id="status-form">
+          <input id="run-id" value="phase1_real_kronos_smoke" aria-label="Run ID" />
+          <button type="submit">Load report</button>
+        </form>
+        <pre id="status-output">Enter a run ID and load its local benchmark status.</pre>
+        <pre id="experiments-output"></pre>
+        <pre id="report-output"></pre>
+      </section>
+      <section>
+        <h2>Common Commands</h2>
+        <pre>python -m research.cli run --profile smoke
+python -m research.cli run --profile smoke --adapter kronos
+python -m research.cli resume RUN_ID
+python -m research.cli status --run-id RUN_ID
+python -m research.cli report --run-id RUN_ID</pre>
+      </section>
+      <section>
+        <h2>Scientific Guardrails</h2>
+        <p>No future bars enter context, baselines use context only, and results compare Kronos to persistence, drift, and momentum.</p>
+      </section>
+    </main>
+    <script src="research_lab.js"></script>
+  </body>
+</html>

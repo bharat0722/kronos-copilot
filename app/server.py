@@ -24,6 +24,7 @@ from openai import OpenAI
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from forecast_config import (
@@ -44,6 +45,15 @@ from forecast_config import (
     trading_duration_label,
 )
 from first_forecast import FEATURES, MODEL_NAME as KRONOS_MODEL_NAME, build_summary, predict_with_kronos, run_kronos_forecast
+from instrument_search import index_stats, search_instruments
+from research.market_data import MarketDataRequest
+from research.market_data_service import MarketDataError, MarketDataService
+from app.product_pipeline import ProductPipeline
+from app.news_intelligence import NewsService
+from app.news_impact import assess_news, research_outlook, save_gold
+from app.security import AccessGuard, EXPENSIVE_POST, LOCAL_READ, PUBLIC_ASSETS, is_loopback, local_secret, same_origin, valid_host
+from app.evidence_snapshot import create_content, read_snapshot, save_snapshot
+from app.agent_research import AgentConfig, AgentError, AgentTeam
 
 SUMMARY_PATH = PROJECT_ROOT / "outputs" / "forecast_summary.json"
 CACHE_PATH = PROJECT_ROOT / "outputs" / "explanation.json"
@@ -60,6 +70,12 @@ EXPLANATION_LOCK = threading.Lock()
 REQUIRED_COLUMNS = ["timestamps", "open", "high", "low", "close", "volume", "amount"]
 SYMBOL_SEARCH_CACHE: dict[tuple[str, str], tuple[float, list[dict[str, str]]]] = {}
 SYMBOL_SEARCH_TTL_SECONDS = 300
+LIVE_MARKET_DATA_SERVICE = MarketDataService()
+PRODUCT_PIPELINE = ProductPipeline(PROJECT_ROOT / "outputs" / "pipeline")
+NEWS_SERVICE = NewsService(PROJECT_ROOT / "outputs" / "news_cache")
+ACCESS_GUARD = AccessGuard(ENV_PATH)
+EVIDENCE_DIR = PROJECT_ROOT / "outputs" / "evidence_snapshots"
+AGENT_TEAM = AgentTeam(PROJECT_ROOT / "outputs" / "agent_research", config=AgentConfig(model=MODEL_NAME))
 
 
 def load_local_key() -> None:
@@ -71,6 +87,24 @@ def load_local_key() -> None:
         if line.startswith("OPENAI_API_KEY="):
             os.environ["OPENAI_API_KEY"] = line.split("=", 1)[1].strip().strip('"')
             return
+
+
+def current_agent_snapshot(digest: str) -> dict[str, object]:
+    """Only the current saved, unchanged product forecast may be analyzed."""
+    record = read_snapshot(EVIDENCE_DIR, digest)
+    if not record:
+        raise AgentError("SNAPSHOT_NOT_FOUND", "Evidence snapshot not found.")
+    evidence = record["evidence"]
+    try:
+        summary = load_summary()
+        matches = (evidence["kronos"]["forecast_fingerprint"] == summary_fingerprint(summary) and
+                   evidence["kronos"]["forecast_sha256"] == hashlib.sha256(FORECAST_PATH.read_bytes()).hexdigest() and
+                   evidence["market_data"]["input_sha256"] == hashlib.sha256(UPLOADED_DATA_PATH.read_bytes()).hexdigest())
+    except (KeyError, OSError, ValueError, TypeError):
+        matches = False
+    if not matches:
+        raise AgentError("STALE_SNAPSHOT", "Evidence changed. Refresh the research view before running agents.")
+    return record
 
 
 def load_summary() -> dict[str, object]:
@@ -553,32 +587,38 @@ def symbol_search(query: str, exchange: str) -> list[dict[str, str]]:
         return cached[1]
 
     results: list[dict[str, str]] = []
+    local_results = search_instruments(cleaned, preferred_exchange, limit=8)
+    results.extend(local_results)
+
     direct = direct_symbol_result(cleaned, preferred_exchange)
-    if direct:
+    if direct and (cleaned.upper().endswith((".NS", ".BO")) or not local_results):
         results.append(direct)
 
-    try:
-        search = yf.Search(
-            cleaned,
-            max_results=12,
-            news_count=0,
-            lists_count=0,
-            include_research=False,
-            include_cultural_assets=False,
-            timeout=5,
-            raise_errors=False,
-        )
-        for quote in search.quotes or []:
-            normalized = normalize_symbol_result(quote)
-            if normalized:
-                results.append(normalized)
-    except Exception:
-        pass
+    if len(results) < 4 and len(re.sub(r"[^A-Za-z0-9]", "", cleaned)) >= 3:
+        try:
+            search = yf.Search(
+                cleaned,
+                max_results=12,
+                news_count=0,
+                lists_count=0,
+                include_research=False,
+                include_cultural_assets=False,
+                timeout=5,
+                raise_errors=False,
+            )
+            for quote in search.quotes or []:
+                normalized = normalize_symbol_result(quote)
+                if normalized:
+                    results.append(normalized)
+        except Exception:
+            pass
 
     unique: dict[str, dict[str, str]] = {}
     for result in results:
-        unique[result["symbol"]] = result
-    ranked = sorted(unique.values(), key=lambda item: search_score(item, cleaned, preferred_exchange))[:8]
+        existing = unique.get(result["symbol"])
+        if not existing or len(str(result.get("name", ""))) > len(str(existing.get("name", ""))):
+            unique[result["symbol"]] = result
+    ranked = list(unique.values())[:10]
     SYMBOL_SEARCH_CACHE[cache_key] = (time.time(), ranked)
     return ranked
 
@@ -638,6 +678,12 @@ def build_dashboard_payload(
     if "timestamps" in history:
         history["timestamps"] = coerce_market_timestamps(history["timestamps"])
     valid_history = history.dropna(subset=["timestamps", "close"]).tail(64)
+    ema_context = history.dropna(subset=["timestamps", "close"]).tail(LOOKBACK_BARS).copy()
+    if not ema_context.empty:
+        ema_context["close"] = pd.to_numeric(ema_context["close"])
+        for span in (20, 50):
+            ema_context[f"ema{span}"] = ema_context["close"].ewm(span=span, adjust=False).mean()
+    ema_visible = ema_context.tail(len(valid_history))
 
     if not forecast.empty:
         forecast = forecast.copy()
@@ -684,6 +730,11 @@ def build_dashboard_payload(
                 "observed": observed_points,
                 "forecast": forecast_points,
                 "actual": actual_points,
+                "analytical_ema": {
+                    f"ema{span}": [{"timestamp": iso_timestamp(row["timestamps"]), "value": float(row[f"ema{span}"])}
+                                    for _, row in ema_visible.iterrows()]
+                    for span in (20, 50)
+                },
             },
             "validation": {
                 **{key: summary.get(key) for key in (
@@ -714,6 +765,68 @@ def build_dashboard_payload(
     if request_id is not None:
         payload["request_id"] = request_id
     return payload
+
+
+def build_news_research_payload(symbol: str, *, refresh: bool = False,
+                                company_hint: str = "") -> dict[str, object]:
+    news = dict(NEWS_SERVICE.get(symbol, refresh=refresh, company_hint=company_hint))
+    for derived_key in ("research_outlook", "news_impact", "evidence_snapshot_id", "forecast_fingerprint"):
+        news.pop(derived_key, None)
+    news["news_pipeline"] = dict(news.get("news_pipeline") or {})
+    news["news_pipeline"].pop("gold", None)
+    canonical_symbol = str(news["symbol"])
+    impact = assess_news(news, NEWS_SERVICE.official_name(canonical_symbol))
+    news["news_impact"] = impact
+    news["news_pipeline"]["impact_status"] = impact["status"]
+    news["news_pipeline"]["events_processed"] = impact["events_processed"]
+    NEWS_SERVICE.record_impact(impact)
+    try:
+        with FORECAST_LOCK:
+            summary = load_summary()
+            _, saved_symbol, _, source_type = source_identity(str(summary.get("input_source", "")))
+            if saved_symbol == canonical_symbol and source_type == "live" and summary.get("mode") != "validation":
+                fingerprint = summary_fingerprint(summary)
+                news["forecast_fingerprint"] = fingerprint
+                technicals = PRODUCT_PIPELINE.matching_technicals(saved_symbol, fingerprint)
+                try:
+                    forecast_times = pd.read_csv(FORECAST_PATH, usecols=["timestamps"])["timestamps"]
+                    forecast_end = str(forecast_times.iloc[-1]) if not forecast_times.empty else None
+                except (FileNotFoundError, OSError, ValueError, KeyError):
+                    forecast_end = None
+                outlook = research_outlook(str(summary.get("direction") or "neutral"), technicals, impact,
+                                           model_as_of=(technicals or {}).get("as_of"),
+                                           forecast_ends_at=forecast_end)
+                news["research_outlook"] = outlook
+                try:
+                    news["news_pipeline"]["gold"] = save_gold(NEWS_SERVICE.cache_dir, saved_symbol, impact, outlook)
+                except OSError:
+                    news["news_pipeline"]["gold_warning"] = "Gold news artifact could not be saved"
+                if not news["news_pipeline"].get("gold"):
+                    outlook = dict(outlook)
+                    outlook["why"] += " The Gold news artifact is unavailable; review this view as degraded."
+                    outlook["warning"] = "News evidence artifact unavailable; this view is degraded."
+                    news["research_outlook"] = outlook
+                try:
+                    manifest = json.loads(PRODUCT_PIPELINE._latest.read_text(encoding="utf-8"))
+                except (OSError, ValueError):
+                    manifest = None
+                try:
+                    content = create_content(
+                        symbol=saved_symbol, exchange="NSE" if saved_symbol.endswith(".NS") else "BSE",
+                        summary=summary, fingerprint=fingerprint,
+                        forecast_sha256=hashlib.sha256(FORECAST_PATH.read_bytes()).hexdigest(),
+                        input_sha256=hashlib.sha256(UPLOADED_DATA_PATH.read_bytes()).hexdigest(),
+                        market=manifest, technicals=technicals, news=news, impact=impact, outlook=outlook,
+                        news_gold=news["news_pipeline"].get("gold"),
+                        technical_version=(technicals or {}).get("analysis_version"),
+                    )
+                    news["evidence_snapshot_id"] = save_snapshot(EVIDENCE_DIR, content)["snapshot_id"]
+                except (OSError, ValueError, TypeError):
+                    news.pop("research_outlook", None)
+                    news["evidence_snapshot_warning"] = "A joined evidence snapshot is unavailable."
+    except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError):
+        pass
+    return news
 
 
 def run_forecast(
@@ -773,53 +886,49 @@ def fetch_live_forecast(
     forecast_bars: int | str | None = None,
 ) -> dict[str, object]:
     """Fetch Indian-market OHLCV data and pass it through the local forecast flow."""
-    source_ticker, clean_data = fetch_live_market_data(ticker, exchange)
-    return run_forecast(
+    source_ticker, clean_data, capture_id = _fetch_product_market_data_with_capture(ticker, exchange)
+    payload = run_forecast(
         clean_data.to_csv(index=False),
         f"{source_ticker} live 5-minute data",
         request_id,
         forecast_bars,
     )
+    _complete_product_pipeline(capture_id, clean_data.tail(LOOKBACK_BARS), payload)
+    return payload
+
+
+def _fetch_product_market_data_with_capture(ticker: str, exchange: str) -> tuple[str, pd.DataFrame, str | None]:
+    result = LIVE_MARKET_DATA_SERVICE.get_bars(MarketDataRequest(ticker, exchange))
+    source_ticker = str(result.provenance["source_symbol"])
+    clean_data = result.bars.rename(columns={"timestamp": "timestamps"})[REQUIRED_COLUMNS].dropna()
+    try:
+        capture_id = PRODUCT_PIPELINE.capture(result)
+    except Exception:
+        capture_id = None
+    return source_ticker, clean_data, capture_id
+
+
+def _complete_product_pipeline(capture_id: str | None, context: pd.DataFrame,
+                               payload: dict[str, object], *, validation: bool = False) -> None:
+    if capture_id is None:
+        return
+    try:
+        PRODUCT_PIPELINE.complete(capture_id, context, payload, validation=validation)
+    except Exception:
+        try:
+            PRODUCT_PIPELINE.record_error("Gold artifact could not be built from the saved forecast.")
+        except Exception:
+            pass
+
+
+def fetch_product_market_data(ticker: str, exchange: str = "NSE") -> tuple[str, pd.DataFrame]:
+    source_ticker, clean_data, _ = _fetch_product_market_data_with_capture(ticker, exchange)
+    return source_ticker, clean_data
 
 
 def fetch_live_market_data(ticker: str, exchange: str = "NSE") -> tuple[str, pd.DataFrame]:
-    normalized_ticker = ticker.strip().upper()
-    normalized_exchange = exchange.strip().upper()
-    if not re.fullmatch(r"[A-Z0-9.^=\-]{1,20}", normalized_ticker):
-        raise ValueError("Use a standard ticker such as AAPL, MSFT, RELIANCE.NS, or ^NSEI.")
-    if normalized_exchange not in {"NSE", "BSE"}:
-        raise ValueError("Choose NSE or BSE.")
-
-    if normalized_ticker.startswith("^") or normalized_ticker.endswith((".NS", ".BO")):
-        source_ticker = normalized_ticker
-    else:
-        suffix = ".NS" if normalized_exchange == "NSE" else ".BO"
-        source_ticker = f"{normalized_ticker}{suffix}"
-
-    try:
-        market_data = yf.Ticker(source_ticker).history(period="1mo", interval="5m", auto_adjust=False)
-    except Exception as error:
-        raise ValueError(f"No five-minute data is currently available for {source_ticker}.") from error
-    if market_data.empty:
-        raise ValueError(f"No recent five-minute data was found for {source_ticker}.")
-
-    market_data = market_data.reset_index()
-    timestamp_column = "Datetime" if "Datetime" in market_data.columns else "Date"
-    market_data = market_data.rename(
-        columns={
-            timestamp_column: "timestamps",
-            "Open": "open",
-            "High": "high",
-            "Low": "low",
-            "Close": "close",
-            "Volume": "volume",
-        }
-    )
-    market_data["timestamps"] = pd.to_datetime(market_data["timestamps"], utc=True).dt.tz_convert(MARKET_TIMEZONE)
-    market_data["amount"] = market_data["close"] * market_data["volume"]
-    required_columns = ["timestamps", "open", "high", "low", "close", "volume", "amount"]
-    clean_data = market_data[required_columns].dropna()
-    return source_ticker, clean_data
+    """Compatibility entry point for live callers; market bars use the service."""
+    return fetch_product_market_data(ticker, exchange)
 
 
 def fetch_live_validation(
@@ -828,24 +937,89 @@ def fetch_live_validation(
     request_id: int | str | None = None,
     forecast_bars: int | str | None = None,
 ) -> dict[str, object]:
-    source_ticker, clean_data = fetch_live_market_data(ticker, exchange)
-    return run_validation(
+    source_ticker, clean_data, capture_id = _fetch_product_market_data_with_capture(ticker, exchange)
+    payload = run_validation(
         clean_data.to_csv(index=False),
         f"{source_ticker} live 5-minute data",
         request_id,
         forecast_bars,
     )
+    horizon = int(payload.get("forecast_rows") or resolve_forecast_bars(forecast_bars))
+    context = clean_data.iloc[-(LOOKBACK_BARS + horizon):-horizon]
+    _complete_product_pipeline(capture_id, context, payload, validation=True)
+    return payload
 
 
 class DashboardHandler(SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=str(PROJECT_ROOT), **kwargs)
+    PROTECTED_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/evidence-snapshot", "/api/agents/result"})
+    BROWSER_FETCH_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/agents/result"})
 
-    def send_json(self, payload: dict[str, object], status: HTTPStatus = HTTPStatus.OK) -> None:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(PROJECT_ROOT / "app"), **kwargs)
+
+    def translate_path(self, path: str) -> str:
+        route = urlparse(path).path
+        if route not in PUBLIC_ASSETS:
+            return str(PROJECT_ROOT / "app" / "__not_public__")
+        return str(PROJECT_ROOT / "app" / route.removeprefix("/app/"))
+
+    def log_message(self, format: str, *args: object) -> None:
+        # Request lines can carry attacker-supplied tokens; never log query strings or bodies.
+        return
+
+    def end_headers(self) -> None:
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Referrer-Policy", "no-referrer")
+        self.send_header("X-Frame-Options", "DENY")
+        super().end_headers()
+
+    def _address(self) -> str:
+        return str(self.client_address[0])
+
+    def _authorized(self) -> bool:
+        return ACCESS_GUARD.authenticated(self._address(), self.headers.get("Cookie", ""))
+
+    def _require_access(self, route: str, *, expensive: bool = False) -> bool:
+        if not self._authorized():
+            self.send_json({"error": "Unlock this laptop's dashboard to continue.", "code": "AUTH_REQUIRED"}, HTTPStatus.UNAUTHORIZED)
+            return False
+        if expensive and not ACCESS_GUARD.allow(self._address(), route, 8, 600, daily=48):
+            self.send_json({"error": "Local request limit reached. Please try later.", "code": "RATE_LIMITED"}, HTTPStatus.TOO_MANY_REQUESTS)
+            return False
+        return True
+
+    def _public_asset(self, head: bool = False) -> None:
+        # Exact URL allowlist; no percent-decoding or filesystem path supplied by the caller.
+        if not valid_host(self.headers.get("Host", "")) or urlparse(self.path).path not in PUBLIC_ASSETS:
+            self.send_error(HTTPStatus.NOT_FOUND, "Public asset not found")
+            return
+        if head:
+            super().do_HEAD()
+        else:
+            super().do_GET()
+
+    def do_HEAD(self) -> None:
+        self._public_asset(head=True)
+
+    def _method_not_allowed(self) -> None:
+        self.send_json({"error": "Method not allowed."}, HTTPStatus.METHOD_NOT_ALLOWED,
+                       extra_headers={"Allow": "GET, HEAD, POST"})
+
+    do_PUT = _method_not_allowed
+    do_PATCH = _method_not_allowed
+    do_DELETE = _method_not_allowed
+    do_OPTIONS = _method_not_allowed
+
+    def send_json(self, payload: dict[str, object], status: HTTPStatus = HTTPStatus.OK,
+                  extra_headers: dict[str, str] | None = None) -> None:
+        if int(status) >= 400:
+            ACCESS_GUARD.record_failure(self._address(), urlparse(self.path).path)
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Cache-Control", "no-store")
+        for name, value in (extra_headers or {}).items():
+            self.send_header(name, value)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         try:
@@ -854,23 +1028,160 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             pass
 
     def do_GET(self) -> None:
+        if not valid_host(self.headers.get("Host", "")):
+            self.send_error(HTTPStatus.NOT_FOUND, "Public asset not found")
+            return
         parsed_path = urlparse(self.path)
+        if parsed_path.path in self.PROTECTED_GET and not same_origin(self.headers):
+            self.send_json({"error": "Cross-origin request rejected."}, HTTPStatus.FORBIDDEN)
+            return
+        if parsed_path.path in self.BROWSER_FETCH_GET and self.headers.get("X-Kronos-Request") != "dashboard":
+            self.send_json({"error": "Dashboard request required."}, HTTPStatus.FORBIDDEN)
+            return
+        if parsed_path.path in LOCAL_READ and not is_loopback(self._address()):
+            self.send_json({"error": "Local research access only."}, HTTPStatus.FORBIDDEN)
+            return
+        if parsed_path.path == "/api/news":
+            if not self._require_access("/api/news", expensive=True):
+                return
+            params = parse_qs(parsed_path.query)
+            try:
+                self.send_json(build_news_research_payload(
+                    params.get("symbol", [""])[0],
+                    refresh=params.get("refresh", ["0"])[0] == "1",
+                    company_hint=params.get("name", [""])[0],
+                ))
+            except ValueError as error:
+                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+            return
+        if parsed_path.path == "/api/pipeline":
+            try:
+                pipeline = PRODUCT_PIPELINE.snapshot()
+                pipeline["stages"]["news"] = NEWS_SERVICE.pipeline_stage()
+                load_local_key()
+                pipeline["stages"]["agents"] = AGENT_TEAM.health()
+                intelligence = pipeline["stages"].get("intelligence") or {}
+                intelligence["warnings"] = [warning for warning in intelligence.get("warnings", [])
+                                            if warning != "Agents are not connected"]
+                self.send_json(pipeline)
+            except (OSError, ValueError, json.JSONDecodeError):
+                self.send_json({"error": "Local pipeline status is unavailable."}, HTTPStatus.SERVICE_UNAVAILABLE)
+            return
         if parsed_path.path == "/api/dashboard":
             try:
                 self.send_json(build_dashboard_payload(load_summary()))
             except (FileNotFoundError, json.JSONDecodeError, ValueError) as error:
                 self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
             return
-        if parsed_path.path == "/api/symbol-search":
+        if parsed_path.path in {"/api/symbol-search", "/api/search"}:
+            if not self._require_access("/api/search"):
+                return
             params = parse_qs(parsed_path.query)
             self.send_json(
                 {
+                    "query": params.get("q", [""])[0],
                     "results": symbol_search(
                         params.get("q", [""])[0],
                         params.get("exchange", ["NSE"])[0],
-                    )
+                    ),
+                    "stats": index_stats() if parsed_path.path == "/api/search" else None,
                 }
             )
+            return
+        if parsed_path.path == "/api/research/status":
+            from research.registry import ExperimentRegistry
+
+            params = parse_qs(parsed_path.query)
+            registry = ExperimentRegistry()
+            try:
+                self.send_json(registry.summary(params.get("run_id", [None])[0]))
+            finally:
+                registry.close()
+            return
+        if parsed_path.path == "/api/research/report":
+            from research.config import REPORTS_DIR
+
+            params = parse_qs(parsed_path.query)
+            run_id = Path(params.get("run_id", [""])[0]).name
+            report_path = REPORTS_DIR / f"{run_id}.md"
+            if not run_id or not report_path.exists():
+                self.send_json({"error": "Research report was not found for that run ID."}, HTTPStatus.NOT_FOUND)
+                return
+            self.send_json({"run_id": run_id, "markdown": report_path.read_text(encoding="utf-8")})
+            return
+        if parsed_path.path == "/api/research/runs":
+            from research.registry import ExperimentRegistry
+
+            params = parse_qs(parsed_path.query)
+            limit = min(100, max(1, int(params.get("limit", ["20"])[0] or 20)))
+            registry = ExperimentRegistry()
+            try:
+                rows = registry.connection.execute(
+                    "select run_id,status,started_at,finished_at from runs order by started_at desc limit ?",
+                    (limit,),
+                ).fetchall()
+                self.send_json({"runs": [dict(row) for row in rows]})
+            finally:
+                registry.close()
+            return
+        if parsed_path.path == "/api/research/experiments":
+            from research.registry import ExperimentRegistry
+
+            params = parse_qs(parsed_path.query)
+            run_id = Path(params.get("run_id", [""])[0]).name
+            limit = min(100, max(1, int(params.get("limit", ["50"])[0] or 50)))
+            offset = max(0, int(params.get("offset", ["0"])[0] or 0))
+            registry = ExperimentRegistry()
+            try:
+                rows = registry.connection.execute(
+                    """
+                    select e.experiment_id,e.run_id,e.model_name,e.horizon_bars,e.symbol,e.status,e.started_at,e.finished_at,
+                           m.mae,m.normalized_mae,m.rmse,m.mase,m.directional_match
+                    from experiments e left join metrics m on e.experiment_id=m.experiment_id
+                    where (?='' or e.run_id=?)
+                    order by e.started_at desc limit ? offset ?
+                    """,
+                    (run_id, run_id, limit, offset),
+                ).fetchall()
+                self.send_json({"experiments": [dict(row) for row in rows], "limit": limit, "offset": offset})
+            finally:
+                registry.close()
+            return
+        if parsed_path.path == "/api/research/experiment":
+            from research.registry import ExperimentRegistry
+
+            params = parse_qs(parsed_path.query)
+            experiment_id = params.get("experiment_id", [""])[0]
+            registry = ExperimentRegistry()
+            try:
+                spec = registry.connection.execute("select * from experiment_specs where experiment_id=?", (experiment_id,)).fetchone()
+                artifacts = registry.connection.execute("select * from artifacts where experiment_id=? order by artifact_type", (experiment_id,)).fetchall()
+                if not spec:
+                    self.send_json({"error": "Experiment was not found."}, HTTPStatus.NOT_FOUND)
+                else:
+                    self.send_json({"spec": dict(spec), "artifacts": [dict(row) for row in artifacts]})
+            finally:
+                registry.close()
+            return
+        if parsed_path.path == "/api/research/failures":
+            from research.registry import ExperimentRegistry
+
+            params = parse_qs(parsed_path.query)
+            run_id = Path(params.get("run_id", [""])[0]).name
+            registry = ExperimentRegistry()
+            try:
+                rows = registry.connection.execute(
+                    """
+                    select e.experiment_id,e.run_id,e.model_name,e.symbol,e.horizon_bars,m.normalized_mae,m.mae,e.error
+                    from experiments e left join metrics m on e.experiment_id=m.experiment_id
+                    where (?='' or e.run_id=?)
+                    order by coalesce(m.normalized_mae, m.mae, 0) desc limit 20
+                    """,
+                    (run_id, run_id),
+                ).fetchall()
+                self.send_json({"failures": [dict(row) for row in rows]})
+            finally:
+                registry.close()
             return
         if parsed_path.path == "/api/explanation":
             try:
@@ -890,9 +1201,71 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             except (FileNotFoundError, json.JSONDecodeError) as error:
                 self.send_json({"available": False, "error": str(error)}, HTTPStatus.BAD_REQUEST)
             return
-        super().do_GET()
+        if parsed_path.path == "/api/evidence-snapshot":
+            if not self._require_access("/api/evidence-snapshot"):
+                return
+            digest = parse_qs(parsed_path.query).get("id", [""])[0]
+            record = read_snapshot(EVIDENCE_DIR, digest)
+            self.send_json(record if record else {"error": "Evidence snapshot not found."},
+                           HTTPStatus.OK if record else HTTPStatus.NOT_FOUND)
+            return
+        if parsed_path.path == "/api/agents/result":
+            if not self._require_access("/api/agents/result"):
+                return
+            digest = parse_qs(parsed_path.query).get("id", [""])[0]
+            try:
+                load_local_key()
+                self.send_json(AGENT_TEAM.result(current_agent_snapshot(digest)))
+            except AgentError as error:
+                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
+            return
+        self._public_asset()
 
     def do_POST(self) -> None:
+        if not valid_host(self.headers.get("Host", "")):
+            self.send_json({"error": "Invalid local host."}, HTTPStatus.FORBIDDEN)
+            return
+        if not same_origin(self.headers):
+            self.send_json({"error": "Cross-origin request rejected."}, HTTPStatus.FORBIDDEN)
+            return
+        if self.path == "/api/session":
+            if not ACCESS_GUARD.allow(self._address(), "/api/session", 5, 300):
+                self.send_json({"error": "Too many unlock attempts."}, HTTPStatus.TOO_MANY_REQUESTS)
+                return
+            if not local_secret("KRONOS_LAN_ACCESS_CODE", ENV_PATH):
+                self.send_json({"error": "LAN access code is not configured on the laptop.",
+                                "code": "LAN_CODE_UNCONFIGURED"}, HTTPStatus.SERVICE_UNAVAILABLE)
+                return
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+                if length < 1 or length > 1024 or "application/json" not in self.headers.get("Content-Type", ""):
+                    raise ValueError()
+                code = json.loads(self.rfile.read(length))["access_code"]
+                if not isinstance(code, str):
+                    raise ValueError()
+            except (ValueError, KeyError, json.JSONDecodeError, TypeError):
+                self.send_json({"error": "Invalid unlock request."}, HTTPStatus.BAD_REQUEST)
+                return
+            token = ACCESS_GUARD.login(self._address(), code)
+            if not token:
+                self.send_json({"error": "Access code was not accepted."}, HTTPStatus.UNAUTHORIZED)
+                return
+            self.send_json({"authenticated": True}, extra_headers={
+                "Set-Cookie": f"kronos_session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800"})
+            return
+        if self.path in EXPENSIVE_POST:
+            if not self._require_access(self.path, expensive=True):
+                return
+            if "application/json" not in self.headers.get("Content-Type", ""):
+                self.send_json({"error": "JSON request required."}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
+                return
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+            except ValueError:
+                length = 0
+            if length < 0 or length > 6_000_000:
+                self.send_json({"error": "Request is too large."}, HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
+                return
         if self.path == "/api/forecast":
             try:
                 content_length = int(self.headers.get("Content-Length", "0"))
@@ -937,6 +1310,8 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                         request_data.get("forecast_bars") or request_data.get("horizon"),
                     )
                 )
+            except MarketDataError as error:
+                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
                 self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
             return
@@ -952,6 +1327,8 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                         request_data.get("forecast_bars") or request_data.get("horizon"),
                     )
                 )
+            except MarketDataError as error:
+                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
                 self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
             return
@@ -969,6 +1346,29 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     {"error": "The explanation could not be generated. Check your key and API billing, then try again."},
                     HTTPStatus.BAD_GATEWAY,
                 )
+            return
+        if self.path == "/api/agents/run":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                if not 1 <= content_length <= 256:
+                    raise ValueError("Invalid agent request size")
+                request_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                if not isinstance(request_data, dict) or set(request_data) != {"snapshot_id"} or \
+                        not isinstance(request_data["snapshot_id"], str):
+                    raise ValueError("A snapshot ID is required")
+                record = current_agent_snapshot(request_data["snapshot_id"])
+                load_local_key()
+                self.send_json(AGENT_TEAM.run(record))
+            except (ValueError, json.JSONDecodeError):
+                self.send_json({"error": "Invalid AI research request."}, HTTPStatus.BAD_REQUEST)
+            except AgentError as error:
+                status = (HTTPStatus.SERVICE_UNAVAILABLE if error.code in {"UNAVAILABLE", "LEDGER_UNAVAILABLE"} else
+                          HTTPStatus.TOO_MANY_REQUESTS if error.code == "COST_LIMIT" else
+                          HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": str(error), "code": error.code}, status)
+            except Exception:
+                self.send_json({"error": "AI Research Team could not complete the request.", "code": "AGENT_ERROR"},
+                               HTTPStatus.BAD_GATEWAY)
             return
         self.send_error(HTTPStatus.NOT_FOUND)
 

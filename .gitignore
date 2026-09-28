@@ -1,4 +1,7 @@
-.env.local
+.env
+.env.*
+!.env.example
+.agents/
 .venv/
 __pycache__/
 *.py[cod]
@@ -7,7 +10,19 @@ __pycache__/
 data/
 outputs/
 
+# Phase 1 research runtime artifacts
+research/results/
+research/cache/
+research/data/generated/
+research/data/phase1b_pilot/
+*.sqlite3
+*.duckdb
+
 # Third-party Kronos source
 vendor/
+!app/vendor/
+app/vendor/*
+!app/vendor/lightweight-charts-5.2.1.js
+!app/vendor/LIGHTWEIGHT_CHARTS_LICENSE.txt
 
 docs/pdf_qa/

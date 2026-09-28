@@ -69,6 +69,7 @@ The launcher starts the local server, waits until the dashboard API is ready, an
 
 - `src/` — Kronos forecasting and configuration
 - `app/` — backend server and dashboard
+- `research/` — Phase 1 walk-forward benchmarking laboratory
 - `tools/` — project utilities
 - `docs/` — research and project documentation
 - `data/` — local/runtime market data (not committed)
@@ -82,6 +83,26 @@ Kronos inference runs locally.
 OpenAI is optional and is used only for natural-language explanation of compact forecast summaries.
 
 `.env.local`, local environments, runtime market data, generated forecasts, and the downloaded Kronos source are excluded from Git.
+
+## Research / Benchmarking
+
+Kronos Copilot now includes a Phase 1 research foundation for walk-forward model evaluation. It is separate from the live dashboard and is designed to answer whether Kronos beats simple baselines such as persistence, drift, and momentum on controlled historical windows.
+
+Start with:
+
+`python -m research.cli run --profile smoke`
+
+Resume an interrupted run with:
+
+`python -m research.cli resume RUN_ID`
+
+Generate a report with:
+
+`python -m research.cli report --run-id RUN_ID`
+
+See `docs/phase1_research_foundation.md`, `docs/benchmark_metrics.md`, `docs/temporal_integrity.md`, and `docs/benchmark_runbook.md`.
+
+Do not interpret small smoke runs as real market accuracy. They validate the benchmark machinery, not final model quality.
 
 ## Current status
 
