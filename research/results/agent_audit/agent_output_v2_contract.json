@@ -1,0 +1,103 @@
+{
+  "version": "agent_output_v2_contract_v1",
+  "status": "ENFORCED",
+  "schema_version": "agent_output_v2",
+  "claim_object": {
+    "required_fields": [
+      "text",
+      "claim_type",
+      "support_type",
+      "evidence_type",
+      "evidence_ids",
+      "confidence",
+      "material"
+    ],
+    "claim_types": [
+      "FACT",
+      "NUMERICAL_FACT",
+      "INTERPRETATION",
+      "RISK",
+      "LIMITATION",
+      "UNCERTAINTY",
+      "COMPARATIVE",
+      "FORECAST_INTERPRETATION"
+    ],
+    "support_types": ["DIRECT", "DERIVED", "INTERPRETIVE", "MIXED", "INSUFFICIENT"],
+    "evidence_types": [
+      "NEWS",
+      "TECHNICAL",
+      "FORECAST",
+      "MARKET_DATA",
+      "RESEARCH_VIEW",
+      "INSTRUMENT",
+      "MULTI_SOURCE",
+      "NONE"
+    ],
+    "confidence_semantics": "Argument support on a finite 0-to-1 scale; not forecast probability or accuracy.",
+    "material_rule": "Every emitted claim object is material=true and can affect the research interpretation.",
+    "lineage_rule": "Every material claim has nonempty snapshot-scoped evidence_ids except the exact generic directional abstention.",
+    "abstention_rule": {
+      "allowed_text": [
+        "No strong case supported.",
+        "Insufficient evidence to form a case.",
+        "No evidence-supported case can be made."
+      ],
+      "claim_type": "UNCERTAINTY",
+      "support_type": "INSUFFICIENT",
+      "evidence_type": "NONE",
+      "evidence_ids": []
+    }
+  },
+  "validation": {
+    "qualitative_validator": "qualitative_grounding_v1",
+    "numerical_validator": "numerical_grounding_v3",
+    "direct_fact": "DIRECT support, compatible evidence family, no interpretive framing, and conservative token support in cited structured evidence.",
+    "interpretation": "DERIVED, INTERPRETIVE, or MIXED support; explicit interpretive wording; all material premises cited.",
+    "forecast_interpretation": "Must include FORECAST evidence and remain explicitly interpretive.",
+    "comparison": "Must cite at least two evidence families and use DERIVED or MIXED support.",
+    "numbers": "Exact value, unit, currency where applicable, and semantic field category for Bull, Bear, and Risk.",
+    "failure_policy": "Reject before publication/cache; retain sanitized attempt diagnostic and bounded retry decision."
+  },
+  "roles": {
+    "bull": {"prompt_version": "bull_agent_prompt_v5", "contract": "agent_output_v2"},
+    "bear": {"prompt_version": "bear_agent_prompt_v4", "contract": "agent_output_v2"},
+    "risk": {"prompt_version": "risk_agent_prompt_v4", "contract": "agent_output_v2"}
+  },
+  "bounded_harness": {
+    "model": "gpt-5-mini",
+    "tools": "NONE",
+    "loop_limit": 1,
+    "retry_limit_per_failed_agent": 1,
+    "max_output_tokens_per_attempt": 900,
+    "external_calls_during_phase7_3b": 0
+  },
+  "cache": {
+    "config_version": "capstone_agent_config_v3",
+    "harness_version": "agent_run_v3",
+    "identity_includes": [
+      "snapshot_id",
+      "agent_type",
+      "model",
+      "prompt_version",
+      "prompt_sha256",
+      "schema_version",
+      "config_version",
+      "harness_version",
+      "qualitative_validator_version",
+      "numerical_validator_version",
+      "reasoning_effort",
+      "max_output_tokens"
+    ],
+    "v1_reuse": "REJECTED"
+  },
+  "ledger": {
+    "run_version": "agent_run_v3",
+    "attempt_version": "agent_attempt_v3",
+    "accepted_claim_metadata": true,
+    "rejection_diagnostics": "Sanitized claim hash/type/support/evidence/reason only; no chain-of-thought.",
+    "ledger_before_cache": true
+  },
+  "orchestrator": "Deterministic dispatcher/aggregator only; preserves specialist reports and lineage and creates no financial claim.",
+  "dashboard": "Backward-compatible display adapter accepts v1 strings and v2 claim objects without redesign.",
+  "test_evidence": {"passed": 157, "failed": 0, "skipped": 1, "network_calls": 0}
+}

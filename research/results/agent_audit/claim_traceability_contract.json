@@ -1,0 +1,40 @@
+{
+  "version": "phase7_3b_claim_traceability_v2",
+  "previous_version": "phase7_3a_claim_traceability_v1",
+  "history_preserved": true,
+  "status": "PASS",
+  "required_chain": [
+    "published specialist claim",
+    "typed claim object",
+    "snapshot-scoped evidence_ids",
+    "EvidenceSnapshotV1 catalog entries",
+    "original structured source and provenance"
+  ],
+  "current_chain": {
+    "agent_to_typed_claim": "PASS",
+    "typed_claim_to_evidence_ids": "PASS",
+    "evidence_ids_to_snapshot_records": "PASS",
+    "snapshot_records_to_original_source": "PASS_WITH_EXISTING_PROVENANCE",
+    "fact_vs_interpretation": "PASS_MACHINE_READABLE",
+    "material_limitations_and_uncertainty": "PASS_TYPED_AND_CITED",
+    "orchestrator_lineage": "PASS_NO_SYNTHESIS_OR_NEW_FACTS",
+    "ledger_reconstruction": "PASS_TYPED_METADATA_AND_HASHES"
+  },
+  "rejection_policy": {
+    "publish": false,
+    "success_cache": false,
+    "attempt_diagnostic": "sanitized",
+    "bounded_retry_only": true
+  },
+  "immutability": "Agent validation and aggregation do not mutate EvidenceSnapshotV1.",
+  "test_evidence": [
+    "supported and unsupported direct facts",
+    "interpretation typing and framing",
+    "material risk/limitation/uncertainty lineage",
+    "incompatible and nonexistent evidence IDs",
+    "symmetric field-aware numerical grounding",
+    "ledger claim metadata",
+    "deterministic aggregation",
+    "evidence immutability"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "phase8_fusion_test_matrix_v1",
+  "status": "PASS",
+  "scenarios": [
+    {"case": 1, "name": "everything bullish", "status": "PASS"},
+    {"case": 2, "name": "everything bearish", "status": "PASS"},
+    {"case": 3, "name": "Kronos bullish, technicals bearish", "status": "PASS"},
+    {"case": 4, "name": "Kronos bullish, negative news", "status": "PASS"},
+    {"case": 5, "name": "Bull and Bear strongly disagree", "status": "PASS"},
+    {"case": 6, "name": "Risk high", "status": "PASS"},
+    {"case": 7, "name": "news missing", "status": "PASS"},
+    {"case": 8, "name": "Kronos missing", "status": "PASS"},
+    {"case": 9, "name": "stale evidence", "status": "PASS"},
+    {"case": 10, "name": "weak primary evidence, confident agents", "status": "PASS"},
+    {"case": 11, "name": "pipeline provider failure", "status": "PASS"},
+    {"case": 12, "name": "insufficient evidence abstention", "status": "PASS"},
+    {"case": 13, "name": "duplicate evidence lineage", "status": "PASS"},
+    {"case": 14, "name": "agent repeats Kronos claim", "status": "PASS"},
+    {"case": 15, "name": "contradictory primary sources", "status": "PASS"}
+  ],
+  "additional_tests": [
+    "missing is not neutral",
+    "contract and provenance",
+    "cache invalidation",
+    "durable ledger and health",
+    "input immutability",
+    "authenticated read-only route",
+    "dashboard explainability surface"
+  ],
+  "offline_test_result": {"passed": 184, "failed": 0, "skipped": 1},
+  "external_calls": 0
+}

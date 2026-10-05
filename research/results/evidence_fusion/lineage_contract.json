@@ -1,0 +1,16 @@
+{
+  "schema_version": "fusion_lineage_v1",
+  "fusion_version": "evidence_fusion_v1",
+  "primary_sources": ["kronos.direction", "technicals.trend", "news.impact_score"],
+  "derived_sources": ["agent.bull", "agent.bear", "agent.risk"],
+  "meta_sources": ["market_data.quality", "pipeline.health"],
+  "deduplication_rules": [
+    "Agent evidence IDs point back to EvidenceSnapshotV1 catalog IDs.",
+    "All agent outputs are DERIVED and contribute zero independent directional weight.",
+    "Regime shares the technical lineage root and contributes zero additional directional weight.",
+    "A repeated agent interpretation of Kronos cannot increase the Kronos contribution.",
+    "The final source_lineage list preserves component, role, evidence IDs, and provenance."
+  ],
+  "cache_identity": ["evidence snapshot ID", "cached agent output hashes", "normalized quality/freshness state", "fusion version"],
+  "ledger_identity": ["fusion run ID", "snapshot ID", "input evidence IDs", "input hashes", "result hash"]
+}

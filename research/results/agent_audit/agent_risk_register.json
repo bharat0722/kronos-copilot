@@ -1,0 +1,114 @@
+{
+  "version": "phase7_3b_agent_risk_register_v3",
+  "previous_version": "phase7_3a_agent_risk_register_v2",
+  "history_preserved": true,
+  "risks": [
+    {
+      "id": "A4-01",
+      "title": "Unsupported and uncited financial claims can pass output validation",
+      "original_severity": "HIGH",
+      "status": "CLOSED",
+      "current_assessment": "agent_output_v2 requires typed material claims, snapshot-scoped lineage, evidence-family compatibility, conservative direct-fact support, and symmetric field-aware numerical grounding before publication or cache.",
+      "evidence": ["phase7_pre_live_safety_fix", "phase7_2c_evidence_id_constraints", "phase7_2e_bull_numerical_grounding", "phase7_3a_closure_audit", "phase7_3b_agent_output_v2"],
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A4-02",
+      "title": "Successful paid output can be cached before its ledger row exists",
+      "original_severity": "HIGH",
+      "status": "CLOSED",
+      "current_assessment": "Phase 7.1 established ledger-before-cache, rollback on final ledger failure, attempt records, and cache-parent validation; live artifacts confirm linkage.",
+      "evidence": ["ledger_commit_contract", "live_attempt_ledger_contract", "phase7_2f_testco_live_retest"],
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A4-03",
+      "title": "Full real evidence snapshot can be sent externally without a field-minimized egress contract",
+      "original_severity": "MEDIUM",
+      "status": "ACCEPTED",
+      "current_assessment": "Synthetic live testing was privacy-safe and Phase 7.3B made no external call. Phase 8 may begin as a local deterministic fusion phase; any future real-data external egress still requires field minimization and separate authorization.",
+      "evidence": ["privacy_egress_spec", "phase7_2d_live_schema_retest", "phase7_2f_testco_live_retest"],
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A4-04",
+      "title": "Prompt text changes need not invalidate agent cache",
+      "original_severity": "MEDIUM",
+      "status": "CLOSED",
+      "current_assessment": "Prompt SHA-256, prompt version, schema, harness, config, and validator versions are included in v2 cache identity; old agent_output_v1 cache cannot validate as v2.",
+      "evidence": ["phase7_pre_live_safety_fix", "phase7_2e_bull_numerical_grounding", "phase7_3b_agent_output_v2"],
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A4-05",
+      "title": "Risk cannot veto or abstain a future synthesis",
+      "original_severity": "MEDIUM",
+      "status": "OPEN",
+      "current_assessment": "No Phase 7 model orchestrator or final synthesis exists, so this is not a Phase 7 runtime defect. Phase 8 must define deterministic Risk veto/abstain and partial-team policy before fusion.",
+      "evidence": ["harness_contract", "phase7_completion_matrix"],
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A7-01",
+      "title": "Direct facts and interpretations are not machine-distinguished",
+      "severity": "HIGH",
+      "status": "CLOSED",
+      "likelihood": "MEDIUM",
+      "impact": "HIGH",
+      "evidence": "agent_output_v2 adds claim_type, support_type, evidence_type, evidence_ids, confidence, and material and enforces conservative compatibility/direct-fact rules.",
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A7-02",
+      "title": "Material limitations and uncertainty can bypass per-claim lineage",
+      "severity": "MEDIUM",
+      "status": "CLOSED",
+      "likelihood": "HIGH",
+      "impact": "MEDIUM",
+      "evidence": "Limitations, uncertainty, and Risk missing-evidence entries now use the same required typed claim object and evidence lineage as primary claims.",
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A7-03",
+      "title": "Numerical semantic field matching is stronger for Bull than Bear/Risk",
+      "severity": "MEDIUM",
+      "status": "CLOSED",
+      "likelihood": "LOW",
+      "impact": "HIGH",
+      "evidence": "numerical_grounding_v3 applies one field/unit/currency/category validator to Bull, Bear, and Risk with symmetric offline tests.",
+      "blocks_phase7_close": false,
+      "blocks_phase8": false
+    },
+    {
+      "id": "A7-04",
+      "title": "Dashboard does not expose the full durable agent audit trail",
+      "severity": "LOW",
+      "status": "ACCEPTED",
+      "likelihood": "HIGH",
+      "impact": "LOW",
+      "evidence": "Ledger retains run, attempt, failure, usage, and cache state; UI shows role status, factors, confidence, time, and limited pipeline health.",
+      "blocks_phase7_close": false,
+      "blocks_phase8": false,
+      "next_control": "Expose run ID and validation state later if product observability requires it; never expose chain-of-thought."
+    },
+    {
+      "id": "A7-05",
+      "title": "Another integrated paid run may be mistaken for a semantic-grounding fix",
+      "severity": "LOW",
+      "status": "CLOSED",
+      "likelihood": "MEDIUM",
+      "impact": "MEDIUM",
+      "evidence": "All three roles have live synthetic coverage and the deterministic aggregator has offline integration coverage; another call does not add claim typing.",
+      "blocks_phase7_close": false,
+      "blocks_phase8": false,
+      "decision": "INTEGRATED_LIVE_REGRESSION_NOT_REQUIRED"
+    }
+  ]
+}

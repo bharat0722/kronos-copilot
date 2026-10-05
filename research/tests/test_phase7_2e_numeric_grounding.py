@@ -16,7 +16,7 @@ from app.agent_research import (AGENTS, MAX_REASONING_ROUNDS, MAX_RETRIES, Agent
                                 PROMPT_VERSIONS, evidence_catalog, validate_output)
 from app.evidence_snapshot import snapshot_id
 from research.tests.test_phase7_2a_diagnostics import MockClient, mock_response, synthetic_record
-from research.tests.test_phase7_agents import valid_report
+from research.tests.test_phase7_agents import typed_claim, valid_report
 
 
 def record_with(**changes):
@@ -28,11 +28,22 @@ def record_with(**changes):
 
 def bull_claim(record, text, references, *, argument=False):
     report = valid_report("bull", record["snapshot_id"])
+    prefixes = {reference.split(".", 1)[0] for reference in references}
+    evidence_type = ({"kronos": "FORECAST", "technicals": "TECHNICAL", "market_data": "MARKET_DATA",
+                      "news": "NEWS", "research_view": "RESEARCH_VIEW", "instrument": "INSTRUMENT"}
+                     .get(next(iter(prefixes)), "FORECAST") if len(prefixes) == 1 else
+                     "MULTI_SOURCE" if prefixes else "FORECAST")
+    numeric = any(character.isdigit() for character in text)
+    claim = typed_claim(text, references,
+                        claim_type="NUMERICAL_FACT" if numeric else "INTERPRETATION",
+                        support_type="DIRECT" if numeric else "INTERPRETIVE",
+                        evidence_type=evidence_type)
     if argument:
-        report["argument"] = text
+        report["argument"] = claim
         report["supporting_evidence_ids"] = references
+        report["contradicting_evidence_ids"] = []
     else:
-        report["key_factors"] = [{"text": text, "evidence_ids": references}]
+        report["key_factors"] = [claim]
     return report
 
 
@@ -125,14 +136,19 @@ class BullNumericalGroundingTests(unittest.TestCase):
             self.validate(self.record, report)
 
     def test_grounded_qualitative_claim_and_structural_word_count(self):
-        for text in ("The cited RSI signal is bullish.", "The evidence presents two risks."):
+        for text in ("The cited RSI signal may support a bullish interpretation.",
+                     "The technical evidence may present risk signals."):
             with self.subTest(text=text):
                 report = bull_claim(self.record, text, ["technicals.indicator.0"])
                 self.assertEqual(self.validate(self.record, report), report)
 
-    def test_qualitative_entailment_is_not_claimed_by_numeric_guard(self):
-        report = bull_claim(self.record, "The company has a durable moat.", ["technicals.indicator.0"])
-        self.assertEqual(self.validate(self.record, report), report)
+    def test_qualitative_entailment_gap_is_closed_by_typed_contract(self):
+        report = valid_report("bull", self.record["snapshot_id"])
+        report["key_factors"] = [typed_claim("The company announced a new partnership.",
+                                                   ["technicals.indicator.0"], claim_type="FACT",
+                                                   support_type="DIRECT", evidence_type="TECHNICAL")]
+        with self.assertRaises(ClaimValidationError):
+            self.validate(self.record, report)
 
     def test_raw_secret_and_path_redacted_from_diagnostic(self):
         secret = "offline-secret-123456789"
@@ -148,9 +164,9 @@ class BullNumericalGroundingTests(unittest.TestCase):
         self.assertIn("15%", diagnostic_text)
 
     def test_prompt_version_and_cache_key_are_bull_only(self):
-        self.assertEqual(PROMPT_VERSIONS["bull"], "bull_agent_prompt_v4")
-        self.assertEqual(PROMPT_VERSIONS["bear"], "bear_agent_prompt_v3")
-        self.assertEqual(PROMPT_VERSIONS["risk"], "risk_agent_prompt_v3")
+        self.assertEqual(PROMPT_VERSIONS["bull"], "bull_agent_prompt_v5")
+        self.assertEqual(PROMPT_VERSIONS["bear"], "bear_agent_prompt_v4")
+        self.assertEqual(PROMPT_VERSIONS["risk"], "risk_agent_prompt_v4")
         team = AgentTeam(Path("unused"))
         current = {name: team._key(self.record["snapshot_id"], name) for name in AGENTS}
         with patch.dict(PROMPT_VERSIONS, {"bull": "bull_agent_prompt_v3"}):
@@ -163,8 +179,9 @@ class BullNumericalGroundingTests(unittest.TestCase):
         def response(name):
             report = valid_report(name, self.record["snapshot_id"])
             if name == "bull":
-                report["key_factors"] = [{"text": "TESTCO offers 15% upside",
-                                          "evidence_ids": ["kronos.forecast_pct_change"]}]
+                report["key_factors"] = [typed_claim("TESTCO offers 15% upside",
+                                                     ["kronos.forecast_pct_change"],
+                                                     claim_type="NUMERICAL_FACT", support_type="DIRECT")]
             return mock_response(name, self.record["snapshot_id"], report=report)
         client = MockClient(response)
         original = copy.deepcopy(self.record)
@@ -184,7 +201,7 @@ class BullNumericalGroundingTests(unittest.TestCase):
             self.assertEqual(len(bull_attempts), 2)
             self.assertEqual([row["retry_decision"] for row in bull_attempts], ["RETRY", "STOP"])
             self.assertTrue(all(row["failure_stage"] == "NUMERICAL_GROUNDING" and
-                                row["schema_version"] == "agent_attempt_v2" and
+                                row["schema_version"] == "agent_attempt_v3" and
                                 row["validation_diagnostic"]["unsupported_numbers"] == ["15%"]
                                 for row in bull_attempts))
             parent = next(json.loads(path.read_text()) for path in (root / "runs").glob("*.json")
@@ -199,8 +216,9 @@ class BullNumericalGroundingTests(unittest.TestCase):
             counts[name] += 1
             report = valid_report(name, self.record["snapshot_id"])
             if name == "bull" and counts[name] == 1:
-                report["key_factors"] = [{"text": "TESTCO offers 15% upside",
-                                          "evidence_ids": ["kronos.forecast_pct_change"]}]
+                report["key_factors"] = [typed_claim("TESTCO offers 15% upside",
+                                                     ["kronos.forecast_pct_change"],
+                                                     claim_type="NUMERICAL_FACT", support_type="DIRECT")]
             return mock_response(name, self.record["snapshot_id"], report=report)
         client = MockClient(response)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):

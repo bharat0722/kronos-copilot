@@ -1,0 +1,72 @@
+{
+  "project": "Kronos Copilot",
+  "checkpoint": "phase8_pre_monad",
+  "purpose": "Preserve the canonical main-project state before the separate Monad / Metropolis workstream",
+  "created_on": "2026-10-05",
+  "branch": "main",
+  "pre_checkpoint_head": "df4c4c943e948074569cf255aac96c1a0081b22b",
+  "phase7_status": "complete",
+  "phase7_3b_status": "pass",
+  "audit4_status": "pass",
+  "phase8_status": "complete",
+  "fusion_version": "evidence_fusion_v1",
+  "phase9_permission": true,
+  "next_phase": "Phase 9 - Historical Evaluation",
+  "locked_test_status": "untouched",
+  "fine_tuning_track_status": "waiting_on_trusted_data_and_stronger_gpu",
+  "fine_tuning_track_position": "Phase 1E-C.2",
+  "fine_tuning_blockers": [
+    "Provenance-clean long-history NSE/BSE intraday data",
+    "Stronger CUDA GPU / MU hardware support"
+  ],
+  "latest_known_tests": {
+    "passed": 184,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reason": "Existing opt-in live Yahoo regression remained skipped."
+  },
+  "tests_rerun_during_checkpoint": 0,
+  "available_evidence_sources": [
+    "Kronos forecast",
+    "Technical intelligence",
+    "Market regime",
+    "News and events",
+    "News impact",
+    "Pipeline quality",
+    "Valid cached Bull Agent output",
+    "Valid cached Bear Agent output",
+    "Valid cached Risk Agent output"
+  ],
+  "missing_evidence_sources": [
+    "Fundamentals"
+  ],
+  "known_limitations": [
+    "Fusion weights and thresholds are transparent but not historically calibrated.",
+    "No claim has been made that Evidence Fusion improves forecasting accuracy.",
+    "Fundamentals are not implemented.",
+    "Agent evidence is used only when valid cached Phase 7 outputs are available.",
+    "Support labels are qualitative support levels, not statistical probabilities.",
+    "Evidence Fusion has been functionally validated, but its incremental historical value has not yet been scientifically measured."
+  ],
+  "final_reports": [
+    "research/results/reports/phase7_3a_closure_audit.md",
+    "research/results/reports/phase7_3a_closure_audit.json",
+    "research/results/reports/phase7_3b_agent_output_v2.md",
+    "research/results/reports/phase7_3b_agent_output_v2.json",
+    "research/results/reports/phase8_evidence_fusion.md",
+    "research/results/reports/phase8_evidence_fusion.json"
+  ],
+  "contract_directories": [
+    "research/results/agent_audit",
+    "research/results/evidence_fusion"
+  ],
+  "safety": {
+    "external_api_calls": 0,
+    "kronos_inference_runs": 0,
+    "kronos_training_runs": 0,
+    "validation_rerun": false,
+    "locked_test_accessed": false,
+    "monad_work_started": false
+  },
+  "return_instruction": "When the separate Monad / Metropolis workstream is concluded or paused, resume the canonical Kronos Copilot roadmap from Phase 9 - Historical Evaluation without repeating Phase 7 or Phase 8 unless a verified regression requires it."
+}

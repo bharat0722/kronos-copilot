@@ -1,0 +1,46 @@
+{
+  "version": "phase7_3a_integrated_live_decision_v1",
+  "decision": "NOT_REQUIRED",
+  "status": "EVIDENCE_BASED",
+  "reason": "All three specialist roles already have successful synthetic live evidence on the identical TESTCO snapshot. Bear and Risk passed inside a full sequential AgentTeam.run, Bull passed through run_bull_only, which delegates to the same _run_agents request, validation, budget, ledger, and cache path. The orchestrator is deterministic aggregation code and makes no model call. Offline tests cover the complete three-agent path and partial/failure behavior. Another paid run would not resolve the remaining untyped qualitative claim contract.",
+  "live_coverage": {
+    "bull": {
+      "status": "PASS",
+      "source": "Phase 7.2F",
+      "prompt": "bull_agent_prompt_v4",
+      "calls": 1,
+      "attempts": 1
+    },
+    "bear": {
+      "status": "PASS",
+      "source": "Phase 7.2D full-team run",
+      "prompt": "bear_agent_prompt_v3",
+      "calls": 1,
+      "attempts": 1
+    },
+    "risk": {
+      "status": "PASS",
+      "source": "Phase 7.2D full-team run",
+      "prompt": "risk_agent_prompt_v3",
+      "calls": 2,
+      "attempts": 2,
+      "note": "First response was incomplete at the fixed token ceiling; the one permitted retry passed."
+    },
+    "orchestrator": {
+      "status": "PASS_OFFLINE",
+      "model_calls": 0,
+      "contract": "Deterministic dispatcher/aggregator; no financial synthesis."
+    }
+  },
+  "shared_path_evidence": [
+    "AgentTeam.run and AgentTeam.run_bull_only both delegate to _run_agents.",
+    "Request construction, strict schema, validators, usage budget, attempt ledger, parent ledger, and cache are shared.",
+    "The default full-team Bull/Bear/Risk path remains covered by offline mocked tests.",
+    "The Phase 7.2D live run already exercised serial Bear/Risk integration and partial-team handling."
+  ],
+  "incremental_value_of_another_live_run": "LOW",
+  "remaining_gap_addressed_by_live_run": false,
+  "remaining_gap": "Machine-readable direct-fact versus interpretation classification and evidence-type compatibility.",
+  "future_live_test": "A post-contract live smoke may be performed as optional operational assurance only with fresh authorization; it is not the current Phase 7 closure requirement.",
+  "external_calls_made_by_this_decision": 0
+}

@@ -319,6 +319,29 @@
         <p class="agent-disclosure">AI analysts interpret saved evidence. They do not modify the raw forecast or deterministic indicators. Argument confidence is not prediction accuracy or a price probability.</p>
       </section>
 
+      <section id="fusion-section" class="fusion-section" aria-labelledby="fusion-title" hidden>
+        <div class="fusion-heading">
+          <div><p class="eyebrow">Evidence fusion</p><h2 id="fusion-title">Overall research view</h2></div>
+          <span id="fusion-version" class="fusion-version">Local deterministic fusion</span>
+        </div>
+        <p id="fusion-status" class="fusion-status" role="status" aria-live="polite">Waiting for a matching evidence snapshot.</p>
+        <div class="fusion-summary">
+          <div><span>Research view</span><strong id="fusion-view">-</strong></div>
+          <div><span>Support</span><strong id="fusion-support">-</strong></div>
+          <div><span>Evidence quality</span><strong id="fusion-quality">-</strong></div>
+          <div><span>Risk</span><strong id="fusion-risk">-</strong></div>
+        </div>
+        <div class="fusion-why"><h3>Why?</h3><p id="fusion-explanation"></p></div>
+        <div class="fusion-evidence">
+          <div><h3>Supporting evidence</h3><ul id="fusion-supporting"></ul></div>
+          <div><h3>Opposing evidence</h3><ul id="fusion-opposing"></ul></div>
+          <div><h3>Risk &amp; uncertainty</h3><ul id="fusion-risks"></ul></div>
+          <div><h3>Missing evidence</h3><ul id="fusion-missing"></ul></div>
+        </div>
+        <p id="fusion-lineage" class="fusion-lineage"></p>
+        <p class="fusion-disclosure">Research support only, not investment advice. Support is qualitative and must not be read as a probability of price movement.</p>
+      </section>
+
       <section id="pipeline-section" class="pipeline-section" aria-labelledby="pipeline-title">
         <div class="pipeline-heading">
           <div><p class="eyebrow">Local data flow</p><h2 id="pipeline-title">Pipeline health</h2></div>
@@ -332,6 +355,7 @@
           <article class="pipeline-stage" data-stage="intelligence"><div class="pipeline-stage__top"><h3>Intelligence</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Kronos / technicals / agents</p></article>
           <article class="pipeline-stage" data-stage="news"><div class="pipeline-stage__top"><h3>Web news · Tavily</h3><span class="pipeline-status" data-role="status">UNAVAILABLE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Yahoo/RSS fallback remains available</p></article>
           <article class="pipeline-stage" data-stage="agents"><div class="pipeline-stage__top"><h3>AI Research Team</h3><span class="pipeline-status" data-role="status">UNAVAILABLE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Runs only when requested</p></article>
+          <article class="pipeline-stage" data-stage="fusion"><div class="pipeline-stage__top"><h3>Evidence Fusion</h3><span class="pipeline-status" data-role="status">STALE</span></div><strong data-role="rows">-</strong><small data-role="updated">No update</small><small data-role="latency">-</small><p data-role="message">Local deterministic research view</p></article>
         </div>
       </section>
 

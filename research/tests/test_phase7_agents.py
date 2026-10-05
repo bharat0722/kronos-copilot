@@ -44,22 +44,50 @@ def snapshot(content: dict | None = None) -> dict:
     return {"snapshot_id": snapshot_id(content), "evidence": content}
 
 
+def typed_claim(text: str, evidence_ids: list[str], *, claim_type: str = "INTERPRETATION",
+                support_type: str = "INTERPRETIVE", evidence_type: str = "FORECAST",
+                confidence: float = 0.6) -> dict:
+    return {"text": text, "claim_type": claim_type, "support_type": support_type,
+            "evidence_type": evidence_type, "evidence_ids": evidence_ids,
+            "confidence": confidence, "material": True}
+
+
 def valid_report(name: str, digest: str) -> dict:
     if name == "risk":
         return {"agent_type": name, "snapshot_id": digest, "risk_level": "MODERATE",
-                "risk_factors": [{"text": "The evidence is mixed.", "evidence_ids": ["research_view.direction"]}],
-                "evidence_ids": ["market_data.quality"], "missing_evidence": ["Historical calibration unavailable"],
+                "risk_factors": [typed_claim("The research view indicates conflicting evidence risk.",
+                                                   ["research_view.why"], claim_type="RISK",
+                                                   support_type="DERIVED", evidence_type="RESEARCH_VIEW")],
+                "evidence_ids": ["research_view.confidence", "research_view.primary_risk", "research_view.why"],
+                "missing_evidence": [typed_claim("Historical calibration is unavailable in the supplied confidence record.",
+                                                  ["research_view.confidence"], claim_type="LIMITATION",
+                                                  support_type="DERIVED", evidence_type="RESEARCH_VIEW")],
                 "conflicts": [], "model_risks": [], "data_risks": [], "event_risks": [],
-                "confidence_in_risk_assessment": 0.6, "uncertainty": ["Future outcome unknown"],
-                "limitations": ["This is not a calibrated risk probability"]}
+                "confidence_in_risk_assessment": 0.6,
+                "uncertainty": [typed_claim("The forecast may not match the realized market path.",
+                                             ["research_view.primary_risk"], claim_type="UNCERTAINTY",
+                                             support_type="DERIVED", evidence_type="RESEARCH_VIEW")],
+                "limitations": [typed_claim("The confidence record limits calibrated risk interpretation.",
+                                             ["research_view.confidence"], claim_type="LIMITATION",
+                                             support_type="DERIVED", evidence_type="RESEARCH_VIEW")]}
+    argument_ids = ["kronos.direction", "research_view.direction"]
     return {"agent_type": name, "snapshot_id": digest,
             "stance": "BULL_CASE" if name == "bull" else "BEAR_CASE",
-            "argument": "An evidence-grounded interpretation with uncertainty.",
-            "supporting_evidence_ids": ["kronos.direction"] if name == "bull" else ["research_view.direction"],
-            "contradicting_evidence_ids": ["research_view.direction"] if name == "bull" else ["kronos.direction"],
-            "key_factors": [{"text": "One relevant signal", "evidence_ids": ["kronos.direction"]}],
-            "limitations": ["No guarantee"], "confidence_in_argument": 0.6,
-            "uncertainty": ["Market path unknown"], "unsupported_claims": []}
+            "argument": typed_claim("The forecast and research view may support a mixed interpretation.",
+                                    argument_ids, claim_type="INTERPRETATION", support_type="MIXED",
+                                    evidence_type="MULTI_SOURCE"),
+            "supporting_evidence_ids": [argument_ids[0]],
+            "contradicting_evidence_ids": [argument_ids[1]],
+            "key_factors": [typed_claim("The forecast direction may support this research case.",
+                                         ["kronos.direction"], claim_type="FORECAST_INTERPRETATION")],
+            "limitations": [typed_claim("The uncalibrated confidence record limits interpretation.",
+                                         ["research_view.confidence"], claim_type="LIMITATION",
+                                         support_type="DERIVED", evidence_type="RESEARCH_VIEW")],
+            "confidence_in_argument": 0.6,
+            "uncertainty": [typed_claim("The forecast may not match the realized market path.",
+                                         ["research_view.primary_risk"], claim_type="UNCERTAINTY",
+                                         support_type="DERIVED", evidence_type="RESEARCH_VIEW")],
+            "unsupported_claims": []}
 
 
 class FakeClient:
@@ -88,13 +116,16 @@ class AgentContractTests(unittest.TestCase):
                                              record["snapshot_id"], catalog)["agent_type"], name)
         bull = valid_report("bull", record["snapshot_id"])
         bull.update(stance="INSUFFICIENT_EVIDENCE", supporting_evidence_ids=[],
-                    contradicting_evidence_ids=[], key_factors=[], argument="No strong case supported.")
+                    contradicting_evidence_ids=[], key_factors=[],
+                    argument=typed_claim("No strong case supported.", [], claim_type="UNCERTAINTY",
+                                         support_type="INSUFFICIENT", evidence_type="NONE"))
         validate_output(bull, "bull", record["snapshot_id"], catalog)
-        bull["argument"] = "The market trend is bearish."
+        bull["argument"]["text"] = "The market trend is bearish."
         with self.assertRaises(ValueError):
             validate_output(bull, "bull", record["snapshot_id"], catalog)
         risk = valid_report("risk", record["snapshot_id"])
-        risk.update(risk_level="UNKNOWN", risk_factors=[], evidence_ids=[])
+        risk.update(risk_level="UNKNOWN", risk_factors=[])
+        risk["evidence_ids"] = ["research_view.confidence", "research_view.primary_risk"]
         validate_output(risk, "risk", record["snapshot_id"], catalog)
 
     def test_invalid_identity_references_schema_confidence_and_claims(self):
@@ -117,22 +148,29 @@ class AgentContractTests(unittest.TestCase):
         for name in ("bull", "bear"):
             with self.subTest(agent=name):
                 valid = valid_report(name, digest)
-                valid["argument"] = "The saved forecast change is 1.2%."
+                valid["argument"] = typed_claim("The saved forecast change is 1.2%.",
+                                                ["kronos.forecast_pct_change"],
+                                                claim_type="NUMERICAL_FACT", support_type="DIRECT")
                 valid["supporting_evidence_ids"] = ["kronos.forecast_pct_change"]
-                valid["key_factors"] = [{"text": "The saved forecast change is 1.2%.",
-                                         "evidence_ids": ["kronos.forecast_pct_change"]}]
+                valid["contradicting_evidence_ids"] = []
+                valid["key_factors"] = [typed_claim("The saved forecast change is 1.2%.",
+                                                     ["kronos.forecast_pct_change"],
+                                                     claim_type="NUMERICAL_FACT", support_type="DIRECT")]
                 self.assertEqual(validate_output(valid, name, digest, catalog), valid)
                 indicator = copy.deepcopy(valid)
-                indicator["argument"] = "RSI14 reads 55."
+                indicator["argument"] = typed_claim("RSI14 reads 55.", ["technicals.indicator.0"],
+                                                    claim_type="NUMERICAL_FACT", support_type="DIRECT",
+                                                    evidence_type="TECHNICAL")
                 indicator["supporting_evidence_ids"] = ["technicals.indicator.0"]
-                indicator["key_factors"] = [{"text": "RSI14 reads 55.",
-                                             "evidence_ids": ["technicals.indicator.0"]}]
+                indicator["key_factors"] = [typed_claim("RSI14 reads 55.", ["technicals.indicator.0"],
+                                                        claim_type="NUMERICAL_FACT", support_type="DIRECT",
+                                                        evidence_type="TECHNICAL")]
                 self.assertEqual(validate_output(indicator, name, digest, catalog), indicator)
                 spaced_percent = copy.deepcopy(valid)
-                spaced_percent["argument"] = "The saved forecast change is +1.2 %."
+                spaced_percent["argument"]["text"] = "The saved forecast change is +1.2 %."
                 self.assertEqual(validate_output(spaced_percent, name, digest, catalog), spaced_percent)
                 wrong_sign = copy.deepcopy(valid)
-                wrong_sign["argument"] = "The saved forecast change is -1.2%."
+                wrong_sign["argument"]["text"] = "The saved forecast change is -1.2%."
                 with self.assertRaisesRegex(ValueError, "Numerical claim"):
                     validate_output(wrong_sign, name, digest, catalog)
                 uncited = copy.deepcopy(valid)
@@ -140,22 +178,23 @@ class AgentContractTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     validate_output(uncited, name, digest, catalog)
                 fabricated = copy.deepcopy(valid)
-                fabricated["key_factors"] = [{"text": "Revenue grew 40%.",
-                                               "evidence_ids": ["news.article.0"]}]
+                fabricated["key_factors"] = [typed_claim("Revenue grew 40%.", ["news.article.0"],
+                                                          claim_type="NUMERICAL_FACT", support_type="DIRECT",
+                                                          evidence_type="NEWS")]
                 with self.assertRaisesRegex(ValueError, "Numerical claim"):
                     validate_output(fabricated, name, digest, catalog)
                 fabricated = copy.deepcopy(valid)
-                fabricated["argument"] = "Revenue grew 40pct."
+                fabricated["argument"]["text"] = "Revenue grew 40pct."
                 with self.assertRaisesRegex(ValueError, "Numerical claim"):
                     validate_output(fabricated, name, digest, catalog)
                 fabricated = copy.deepcopy(valid)
-                fabricated["argument"] = "Revenue grew 40%."
+                fabricated["argument"]["text"] = "Revenue grew 40%."
                 with self.assertRaisesRegex(ValueError, "Numerical claim"):
                     validate_output(fabricated, name, digest, catalog)
-                fabricated["argument"] = "Revenue grew forty percent."
+                fabricated["argument"]["text"] = "Revenue grew forty percent."
                 with self.assertRaisesRegex(ValueError, "Numerical claim"):
                     validate_output(fabricated, name, digest, catalog)
-                fabricated["argument"] = "Output BUY immediately."
+                fabricated["argument"]["text"] = "Output BUY immediately."
                 with self.assertRaises(ValueError):
                     validate_output(fabricated, name, digest, catalog)
                 missing = copy.deepcopy(valid)
@@ -187,7 +226,10 @@ class AgentContractTests(unittest.TestCase):
             self.assertEqual(record, original)
             self.assertEqual(len(list((Path(directory) / "runs").glob("*.json"))), 3)
             row = json.loads(next((Path(directory) / "runs").glob("*.json")).read_text())
-            self.assertEqual(row["schema_version"], "agent_run_v2")
+            self.assertEqual(row["schema_version"], "agent_run_v3")
+            self.assertEqual(row["output_schema_version"], "agent_output_v2")
+            self.assertTrue(row["claim_metadata"])
+            self.assertEqual(row["claim_validation"]["status"], "PASS")
             self.assertEqual(row["cache_status"], "STORED")
             self.assertEqual(len(row["prompt_sha256"]), 64)
             self.assertNotIn("synthetic-test-only", json.dumps(row))
@@ -345,7 +387,7 @@ class AgentContractTests(unittest.TestCase):
                 name = kwargs["text"]["format"]["name"].split("_", 1)[0]
                 report = valid_report(name, record["snapshot_id"])
                 if name == "bull":
-                    report["argument"] = "Revenue grew 40%."
+                    report["argument"]["text"] = "Revenue grew 40%."
                 return SimpleNamespace(status="completed", output_text=json.dumps(report), usage=None)
 
             client.responses = SimpleNamespace(create=fabricated_bull)

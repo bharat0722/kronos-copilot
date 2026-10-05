@@ -1,0 +1,15 @@
+{
+  "schema_version": "fusion_conflict_v1",
+  "fields": ["conflict_id", "conflict_type", "evidence_ids", "severity", "explanation"],
+  "types": {
+    "PRIMARY_DIRECTION_CONFLICT": "Two eligible independent primary sources have opposite directions.",
+    "AGENT_INTERPRETATION_CONFLICT": "Bull and Bear agents interpret shared upstream evidence in opposing ways."
+  },
+  "severity": ["MEDIUM", "HIGH"],
+  "rules": [
+    "A forecast-versus-technical conflict is HIGH because both are primary sources.",
+    "A news-versus-other-primary conflict is MEDIUM in v1.",
+    "An agent conflict is visible but does not alter the primary direction score.",
+    "Conflicts are never averaged away or removed from the final output."
+  ]
+}

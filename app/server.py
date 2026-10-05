@@ -54,6 +54,7 @@ from app.news_impact import assess_news, research_outlook, save_gold
 from app.security import AccessGuard, EXPENSIVE_POST, LOCAL_READ, PUBLIC_ASSETS, is_loopback, local_secret, same_origin, valid_host
 from app.evidence_snapshot import create_content, read_snapshot, save_snapshot
 from app.agent_research import AgentConfig, AgentError, AgentTeam
+from app.evidence_fusion import EvidenceFusionEngine, EvidenceFusionError
 
 SUMMARY_PATH = PROJECT_ROOT / "outputs" / "forecast_summary.json"
 CACHE_PATH = PROJECT_ROOT / "outputs" / "explanation.json"
@@ -76,6 +77,7 @@ NEWS_SERVICE = NewsService(PROJECT_ROOT / "outputs" / "news_cache")
 ACCESS_GUARD = AccessGuard(ENV_PATH)
 EVIDENCE_DIR = PROJECT_ROOT / "outputs" / "evidence_snapshots"
 AGENT_TEAM = AgentTeam(PROJECT_ROOT / "outputs" / "agent_research", config=AgentConfig(model=MODEL_NAME))
+FUSION_ENGINE = EvidenceFusionEngine(PROJECT_ROOT / "outputs" / "evidence_fusion")
 
 
 def load_local_key() -> None:
@@ -951,8 +953,8 @@ def fetch_live_validation(
 
 
 class DashboardHandler(SimpleHTTPRequestHandler):
-    PROTECTED_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/evidence-snapshot", "/api/agents/result"})
-    BROWSER_FETCH_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/agents/result"})
+    PROTECTED_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/evidence-snapshot", "/api/agents/result", "/api/fusion"})
+    BROWSER_FETCH_GET = frozenset({"/api/news", "/api/search", "/api/symbol-search", "/api/agents/result", "/api/fusion"})
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(PROJECT_ROOT / "app"), **kwargs)
@@ -1060,6 +1062,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 pipeline["stages"]["news"] = NEWS_SERVICE.pipeline_stage()
                 load_local_key()
                 pipeline["stages"]["agents"] = AGENT_TEAM.health()
+                pipeline["stages"]["fusion"] = FUSION_ENGINE.health()
                 intelligence = pipeline["stages"].get("intelligence") or {}
                 intelligence["warnings"] = [warning for warning in intelligence.get("warnings", [])
                                             if warning != "Agents are not connected"]
@@ -1218,6 +1221,25 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(AGENT_TEAM.result(current_agent_snapshot(digest)))
             except AgentError as error:
                 self.send_json({"error": str(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
+            return
+        if parsed_path.path == "/api/fusion":
+            if not self._require_access("/api/fusion"):
+                return
+            digest = parse_qs(parsed_path.query).get("id", [""])[0]
+            try:
+                record = current_agent_snapshot(digest)
+                agents = AGENT_TEAM.result(record)
+                pipeline = PRODUCT_PIPELINE.snapshot()
+                pipeline["stages"]["news"] = NEWS_SERVICE.pipeline_stage()
+                pipeline["stages"]["agents"] = AGENT_TEAM.health()
+                self.send_json(FUSION_ENGINE.fuse(record, agent_result=agents, pipeline=pipeline))
+            except AgentError as error:
+                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
+            except EvidenceFusionError as error:
+                self.send_json({"error": str(error), "code": "FUSION_INVALID_EVIDENCE"}, HTTPStatus.CONFLICT)
+            except (OSError, json.JSONDecodeError):
+                self.send_json({"error": "Evidence fusion storage is unavailable.",
+                                "code": "FUSION_STORAGE_UNAVAILABLE"}, HTTPStatus.SERVICE_UNAVAILABLE)
             return
         self._public_asset()
 

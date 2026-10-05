@@ -1,0 +1,85 @@
+{
+  "report_version": "phase7_3a_closure_audit_v1",
+  "phase": "7.3A",
+  "mode": "OFFLINE_AUDIT_ONLY",
+  "status": "PASS",
+  "audit4_status": "PARTIAL",
+  "phase7_closure_readiness": "YELLOW",
+  "phase7_status": "PARTIAL",
+  "phase8_permission": "NO",
+  "ratings": {
+    "qualitative_grounding": "YELLOW",
+    "claim_traceability": "YELLOW",
+    "numerical_grounding": "YELLOW",
+    "harness": "GREEN",
+    "prompt_injection": "GREEN",
+    "cache": "GREEN",
+    "ledger": "GREEN",
+    "privacy": "GREEN",
+    "failure_handling": "GREEN",
+    "observability": "YELLOW"
+  },
+  "primary_answer": "Current evidence is sufficient to avoid another integrated live regression, but not sufficient to close Phase 7. The remaining blocker is an offline contract defect: claims do not machine-distinguish direct facts from interpretations, material side-channel statements lack lineage, and field-aware numerical semantics are asymmetric across roles.",
+  "semantic_entailment_standard": {
+    "required_level": 4,
+    "current_level": "2_TO_3_WITH_PARTIAL_LEVEL_4_CONTEXT",
+    "independent_verifier_model_required": false
+  },
+  "agent_status": {
+    "bull": "Live PASS on TESTCO with prompt v4, one call and no retry; accepted output is mostly supported but contains untyped interpretations and one weak adjective.",
+    "bear": "Live PASS in Phase 7.2D full-team run with prompt v3; conservative abstention and zero numeric mentions, but qualitative typing remains absent.",
+    "risk": "Live PASS in Phase 7.2D after one bounded incomplete-response retry; numbers are supported, but two absence/quality interpretations are weakly scoped.",
+    "orchestrator": "Deterministic dispatcher/aggregator with no model call or financial synthesis; offline integration coverage is sufficient."
+  },
+  "integrated_live_regression": {
+    "decision": "NOT_REQUIRED",
+    "reason": "Every specialist has live synthetic coverage on the same snapshot, the full-team path was exercised live for Bear/Risk, Bull uses the same shared execution machinery, and the aggregator is deterministic. Another paid run would not test or repair the remaining qualitative contract gap."
+  },
+  "must_fix_before_phase7_close": [
+    "Extend the existing claim object with machine-readable claim_type and support_type, or an equivalent nonduplicative contract.",
+    "Require evidence lineage for every material published statement, including factual limitations, uncertainty, and missing-evidence text; preserve only fixed generic abstentions as uncited.",
+    "Enforce evidence-family compatibility for direct facts and interpretations, including snapshot-scoped absence claims and both-side citations for comparisons.",
+    "Apply field/unit/category-aware numerical grounding symmetrically to Bull, Bear, and Risk.",
+    "Update all role prompts to explicitly distinguish FACT from INTERPRETATION and invalidate caches through prompt/schema identity."
+  ],
+  "acceptable_limitations": [
+    "No universal Level-5 semantic-verifier model; deterministic Level 4 plus conservative framing is sufficient.",
+    "Argument confidence remains self-assessed support, not calibrated probability or forecast accuracy.",
+    "No model orchestrator exists in Phase 7; deterministic aggregation is safer and intentional.",
+    "Full run/attempt diagnostics remain in local ledger rather than all being displayed in the dashboard.",
+    "Browser disconnect cannot cancel an already-started provider call; timeout and budgets remain enforced."
+  ],
+  "completion_evidence": {
+    "bull_live": "phase7_2f_testco_live_retest_v2",
+    "bear_risk_live": "phase7_2d_live_schema_retest_v1",
+    "harness": "phase7_2f1_bull_only_harness_v1 and current AgentTeam._run_agents",
+    "claim_inventory": "phase7_3a_claim_traceability_v1",
+    "completion_matrix": "phase7_3a_completion_matrix_v1"
+  },
+  "tests": {
+    "passed": 75,
+    "failed": 0,
+    "skipped": 0,
+    "external_calls": 0,
+    "includes_new_characterization_tests": 9
+  },
+  "scientific_safety": {
+    "external_api_calls": 0,
+    "openai_calls": 0,
+    "tavily_calls": 0,
+    "other_llm_calls": 0,
+    "kronos_inference_runs": 0,
+    "kronos_training_runs": 0,
+    "validation_reruns": 0,
+    "locked_test_accesses": 0,
+    "phase8_started": false
+  },
+  "repository": {
+    "branch": "main",
+    "dirty": true,
+    "push": false,
+    "history_rewritten": false,
+    "tags_changed": false
+  },
+  "next_action": "Implement and offline-test one agent_output_v2 typed claim-support contract across Bull, Bear, and Risk, including cited material side-channel claims and symmetric numerical field matching; do not make a live call."
+}

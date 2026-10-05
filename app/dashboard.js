@@ -30,6 +30,7 @@
     agentSequence: 0,
     agentRunning: false,
     agentAvailable: true,
+    fusionSequence: 0,
   };
 
   const elements = {};
@@ -65,6 +66,9 @@
       'news-evidence-reference', 'lan-access-dialog', 'lan-access-form', 'lan-access-code',
       'lan-access-error', 'lan-access-cancel',
       'agent-section', 'agent-run', 'agent-status',
+      'fusion-section', 'fusion-status', 'fusion-version', 'fusion-view', 'fusion-support',
+      'fusion-quality', 'fusion-risk', 'fusion-explanation', 'fusion-supporting',
+      'fusion-opposing', 'fusion-risks', 'fusion-missing', 'fusion-lineage',
     ].forEach((id) => { elements[id] = byId(id); });
   }
 
@@ -482,6 +486,7 @@
       gold: 'Technicals and forecast references', intelligence: 'Kronos / technicals / agents',
       news: 'Tavily web news · Yahoo/RSS fallback available',
       agents: 'Runs only when requested',
+      fusion: 'Local deterministic research view',
     };
     document.querySelectorAll('.pipeline-stage').forEach((card) => {
       const name = card.dataset.stage;
@@ -491,6 +496,7 @@
       card.querySelector('[data-role="status"]').textContent = status;
       card.querySelector('[data-role="rows"]').textContent = name === 'agents'
         ? `${stage.agents_completed || 0}/3 agents`
+        : name === 'fusion' ? `${stage.rows || 0} evidence items`
         : stage.rows == null ? 'No rows' : `${Number(stage.rows).toLocaleString('en-IN')} rows`;
       card.querySelector('[data-role="updated"]').textContent = stage.last_update ? shortDateTimeLabel(stage.last_update) : 'No update';
       card.querySelector('[data-role="latency"]').textContent = stage.latency_ms == null ? 'Latency -' : `Latency ${stage.latency_ms} ms`;
@@ -498,6 +504,7 @@
       const detail = name === 'news'
         ? `${note} · ${stage.events_processed || 0} events · ${stage.impact_status || 'NOT_EVALUATED'} impact · ${stage.requests || 0} requests · ${stage.credits || 0} credits`
         : name === 'agents' ? `${note} · ${stage.agents_completed || 0}/3 completed · ${stage.openai_available ? 'OpenAI configured' : 'OpenAI unavailable'}`
+        : name === 'fusion' ? `${note} · ${stage.input_completeness || 'UNKNOWN'} inputs · ${stage.conflicts || 0} conflicts`
         : note;
       card.querySelector('[data-role="message"]').textContent = stage.cache_status === 'hit' && !stage.errors?.length && !stage.warnings?.length
         ? `${detail} · cached` : detail;
@@ -627,9 +634,78 @@
       card.querySelector('[data-role="confidence"]').textContent = '';
       card.querySelector('[data-role="time"]').textContent = '';
     });
+    resetFusion();
+  }
+
+  function resetFusion(message = 'Waiting for a matching evidence snapshot.') {
+    state.fusionSequence += 1;
+    elements['fusion-section'].hidden = !state.currentResult || state.currentResult.mode === 'validation';
+    elements['fusion-status'].textContent = message;
+    elements['fusion-version'].textContent = 'Local deterministic fusion';
+    elements['fusion-view'].textContent = '-';
+    elements['fusion-support'].textContent = '-';
+    elements['fusion-quality'].textContent = '-';
+    elements['fusion-risk'].textContent = '-';
+    elements['fusion-explanation'].textContent = '';
+    elements['fusion-lineage'].textContent = '';
+    for (const id of ['fusion-supporting', 'fusion-opposing', 'fusion-risks', 'fusion-missing']) {
+      elements[id].replaceChildren();
+    }
+  }
+
+  function renderFusion(payload) {
+    const label = (value) => String(value || '-').replaceAll('_', ' ').toLowerCase().replace(/^./, (first) => first.toUpperCase());
+    elements['fusion-section'].hidden = false;
+    elements['fusion-status'].textContent = payload.view === 'INSUFFICIENT_EVIDENCE'
+      ? 'The engine abstained because usable primary evidence is insufficient.'
+      : payload.view === 'MIXED' ? 'Primary evidence conflicts or remains closely balanced.'
+        : `${payload.cache_status === 'hit' ? 'Saved' : 'New'} deterministic fusion result.`;
+    elements['fusion-version'].textContent = payload.fusion_version || 'evidence_fusion_v1';
+    elements['fusion-view'].textContent = label(payload.view);
+    elements['fusion-view'].dataset.tone = String(payload.view).includes('BULLISH') ? 'positive'
+      : String(payload.view).includes('BEARISH') ? 'negative' : 'warning';
+    elements['fusion-support'].textContent = label(payload.support_level);
+    elements['fusion-quality'].textContent = label(payload.evidence_quality);
+    elements['fusion-risk'].textContent = label(payload.risk_level);
+    elements['fusion-explanation'].textContent = payload.summary || 'No structured explanation is available.';
+
+    const fill = (target, values, text) => {
+      target.replaceChildren();
+      for (const value of values || []) {
+        const item = document.createElement('li');
+        item.textContent = text(value);
+        target.append(item);
+      }
+      if (!target.childElementCount) {
+        const item = document.createElement('li');
+        item.textContent = 'None';
+        target.append(item);
+      }
+    };
+    fill(elements['fusion-supporting'], payload.supporting_evidence,
+      (item) => `${item.summary} [${item.evidence_id}]`);
+    fill(elements['fusion-opposing'], payload.opposing_evidence,
+      (item) => `${item.summary} [${item.evidence_id}]`);
+    fill(elements['fusion-risks'], payload.risks,
+      (item) => `${item.text} [${(item.evidence_ids || []).join(', ')}]`);
+    fill(elements['fusion-missing'], payload.missing_evidence,
+      (item) => label(item));
+    elements['fusion-lineage'].textContent = `Fusion run ${String(payload.fusion_run_id || '').slice(0, 12)} · snapshot ${String(payload.snapshot_id || '').slice(0, 12)} · ${payload.evidence_items?.length || 0} traceable evidence items · ${payload.cache_status || 'cache unknown'}`;
+  }
+
+  async function loadFusion(snapshotId) {
+    const sequence = ++state.fusionSequence;
+    try {
+      const payload = await fetchJson(`/api/fusion?id=${encodeURIComponent(snapshotId)}`);
+      if (sequence === state.fusionSequence && state.agentSnapshotId === snapshotId) renderFusion(payload);
+    } catch (error) {
+      if (sequence === state.fusionSequence && state.agentSnapshotId === snapshotId)
+        elements['fusion-status'].textContent = error.message || 'Evidence fusion is unavailable.';
+    }
   }
 
   function renderAgents(payload) {
+    const claimText = (value) => typeof value === 'string' ? value : value?.text || '';
     state.agentAvailable = payload.available !== false;
     const complete = Object.values(payload.agents || {}).filter((entry) => entry.report).length;
     elements['agent-status'].textContent = payload.status === 'UNAVAILABLE'
@@ -646,19 +722,19 @@
         : entry.status === 'SUCCESS' ? 'Complete' : entry.status === 'AGENT_FAILED' ? 'Failed'
           : entry.status === 'CANCELLED' ? 'Cancelled' : 'Not run';
       const argument = kind === 'risk'
-        ? (report?.risk_factors?.map((item) => item.text).join(' ') || (report ? 'Risk assessment unknown.' : 'No analysis yet.'))
-        : report?.argument || 'No analysis yet.';
+        ? (report?.risk_factors?.map(claimText).filter(Boolean).join(' ') || (report ? 'Risk assessment unknown.' : 'No analysis yet.'))
+        : claimText(report?.argument) || 'No analysis yet.';
       card.querySelector('[data-role="argument"]').textContent = argument;
       const evidence = card.querySelector('[data-role="evidence"]');
       evidence.replaceChildren();
       const factors = kind === 'risk' ? report?.risk_factors : report?.key_factors;
       (factors || []).slice(0, 3).forEach((factor) => {
         const item = document.createElement('li');
-        item.textContent = `${factor.text} [${factor.evidence_ids.join(', ')}]`;
+        item.textContent = `${claimText(factor)} [${(factor?.evidence_ids || []).join(', ')}]`;
         evidence.append(item);
       });
       card.querySelector('[data-role="limitations"]').textContent = report?.limitations?.length
-        ? `Limitations: ${report.limitations.slice(0, 2).join(' · ')}` : '';
+        ? `Limitations: ${report.limitations.slice(0, 2).map(claimText).filter(Boolean).join(' · ')}` : '';
       const confidence = kind === 'risk' ? report?.confidence_in_risk_assessment : report?.confidence_in_argument;
       card.querySelector('[data-role="confidence"]').textContent = Number.isFinite(confidence)
         ? `Argument confidence: ${Math.round(confidence * 100)}% · not prediction accuracy` : '';
@@ -671,7 +747,10 @@
     const sequence = state.agentSequence;
     try {
       const payload = await fetchJson(`/api/agents/result?id=${encodeURIComponent(snapshotId)}`);
-      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) renderAgents(payload);
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) {
+        renderAgents(payload);
+        loadFusion(snapshotId);
+      }
     } catch {
       if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId)
         elements['agent-status'].textContent = 'Saved AI analysis could not be loaded.';
@@ -689,7 +768,10 @@
     try {
       const payload = await fetchJson('/api/agents/run', { method: 'POST',
         headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ snapshot_id: snapshotId }) });
-      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) renderAgents(payload);
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) {
+        renderAgents(payload);
+        loadFusion(snapshotId);
+      }
     } catch (error) {
       if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId)
         elements['agent-status'].textContent = error.message || 'AI Research Team unavailable.';
@@ -718,6 +800,7 @@
       state.agentSnapshotId = payload.evidence_snapshot_id;
       elements['agent-run'].disabled = false;
       loadCachedAgents(payload.evidence_snapshot_id);
+      loadFusion(payload.evidence_snapshot_id);
     }
     const label = (value) => String(value || '-').replaceAll('_', ' ').toLowerCase().replace(/^./, (first) => first.toUpperCase());
     elements['news-raw-view'].textContent = label(outlook.raw_kronos_view);

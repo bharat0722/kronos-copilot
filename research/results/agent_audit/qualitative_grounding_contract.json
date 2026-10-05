@@ -1,0 +1,33 @@
+{
+  "version": "phase7_3b_qualitative_grounding_v2",
+  "previous_version": "phase7_3a_qualitative_grounding_v1",
+  "history_preserved": true,
+  "status": "ENFORCED_PASS",
+  "semantic_entailment_level_required": 4,
+  "semantic_entailment_level_achieved": 4,
+  "levels": {
+    "0": "Cited source ID exists in the immutable snapshot catalog.",
+    "1": "Every material claim is attached to source IDs, except the exact generic abstention.",
+    "2": "Declared evidence type matches the cited source family.",
+    "3": "Direct facts use conservative lexical support and deterministic numbers match value, unit, currency, and field category.",
+    "4": "Interpretations are machine-typed, explicitly framed as interpretation, and preserve premise citations.",
+    "5": "Independent semantic verifier model; intentionally not required."
+  },
+  "enforced_rules": [
+    "FACT requires DIRECT support and conservative presence in compatible cited structured evidence.",
+    "NUMERICAL_FACT requires DIRECT support and exact field-aware deterministic grounding.",
+    "INTERPRETATION and FORECAST_INTERPRETATION require interpretive wording and cited evidence.",
+    "FORECAST_INTERPRETATION must cite forecast evidence.",
+    "COMPARATIVE requires both compared evidence families.",
+    "RISK, LIMITATION, UNCERTAINTY, and missing-evidence statements use the same typed lineage contract.",
+    "Unsupported, uncited, incompatible, or untyped material claims fail closed.",
+    "Validation is identical for Bull, Bear, and Risk."
+  ],
+  "accepted_limitations": [
+    "No independent semantic-verifier model.",
+    "Conservative deterministic checks do not claim universal natural-language entailment.",
+    "Confidence is argument support, not forecast probability.",
+    "Detailed diagnostics remain local and are not rendered in the dashboard."
+  ],
+  "closure_gate": "PASS"
+}

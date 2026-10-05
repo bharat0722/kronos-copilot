@@ -279,6 +279,8 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
             report = valid_report(name, digest)
             field = "risk_factors" if name == "risk" else "key_factors"
             report[field][0]["text"] = "Revenue grew 40%."
+            report[field][0]["claim_type"] = "NUMERICAL_FACT"
+            report[field][0]["support_type"] = "DIRECT"
             return report
         for make, stage in ((lambda name: mock_response(name, digest, text="{not-json"), "STRUCTURED_PARSE"),
                             (lambda name: mock_response(name, digest, report=bad_schema(name)), "SCHEMA_VALIDATION"),

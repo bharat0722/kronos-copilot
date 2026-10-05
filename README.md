@@ -106,6 +106,10 @@ Do not interpret small smoke runs as real market accuracy. They validate the ben
 
 ## Current status
 
-Working research prototype.
+The canonical main project has completed Phase 7 (Controlled Agent Architecture), Audit #4, and Phase 8 (Evidence Fusion Engine). The frozen fusion implementation is `evidence_fusion_v1`.
 
-Future development is planned around stronger walk-forward evaluation, improved financial data infrastructure, technical indicators, professional charting, current-news retrieval, and multi-agent market research.
+The next main phase is **Phase 9 - Historical Evaluation**, which will test whether the complete intelligence stack adds measurable value over simpler systems without tuning against the locked test.
+
+A separate Monad / Metropolis hackathon adaptation will be developed independently from the canonical main roadmap. The model fine-tuning track remains paused at Phase 1E-C.2 pending trusted historical Indian intraday data and stronger GPU / MU hardware support.
+
+See [`docs/checkpoints/phase8_pre_monad_checkpoint.md`](docs/checkpoints/phase8_pre_monad_checkpoint.md) for the preserved return point, validated status, limitations, and scientific-safety constraints.

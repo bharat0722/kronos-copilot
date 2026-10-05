@@ -1,0 +1,67 @@
+{
+  "phase": "7.3B",
+  "title": "Agent Output V2 Typed Claim-Support Contract",
+  "status": "PASS",
+  "audit4_status": "PASS",
+  "phase7_status": "COMPLETE",
+  "phase8_permission": "YES",
+  "mode": "OFFLINE_IMPLEMENTATION_AND_TESTING",
+  "contracts": {
+    "output_schema": "agent_output_v2",
+    "run_ledger": "agent_run_v3",
+    "attempt_ledger": "agent_attempt_v3",
+    "config": "capstone_agent_config_v3",
+    "qualitative_validator": "qualitative_grounding_v1",
+    "numerical_validator": "numerical_grounding_v3"
+  },
+  "prompt_versions": {
+    "bull": "bull_agent_prompt_v5",
+    "bear": "bear_agent_prompt_v4",
+    "risk": "risk_agent_prompt_v4"
+  },
+  "closure_results": {
+    "claim_types": "PASS",
+    "support_types": "PASS",
+    "fact_vs_interpretation": "PASS",
+    "qualitative_grounding": "GREEN",
+    "claim_traceability": "GREEN",
+    "numerical_grounding": "GREEN",
+    "bull": "PASS",
+    "bear": "PASS",
+    "risk": "PASS",
+    "deterministic_orchestrator": "PASS",
+    "cache_version_safety": "PASS",
+    "ledger": "PASS",
+    "evidence_immutability": "PASS",
+    "prompt_injection": "PASS"
+  },
+  "test_result": {
+    "passed": 157,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reason": "Explicit live Yahoo regression requires KRONOS_LIVE_YAHOO_REGRESSION=1.",
+    "external_calls": 0
+  },
+  "safety": {
+    "openai_calls": 0,
+    "other_llm_calls": 0,
+    "tavily_calls": 0,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "model_weight_changes": 0,
+    "validation_reruns": 0,
+    "locked_test_accesses": 0,
+    "tools": "NONE",
+    "loop_limit": 1,
+    "retry_limit_per_failed_agent": 1
+  },
+  "accepted_limitations": [
+    "No independent semantic-verifier model.",
+    "Confidence is argument support, not forecast probability or accuracy.",
+    "No model-based orchestrator.",
+    "Detailed diagnostics are local only.",
+    "Cancellation remains bounded by timeout and budget rather than browser interruption.",
+    "Conservative direct-fact matching may reject a valid paraphrase and fail closed."
+  ],
+  "next_action": "Begin Phase 8 - Evidence Fusion Engine."
+}

@@ -1,0 +1,82 @@
+{
+  "phase": "8",
+  "title": "Evidence Fusion Engine",
+  "status": "PASS",
+  "fusion_version": "evidence_fusion_v1",
+  "mode": "LOCAL_OFFLINE_FIRST",
+  "evidence_availability": [
+    {"source": "Kronos forecast", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "Technical intelligence", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "News and event intelligence", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "News impact", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "Market regime", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "Pipeline quality", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": true},
+    {"source": "Bull Agent", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": "when a valid cached agent_output_v2 exists"},
+    {"source": "Bear Agent", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": "when a valid cached agent_output_v2 exists"},
+    {"source": "Risk Agent", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": "when a valid cached agent_output_v2 exists"},
+    {"source": "Phase 6.2 preliminary research view", "implemented": true, "structured": true, "freshness": true, "provenance": true, "quality": true, "usable": "excluded from directional aggregation because it is derived from Kronos, technicals, and news"},
+    {"source": "Fundamentals", "implemented": false, "structured": false, "freshness": false, "provenance": false, "quality": false, "usable": false}
+  ],
+  "results": {
+    "canonical_evidence_contract": "PASS",
+    "primary_vs_derived": "PASS",
+    "direction_normalization": "PASS",
+    "strength": "PASS",
+    "freshness": "PASS",
+    "quality": "PASS",
+    "missing_not_neutral": "PASS",
+    "conflict_detection": "PASS",
+    "agreement_detection": "PASS",
+    "lineage_deduplication": "PASS",
+    "double_counting_protection": "PASS",
+    "risk_adjustment": "PASS",
+    "abstention": "PASS",
+    "final_research_view": "PASS",
+    "explainability": "PASS",
+    "provenance": "PASS",
+    "cache": "PASS",
+    "ledger": "PASS",
+    "immutability": "PASS",
+    "dashboard": "PASS",
+    "pipeline_observability": "PASS"
+  },
+  "offline_saved_snapshot_smoke": {
+    "symbol": "NSE:TCS",
+    "view": "MIXED",
+    "support_level": "LOW",
+    "evidence_quality": "LIMITED",
+    "missing_evidence": ["AGENT_BEAR", "AGENT_BULL", "AGENT_RISK"],
+    "external_calls": 0
+  },
+  "dashboard_regression": {
+    "desktop": "PASS",
+    "phone_width": "PASS",
+    "ipad_width": "PASS",
+    "horizontal_overflow": false,
+    "console_errors": 0,
+    "network_policy": "local offline fixture only"
+  },
+  "tests": {"passed": 184, "failed": 0, "skipped": 1, "skip_reason": "Existing opt-in live Yahoo regression remained skipped."},
+  "safety": {
+    "openai_calls": 0,
+    "other_llm_calls": 0,
+    "tavily_calls": 0,
+    "external_api_calls": 0,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "model_weight_changes": 0,
+    "validation_reruns": 0,
+    "locked_test_accesses": 0,
+    "trading_actions": 0
+  },
+  "known_limitations": [
+    "Fusion v1 weights and thresholds are conservative rules and have not been historically calibrated.",
+    "Phase 9 must evaluate whether fusion adds historical value; Phase 8 makes no accuracy-improvement claim.",
+    "Fundamentals are not implemented and are reported missing rather than invented.",
+    "Agent evidence is consumed only when a valid cached Phase 7 output exists.",
+    "Forecast freshness uses joined market/snapshot timestamps because EvidenceSnapshotV1 has no separate forecast-generated timestamp.",
+    "Support labels are qualitative evidence assessments, not probabilities."
+  ],
+  "phase9_permission": "YES",
+  "next_action": "Begin Phase 9 - Historical Evaluation without tuning on locked-test data."
+}

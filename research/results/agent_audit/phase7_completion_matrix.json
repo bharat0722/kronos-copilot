@@ -1,0 +1,39 @@
+{
+  "version": "phase7_3b_completion_matrix_v2",
+  "previous_version": "phase7_3a_completion_matrix_v1",
+  "history_preserved": true,
+  "phase7_status": "COMPLETE",
+  "audit4_status": "PASS",
+  "phase8_permission": "YES",
+  "requirements": [
+    {"requirement": "Agent architecture", "status": "PASS", "evidence": "Immutable EvidenceSnapshotV1 to bounded AgentTeam with separate specialist outputs", "mode": "OFFLINE_AND_PRIOR_LIVE", "blocker": false},
+    {"requirement": "Bull role", "status": "PASS", "evidence": "Prior synthetic live pass plus prompt v5 and agent_output_v2 offline contract", "mode": "PRIOR_LIVE_AND_OFFLINE", "blocker": false},
+    {"requirement": "Bear role", "status": "PASS", "evidence": "Prior synthetic live pass plus prompt v4 and symmetric v2 validator", "mode": "PRIOR_LIVE_AND_OFFLINE", "blocker": false},
+    {"requirement": "Risk role", "status": "PASS", "evidence": "Prior synthetic live pass plus prompt v4 and typed risk/limitation/uncertainty lineage", "mode": "PRIOR_LIVE_AND_OFFLINE", "blocker": false},
+    {"requirement": "Orchestrator", "status": "PASS", "evidence": "Deterministic dispatcher/aggregator preserves complete specialist reports; no model synthesis", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Harness", "status": "PASS", "evidence": "One loop, one retry per failed agent, tools none, persistent budget, failure isolation", "mode": "CODE_AND_TEST", "blocker": false},
+    {"requirement": "Structured output", "status": "PASS", "evidence": "Strict agent_output_v2 closed JSON schema plus exact local field validation", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Numerical grounding", "status": "PASS", "evidence": "numerical_grounding_v3 enforces value/unit/currency/field matching for Bull, Bear, and Risk", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Qualitative grounding", "status": "PASS", "evidence": "Typed fact/interpretation contract, evidence-family compatibility, and conservative direct-fact support", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Reference validation", "status": "PASS", "evidence": "Snapshot-scoped enums plus non-null catalog and family validation", "mode": "OFFLINE_AND_PRIOR_LIVE", "blocker": false},
+    {"requirement": "Semantic traceability", "status": "PASS", "evidence": "All material claims including limitations and uncertainty preserve typed source lineage", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Prompt injection", "status": "PASS", "evidence": "Existing malicious-evidence boundary regression remains green", "mode": "OFFLINE_AND_PRIOR_LIVE", "blocker": false},
+    {"requirement": "Loop/retry/cost safety", "status": "PASS", "evidence": "Loop 1, retry 1, SDK retries 0, persistent daily budget, versioned cache", "mode": "CODE_AND_TEST", "blocker": false},
+    {"requirement": "Cache", "status": "PASS", "evidence": "v2 schema/prompt/model/snapshot/harness/validator identity; v1 reuse rejected", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Ledger", "status": "PASS", "evidence": "agent_run_v3 and agent_attempt_v3 preserve typed claim metadata, validation result, and sanitized rejection diagnostics before cache", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Privacy", "status": "PASS", "evidence": "Phase 7.3B made zero external calls and retained local-only diagnostics", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Evidence immutability", "status": "PASS", "evidence": "Byte-stable snapshot regression across complete mock team run", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Failure handling", "status": "PASS", "evidence": "Rejected claims are not published/cached; durable attempts and bounded retry remain", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "LAN/security", "status": "PASS", "evidence": "Phase 6.3 security and authenticated expensive-route regression suite remains green", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "Observability", "status": "PASS_WITH_ACCEPTED_UI_LIMIT", "evidence": "Ledger contains full typed validation state; dashboard intentionally shows user-facing status only", "mode": "OFFLINE", "blocker": false},
+    {"requirement": "No tool/execution authority", "status": "PASS", "evidence": "tools empty, tool_choice none, no order or mutation path", "mode": "CODE_AND_TEST", "blocker": false},
+    {"requirement": "Integrated live regression", "status": "NOT_REQUIRED", "evidence": "All specialists have prior live synthetic coverage; v2 change is fully offline-testable; aggregation is deterministic", "mode": "AUDIT_DECISION", "blocker": false}
+  ],
+  "blocking_requirements": [],
+  "phase8_entry_criteria": [
+    "Consume agent_output_v2 without weakening source lineage.",
+    "Define deterministic Risk veto/abstain and partial-team behavior inside the Phase 8 fusion contract.",
+    "Keep real-data external egress disabled unless separately minimized and authorized.",
+    "Preserve current loop, retry, cost, tool, ledger, cache, privacy, and immutability controls."
+  ]
+}

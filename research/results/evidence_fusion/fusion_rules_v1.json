@@ -1,0 +1,52 @@
+{
+  "fusion_version": "evidence_fusion_v1",
+  "method": [
+    "normalize immutable evidence",
+    "apply quality and freshness gates",
+    "exclude derived and duplicate lineage from direction",
+    "aggregate eligible primary directions",
+    "detect agreements and conflicts",
+    "apply risk to support only",
+    "abstain when primary evidence is insufficient",
+    "assemble deterministic explanation and lineage"
+  ],
+  "directional_sources": {
+    "FORECAST": {"weight": 1.0, "source": "Kronos forecast"},
+    "TECHNICAL": {"weight": 1.0, "source": "deterministic technical trend"},
+    "NEWS": {"weight": 0.75, "source": "rule-based qualifying news impact"}
+  },
+  "non_directional_sources": {
+    "REGIME": "Context from the same technical series; not counted again.",
+    "AGENT_BULL": "Derived interpretation; never an independent vote.",
+    "AGENT_BEAR": "Derived interpretation; never an independent vote.",
+    "AGENT_RISK": "May lower support and add warnings; never flips direction.",
+    "DATA_QUALITY": "Operational meta-evidence; never bearish or bullish."
+  },
+  "quality_factors": {"PASS": 1.0, "WARN": 0.6, "FAIL": 0.0},
+  "freshness_factors": {"FRESH": 1.0, "AGING": 0.65, "STALE": 0.0, "UNKNOWN": 0.5},
+  "freshness_hours": {
+    "FORECAST": {"fresh_through": 2, "aging_through": 24},
+    "TECHNICAL": {"fresh_through": 2, "aging_through": 24},
+    "NEWS": {"fresh_through": 72, "aging_through": 168},
+    "AGENT": {"fresh_through": 24, "aging_through": 168},
+    "DATA_QUALITY": {"fresh_through": 2, "aging_through": 24}
+  },
+  "view_thresholds": {
+    "strong": 0.67,
+    "directional": 0.25,
+    "mixed_conflict_ceiling": 0.5,
+    "minimum_usable_primary_sources": 2
+  },
+  "strength_semantics": "Forecast magnitude maps to support at 3 percentage points = 1.0; technical strength uses existing Phase 3 values; news uses absolute bounded impact. These are conservative rule-based values, not fitted probabilities.",
+  "risk_policy": {
+    "MODERATE": "Caps HIGH support at MEDIUM.",
+    "HIGH_OR_VERY_HIGH": "Caps support at LOW without changing direction.",
+    "pipeline_failure": "Caps support at LOW and adds an operational risk without changing direction."
+  },
+  "abstention": [
+    "fewer than two usable primary sources",
+    "no usable directional primary signal",
+    "all relevant sources fail quality or freshness gates"
+  ],
+  "calibration_status": "UNVALIDATED; Phase 9 must evaluate historical utility without locked-test tuning."
+}

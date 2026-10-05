@@ -1,0 +1,52 @@
+{
+  "schema_version": "evidence_item_v1",
+  "purpose": "Provider-independent internal evidence used by deterministic Phase 8 fusion.",
+  "required_fields": [
+    "schema_version",
+    "evidence_id",
+    "evidence_type",
+    "role",
+    "source_component",
+    "symbol",
+    "observed_at",
+    "raw_value",
+    "direction",
+    "strength",
+    "strength_label",
+    "confidence_semantics",
+    "quality",
+    "freshness",
+    "provenance",
+    "lineage_ids",
+    "contributes_to_direction",
+    "summary",
+    "metadata"
+  ],
+  "evidence_types": [
+    "FORECAST",
+    "TECHNICAL",
+    "NEWS",
+    "REGIME",
+    "AGENT_BULL",
+    "AGENT_BEAR",
+    "AGENT_RISK",
+    "DATA_QUALITY"
+  ],
+  "roles": ["PRIMARY", "DERIVED", "META"],
+  "directions": [
+    "STRONGLY_BEARISH",
+    "BEARISH",
+    "NEUTRAL",
+    "BULLISH",
+    "STRONGLY_BULLISH",
+    "UNKNOWN"
+  ],
+  "quality": ["PASS", "WARN", "FAIL"],
+  "freshness": ["FRESH", "AGING", "STALE", "UNKNOWN"],
+  "strength": {
+    "range": [0.0, 1.0],
+    "meaning": "Rule-based evidence support within a source; never a probability, expected return, or calibrated accuracy."
+  },
+  "missing_rule": "A missing source has no EvidenceItem and is listed in missing_evidence. Missing is never encoded as NEUTRAL.",
+  "immutability_rule": "Fusion serializes inputs before and after processing and rejects any mutation."
+}

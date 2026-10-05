@@ -16,16 +16,24 @@ from app.agent_research import (AGENTS, MAX_REASONING_ROUNDS, MAX_RETRIES, Agent
                                 validate_output)
 from app.evidence_snapshot import snapshot_id
 from research.tests.test_phase7_2a_diagnostics import MockClient, mock_response, synthetic_record
-from research.tests.test_phase7_agents import valid_report
+from research.tests.test_phase7_agents import typed_claim, valid_report
 
 
 def citation_items(schema: dict) -> list[dict]:
     items = []
-    for name, field in schema["properties"].items():
-        if name in ("evidence_ids", "supporting_evidence_ids", "contradicting_evidence_ids"):
-            items.append(field["items"])
-        elif name in ("key_factors", "risk_factors", "conflicts", "model_risks", "data_risks", "event_risks"):
-            items.append(field["items"]["properties"]["evidence_ids"]["items"])
+    def visit(value):
+        if not isinstance(value, dict):
+            return
+        properties = value.get("properties") or {}
+        if "evidence_ids" in properties:
+            items.append(properties["evidence_ids"]["items"])
+        for child in properties.values():
+            visit(child)
+        visit(value.get("items"))
+    visit(schema)
+    for name in ("evidence_ids", "supporting_evidence_ids", "contradicting_evidence_ids"):
+        if name in schema["properties"]:
+            items.append(schema["properties"][name]["items"])
     return items
 
 
@@ -91,8 +99,21 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
                 report = valid_report(name, self.digest)
                 field = "risk_factors" if name == "risk" else "key_factors"
                 report[field][0]["evidence_ids"] = ["news.article.0"]
+                report[field][0]["evidence_type"] = "NEWS"
+                if name != "risk":
+                    report[field][0]["claim_type"] = "INTERPRETATION"
+                if name == "risk":
+                    report["evidence_ids"] = sorted({reference for key in
+                        ("risk_factors", "conflicts", "model_risks", "data_risks", "event_risks",
+                         "missing_evidence", "limitations", "uncertainty")
+                        for claim in report[key] for reference in claim["evidence_ids"]})
                 self.assertEqual(validate_output(report, name, self.digest, self.catalog), report)
                 report[field][0]["evidence_ids"] = ["news.article.0", "news.article.1"]
+                if name == "risk":
+                    report["evidence_ids"] = sorted({reference for key in
+                        ("risk_factors", "conflicts", "model_risks", "data_risks", "event_risks",
+                         "missing_evidence", "limitations", "uncertainty")
+                        for claim in report[key] for reference in claim["evidence_ids"]})
                 self.assertEqual(validate_output(report, name, self.digest, self.catalog), report)
                 report[field][0]["evidence_ids"] = []
                 with self.assertRaises(ClaimValidationError):
@@ -114,8 +135,14 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
             with self.subTest(agent=name):
                 report = valid_report(name, self.digest)
                 field = "risk_factors" if name == "risk" else "key_factors"
-                report[field][0] = {"text": "The saved forecast change is 2%.",
-                                    "evidence_ids": ["kronos.forecast_pct_change"]}
+                report[field][0] = typed_claim("The saved forecast change is 2%.",
+                                              ["kronos.forecast_pct_change"],
+                                              claim_type="NUMERICAL_FACT", support_type="DIRECT")
+                if name == "risk":
+                    report["evidence_ids"] = sorted({reference for key in
+                        ("risk_factors", "conflicts", "model_risks", "data_risks", "event_risks",
+                         "missing_evidence", "limitations", "uncertainty")
+                        for claim in report[key] for reference in claim["evidence_ids"]})
                 self.assertEqual(validate_output(report, name, self.digest, self.catalog), report)
                 report[field][0]["text"] = "The saved forecast change is 40%."
                 with self.assertRaises(NumericalGroundingError):
@@ -144,6 +171,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
             report = valid_report(name, self.digest)
             field = "risk_factors" if name == "risk" else "key_factors"
             report[field][0]["evidence_ids"] = ["news.article.0", "NEWS_FAKE"]
+            report[field][0]["evidence_type"] = "NEWS"
             return mock_response(name, self.digest, report=report)
         client = MockClient(response)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
