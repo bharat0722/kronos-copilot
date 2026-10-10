@@ -23,12 +23,12 @@ class DailyUsageBudget:
                              (day, provider)).fetchone()
         return (int(row[0]), int(row[1])) if row else (0, 0)
 
-    def reserve(self, provider: str, limit: int, day: str | None = None) -> bool:
+    def reserve(self, provider: str, limit: int | None, day: str | None = None) -> bool:
         day = day or datetime.now(timezone.utc).date().isoformat()
         with closing(sqlite3.connect(self.path, timeout=10)) as db, db:
             db.execute("begin immediate")
             count, _ = self.totals_in(db, provider, day)
-            if count >= limit:
+            if limit is not None and count >= limit:
                 return False
             db.execute("insert into usage(day, provider, requests, credits) values(?,?,1,0) "
                        "on conflict(day, provider) do update set requests=requests+1", (day, provider))

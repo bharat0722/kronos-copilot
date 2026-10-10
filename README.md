@@ -80,7 +80,7 @@ The launcher starts the local server, waits until the dashboard API is ready, an
 
 Kronos inference runs locally.
 
-OpenAI is optional and is used only for natural-language explanation of compact forecast summaries.
+OpenAI is optional. V4 Bull/Bear/Risk agents select and rank admissible evidence IDs; the backend owns facts, numbers and deterministic state. Optional explanations are non-blocking.
 
 `.env.local`, local environments, runtime market data, generated forecasts, and the downloaded Kronos source are excluded from Git.
 
@@ -105,6 +105,12 @@ See `docs/phase1_research_foundation.md`, `docs/benchmark_metrics.md`, `docs/tem
 Do not interpret small smoke runs as real market accuracy. They validate the benchmark machinery, not final model quality.
 
 ## Current status
+
+The `monad-metropolis` branch now preserves the **Pre-Monad GREEN foundation** with `agent_output_v4` and `evidence_selection_validator_v2`. The latest offline baseline is 419 passed, 0 failed and 1 intentionally skipped live test.
+
+The real-world blind AXISBANK evaluation is complete and remains **weak in those three windows**, not a general accuracy estimate. Its forecasts and results are preserved for Phase 9. Monad research, audit and architecture are next; implementation has not started. Fine-tuning still waits on trusted data and stronger GPU / MU support.
+
+Final branch return point: [`pre_monad_green_v4_final_checkpoint.md`](docs/checkpoints/pre_monad_green_v4_final_checkpoint.md), tagged `kronos-pre-monad-green-v4-final`.
 
 The canonical main project has completed Phase 7 (Controlled Agent Architecture), Audit #4, and Phase 8 (Evidence Fusion Engine). The frozen fusion implementation is `evidence_fusion_v1`.
 

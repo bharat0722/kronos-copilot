@@ -1,12 +1,14 @@
 """Offline failure-stage, attempt-ledger, and response-metadata checks."""
 
 from __future__ import annotations
+from research.tests.legacy_agent_harness import LegacyAgentTeam
 
 import json
 import inspect
 import os
 import tempfile
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -20,17 +22,19 @@ from openai.types.responses import Response
 from app import agent_research
 from app.agent_research import AgentError, AgentTeam, FailureStage
 from app.evidence_snapshot import canonical_bytes, snapshot_id
-from research.tests.test_phase7_agents import valid_report
+from research.tests.test_phase7_agents import valid_report, concise_report
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+FIXTURE_CLOCK = datetime.now(timezone.utc).isoformat()
 
 
 def synthetic_record():
-    spec = json.loads((PROJECT_ROOT / "research/results/agent_audit/synthetic_live_smoke_spec.json")
-                      .read_text(encoding="utf-8"))
-    content = spec["payload_template"]
-    return {"snapshot_id": snapshot_id(content), "evidence": content}
+    content = json.loads((Path(__file__).parent / "fixtures/synthetic_agent_evidence.json").read_text(encoding="utf-8"))
+    stamp = FIXTURE_CLOCK
+    content["market_data"]["retrieved_at"] = stamp
+    content["news"]["retrieved_at"] = stamp
+    return {"snapshot_id": snapshot_id(content), "created_at": stamp, "evidence": content}
 
 
 def mock_response(name, digest, *, report=None, status="completed", text=None, usage=True,
@@ -52,7 +56,7 @@ def sdk_response(name, digest):
     return Response.model_validate({
         "id": "resp_offline", "created_at": 0, "model": "gpt-5-mini", "object": "response",
         "output": [{"id": "msg_offline", "type": "message", "role": "assistant", "status": "completed",
-                    "content": [{"type": "output_text", "text": json.dumps(valid_report(name, digest)),
+                    "content": [{"type": "output_text", "text": json.dumps(concise_report(valid_report(name, digest))),
                                  "annotations": []}]}],
         "parallel_tool_calls": False, "tool_choice": "none", "tools": [], "status": "completed",
         "usage": {"input_tokens": 100, "output_tokens": 70, "total_tokens": 170,
@@ -70,7 +74,18 @@ class MockClient:
     def create(self, **kwargs):
         self.calls.append(kwargs)
         name = kwargs["text"]["format"]["name"].split("_", 1)[0]
-        return self.make_response(name)
+        response = self.make_response(name)
+        # Bound valid mocks; keep unsupported responses intact for rejection tests.
+        if isinstance(response, SimpleNamespace) and getattr(response, "status", None) == "completed":
+            try:
+                report = json.loads(response.output_text)
+                wire = json.loads(kwargs["input"].split("\n", 1)[1])
+                agent_research.validate_output(report, name, wire["snapshot_id"],
+                                              agent_research.evidence_catalog(wire["evidence"]))
+                response.output_text = json.dumps(concise_report(report))
+            except (ValueError, KeyError, TypeError):
+                pass
+        return response
 
 
 class Phase72ADiagnosticsTests(unittest.TestCase):
@@ -79,7 +94,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         client = MockClient(make_response)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-test-only"}):
             root = Path(directory)
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             result = team.run(record)
             parents = {row["agent_type"]: row for path in (root / "runs").glob("*.json")
                        for row in [json.loads(path.read_text(encoding="utf-8"))]}
@@ -92,7 +107,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         record = synthetic_record()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "unused"
-            team = AgentTeam(root, client_factory=lambda: self.fail("No client should be constructed"))
+            team = LegacyAgentTeam(root, client_factory=lambda: self.fail("No client should be constructed"))
             result = team.preflight(record)
             self.assertEqual(result["status"], "PASS")
             self.assertEqual(result["model"], "gpt-5-mini")
@@ -178,7 +193,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-test-only"}):
             root = Path(directory)
             client = MockClient(lambda name: mock_response(name, record["snapshot_id"]))
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             original = team._request_args
             calls = [0]
             def fail_after_preflight(name, wire):
@@ -235,7 +250,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         self.assertTrue(all(p["cache_status"] == "STORED" and p["token_usage"]["total_tokens"] == 170
                             and len(p["attempt_refs"]) == 1 for p in parents.values()))
         self.assertTrue(all(call["tools"] == [] and call["tool_choice"] == "none" and
-                            call["max_output_tokens"] == 900 for call in sdk_calls))
+                            call["max_output_tokens"] == 1600 for call in sdk_calls))
 
     def test_actual_sdk_pydantic_response_output_text_for_all_roles(self):
         record = synthetic_record()
@@ -263,7 +278,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         self.assertEqual(len(attempts), 6)
         self.assertTrue(all(p["failure_stage"] is None and p["error_class"] is None and
                             p["retry_count"] == 1 and len(p["attempt_refs"]) == 2 for p in parents.values()))
-        self.assertTrue(all(a["failure_stage"] == "RESPONSE_INCOMPLETE" for a in attempts if a["attempt"] == 1))
+        self.assertTrue(all(a["failure_stage"] == "OUTPUT_TRUNCATED" for a in attempts if a["attempt"] == 1))
 
     def test_parse_schema_claim_and_numeric_failures_preserve_failed_usage(self):
         record = synthetic_record()
@@ -300,7 +315,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         digest = record["snapshot_id"]
         for make, stage in ((lambda name: mock_response(name, digest, content_type="refusal"), "RESPONSE_REFUSAL"),
                             (lambda name: mock_response(name, digest, status="incomplete",
-                                                        incomplete_reason="max_output_tokens"), "RESPONSE_INCOMPLETE"),
+                                                        incomplete_reason="max_output_tokens"), "OUTPUT_TRUNCATED"),
                             (lambda name: mock_response(name, digest, status="failed"), "RESPONSE_STATUS"),
                             (lambda name: mock_response(name, digest, text=" "), "RESPONSE_EMPTY")):
             with self.subTest(stage=stage):
@@ -309,14 +324,14 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
                 self.assertEqual(cache_count, 0)
                 self.assertTrue(all(a["failure_stage"] == stage and a["response_status"] is not None and
                                     a["token_usage"]["total_tokens"] == 170 for a in attempts))
-                if stage == "RESPONSE_INCOMPLETE":
+                if stage == "OUTPUT_TRUNCATED":
                     self.assertTrue(all(a["completion_reason"] == "max_output_tokens" for a in attempts))
 
     def test_attempt_ledger_failure_blocks_sdk_and_cache_stage_is_explicit(self):
         record = synthetic_record()
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-test-only"}):
             client = MockClient(lambda name: mock_response(name, record["snapshot_id"]))
-            team = AgentTeam(Path(directory), client_factory=lambda: client)
+            team = LegacyAgentTeam(Path(directory), client_factory=lambda: client)
             with patch.object(team, "_attempt_ledger", side_effect=OSError("private disk path")):
                 with self.assertRaises(AgentError) as failure:
                     team.run(record)
@@ -329,7 +344,7 @@ class Phase72ADiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-test-only"}):
             root = Path(directory)
             client = MockClient(lambda name: mock_response(name, record["snapshot_id"]))
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             original = agent_research._atomic_json
             def fail_cache(path, value):
                 if path.parent.name == "cache":

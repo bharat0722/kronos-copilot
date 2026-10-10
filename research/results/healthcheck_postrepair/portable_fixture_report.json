@@ -1,0 +1,39 @@
+{
+  "schema_version": "portable_fixture_report_v1",
+  "status": "PASS",
+  "tracked_fixture": "research/tests/fixtures/synthetic_agent_evidence.json",
+  "synthetic_only": true,
+  "ignored_cache_dependency_removed": [
+    "synthetic_live_smoke_spec.json",
+    "instrument_master_cache.json"
+  ],
+  "production_fixture": "production_record() in research/tests/test_health_remediation.py",
+  "freshness": "Deterministic structure and test-clock timestamps; historical immutable fixture hash remains asserted",
+  "input_bytes": 41477,
+  "catalog_entries": ">=60 (test assertion)",
+  "output_sizes_byte_div_four_heuristic": {
+    "bull": {
+      "json_bytes": 1062,
+      "token_approximation": 266
+    },
+    "bear": {
+      "json_bytes": 1062,
+      "token_approximation": 266
+    },
+    "risk": {
+      "json_bytes": 1385,
+      "token_approximation": 346
+    }
+  },
+  "tests": {
+    "run": 202,
+    "passed": 201,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "blocked_external_attempts": 0,
+    "external_calls": 0,
+    "failure_details": []
+  },
+  "portability_proof": "Tracked-source mirror passed without ignored smoke spec or instrument cache; paths derived from files. No claim of independent OS install."
+}

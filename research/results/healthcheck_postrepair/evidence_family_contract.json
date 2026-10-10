@@ -1,0 +1,119 @@
+{
+  "schema_version": "evidence_family_contract_v1",
+  "agent_output_schema": "agent_output_v2",
+  "prefix_map": {
+    "news": "NEWS",
+    "technicals": "TECHNICAL",
+    "kronos": "FORECAST",
+    "market_data": "MARKET_DATA",
+    "research_view": "RESEARCH_VIEW",
+    "instrument": "INSTRUMENT"
+  },
+  "evidence_types": [
+    "NEWS",
+    "TECHNICAL",
+    "FORECAST",
+    "MARKET_DATA",
+    "RESEARCH_VIEW",
+    "INSTRUMENT",
+    "MULTI_SOURCE",
+    "NONE"
+  ],
+  "primary_policy": "One material observation per evidence family; split claims before cross-source synthesis.",
+  "multi_family_exception": {
+    "existing_representation": "MULTI_SOURCE",
+    "requirements": [
+      "At least two actual families",
+      "Cite every family",
+      "Use MIXED for interpretive conflict/argument synthesis; DERIVED or MIXED for COMPARATIVE"
+    ],
+    "new_schema_fields": false,
+    "same_family_multiple_ids": "Use the single matching family, never MULTI_SOURCE."
+  },
+  "claim_categories": {
+    "FACT": {
+      "support": [
+        "DIRECT"
+      ],
+      "families": [
+        "NEWS",
+        "TECHNICAL",
+        "FORECAST",
+        "MARKET_DATA",
+        "RESEARCH_VIEW",
+        "INSTRUMENT"
+      ],
+      "check": "Existing strict direct string-token support; no inferred fact, no numerical or interpretive wording."
+    },
+    "NUMERICAL_FACT": {
+      "support": [
+        "DIRECT"
+      ],
+      "families": [
+        "FORECAST",
+        "TECHNICAL",
+        "MARKET_DATA",
+        "NEWS"
+      ],
+      "check": "Existing exact field/value/unit numeric whitelist; family alone cannot establish support."
+    },
+    "INTERPRETATION": {
+      "support": [
+        "DERIVED",
+        "INTERPRETIVE",
+        "MIXED"
+      ],
+      "check": "Existing interpretive framing, nonempty valid citations, compatible families and strict numerical grounding."
+    },
+    "FORECAST_INTERPRETATION": {
+      "support": [
+        "DERIVED",
+        "INTERPRETIVE",
+        "MIXED"
+      ],
+      "required_family": "FORECAST"
+    },
+    "COMPARATIVE": {
+      "support": [
+        "DERIVED",
+        "MIXED"
+      ],
+      "required_families": "At least two families with both compared sources cited."
+    },
+    "RISK": {
+      "generation_support": [
+        "DIRECT only for explicit source observation",
+        "DERIVED otherwise"
+      ],
+      "requirement": "Cite actual risk/conflict source; split unrelated families."
+    },
+    "LIMITATION": {
+      "generation_support": [
+        "DIRECT only for explicit source observation",
+        "DERIVED otherwise"
+      ],
+      "requirement": "Cite actual quality/availability/calibration/limitation state."
+    },
+    "UNCERTAINTY": {
+      "generation_support": [
+        "DERIVED"
+      ],
+      "requirement": "Cite actual conflict, absence or uncalibrated state; existing exact uncited argument-abstention exception remains."
+    }
+  },
+  "scope_notes": [
+    "Regime belongs to TECHNICAL; quality belongs to MARKET_DATA where already exposed.",
+    "Do not invent PIPELINE, AGENT, REGIME or QUALITY namespaces absent from the agent catalog.",
+    "RISK/LIMITATION/UNCERTAINTY generation guidance is narrower; legacy validators were not relaxed or broadly rewritten.",
+    "Deterministic type/lineage/numeric guards are not universal semantic entailment."
+  ],
+  "prompt_versions": {
+    "bull": "bull_agent_prompt_v7",
+    "bear": "bear_agent_prompt_v6",
+    "risk": "risk_agent_prompt_v6"
+  },
+  "validator_versions": {
+    "qualitative": "qualitative_grounding_v1",
+    "numerical": "numerical_grounding_v3"
+  }
+}

@@ -66,7 +66,7 @@ VALIDATION_ACTUAL_PATH = PROJECT_ROOT / "outputs" / "validation_actual.csv"
 FORECAST_CACHE_DIR = PROJECT_ROOT / "outputs" / "forecast_cache"
 MODEL_NAME = "gpt-5-mini"
 EXPLANATION_PROMPT_VERSION = "3"
-FORECAST_LOCK = threading.Lock()
+FORECAST_LOCK = threading.RLock()
 EXPLANATION_LOCK = threading.Lock()
 REQUIRED_COLUMNS = ["timestamps", "open", "high", "low", "close", "volume", "amount"]
 SYMBOL_SEARCH_CACHE: dict[tuple[str, str], tuple[float, list[dict[str, str]]]] = {}
@@ -109,10 +109,31 @@ def current_agent_snapshot(digest: str) -> dict[str, object]:
     return record
 
 
+def current_paid_agent_snapshot(digest: str) -> dict[str, object]:
+    from app.agent_research import assert_fresh_snapshot
+    with FORECAST_LOCK:
+        record = current_agent_snapshot(digest)
+        try:
+            current = json.loads((EVIDENCE_DIR / "current.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            current = {}
+        if current.get("snapshot_id") != digest:
+            raise AgentError("STALE_EVIDENCE", "Evidence changed. Refresh the research view before running agents.")
+        assert_fresh_snapshot(record)
+        return record
+
+
+def public_error(error: Exception) -> str:
+    if isinstance(error, AgentError):
+        return str(error)
+    return "Saved data is unavailable or the request is invalid. Refresh the research view."
+
+
 def load_summary() -> dict[str, object]:
-    if not SUMMARY_PATH.exists():
-        raise FileNotFoundError("Run the local Kronos forecast before requesting an explanation.")
-    return json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
+    with FORECAST_LOCK:
+        if not SUMMARY_PATH.exists():
+            raise FileNotFoundError("Run the local Kronos forecast before requesting an explanation.")
+        return json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
 
 
 def forecast_identity(summary: dict[str, object]) -> dict[str, object]:
@@ -823,6 +844,8 @@ def build_news_research_payload(symbol: str, *, refresh: bool = False,
                         technical_version=(technicals or {}).get("analysis_version"),
                     )
                     news["evidence_snapshot_id"] = save_snapshot(EVIDENCE_DIR, content)["snapshot_id"]
+                    from app.agent_research import _atomic_json
+                    _atomic_json(EVIDENCE_DIR / "current.json", {"snapshot_id": news["evidence_snapshot_id"]})
                 except (OSError, ValueError, TypeError):
                     news.pop("research_outlook", None)
                     news["evidence_snapshot_warning"] = "A joined evidence snapshot is unavailable."
@@ -1054,15 +1077,33 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     company_hint=params.get("name", [""])[0],
                 ))
             except ValueError as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if parsed_path.path == "/api/pipeline":
             try:
                 pipeline = PRODUCT_PIPELINE.snapshot()
                 pipeline["stages"]["news"] = NEWS_SERVICE.pipeline_stage()
                 load_local_key()
-                pipeline["stages"]["agents"] = AGENT_TEAM.health()
+                digest = parse_qs(parsed_path.query).get("id", [""])[0]
+                if not digest:
+                    try:
+                        digest = json.loads((EVIDENCE_DIR / "current.json").read_text(encoding="utf-8"))["snapshot_id"]
+                    except (OSError, ValueError, KeyError):
+                        digest = ""
+                try:
+                    record = current_agent_snapshot(digest) if digest else None
+                except AgentError:
+                    record = None
+                news_health = pipeline["stages"]["news"]
+                if record and news_health.get("symbol") and news_health["symbol"] != record["evidence"]["instrument"]["provider_symbol"]:
+                    news_health["status"] = "STALE"
+                    news_health.setdefault("warnings", []).append("News health belongs to a different instrument")
+                pipeline["stages"]["agents"] = AGENT_TEAM.health(record, current_only=True)
                 pipeline["stages"]["fusion"] = FUSION_ENGINE.health()
+                fusion_health = pipeline["stages"]["fusion"]
+                if not record or fusion_health.get("snapshot_id") != record["snapshot_id"]:
+                    fusion_health["status"] = "STALE"
+                    fusion_health.setdefault("warnings", []).append("Fusion does not belong to the current evidence snapshot")
                 intelligence = pipeline["stages"].get("intelligence") or {}
                 intelligence["warnings"] = [warning for warning in intelligence.get("warnings", [])
                                             if warning != "Agents are not connected"]
@@ -1072,9 +1113,11 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             return
         if parsed_path.path == "/api/dashboard":
             try:
-                self.send_json(build_dashboard_payload(load_summary()))
+                with FORECAST_LOCK:
+                    payload = build_dashboard_payload(load_summary())
+                self.send_json(payload)
             except (FileNotFoundError, json.JSONDecodeError, ValueError) as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if parsed_path.path in {"/api/symbol-search", "/api/search"}:
             if not self._require_access("/api/search"):
@@ -1188,8 +1231,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             return
         if parsed_path.path == "/api/explanation":
             try:
-                summary = load_summary()
-                cached = load_cached_explanation(summary)
+                with FORECAST_LOCK:
+                    summary = load_summary()
+                    cached = load_cached_explanation(summary)
                 self.send_json(
                     {
                         "available": bool(cached),
@@ -1202,7 +1246,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     }
                 )
             except (FileNotFoundError, json.JSONDecodeError) as error:
-                self.send_json({"available": False, "error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"available": False, "error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if parsed_path.path == "/api/evidence-snapshot":
             if not self._require_access("/api/evidence-snapshot"):
@@ -1220,7 +1264,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 load_local_key()
                 self.send_json(AGENT_TEAM.result(current_agent_snapshot(digest)))
             except AgentError as error:
-                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
+                self.send_json({"error": public_error(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
             return
         if parsed_path.path == "/api/fusion":
             if not self._require_access("/api/fusion"):
@@ -1231,12 +1275,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 agents = AGENT_TEAM.result(record)
                 pipeline = PRODUCT_PIPELINE.snapshot()
                 pipeline["stages"]["news"] = NEWS_SERVICE.pipeline_stage()
-                pipeline["stages"]["agents"] = AGENT_TEAM.health()
+                pipeline["stages"]["agents"] = AGENT_TEAM.health(record)
                 self.send_json(FUSION_ENGINE.fuse(record, agent_result=agents, pipeline=pipeline))
             except AgentError as error:
-                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
+                self.send_json({"error": public_error(error), "code": error.code}, HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.NOT_FOUND)
             except EvidenceFusionError as error:
-                self.send_json({"error": str(error), "code": "FUSION_INVALID_EVIDENCE"}, HTTPStatus.CONFLICT)
+                self.send_json({"error": public_error(error), "code": "FUSION_INVALID_EVIDENCE"}, HTTPStatus.CONFLICT)
             except (OSError, json.JSONDecodeError):
                 self.send_json({"error": "Evidence fusion storage is unavailable.",
                                 "code": "FUSION_STORAGE_UNAVAILABLE"}, HTTPStatus.SERVICE_UNAVAILABLE)
@@ -1302,7 +1346,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     )
                 )
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if self.path == "/api/validation":
             try:
@@ -1318,7 +1362,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     )
                 )
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if self.path == "/api/live-forecast":
             try:
@@ -1333,9 +1377,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     )
                 )
             except MarketDataError as error:
-                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if self.path == "/api/live-validation":
             try:
@@ -1350,9 +1394,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                     )
                 )
             except MarketDataError as error:
-                self.send_json({"error": str(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error), "code": error.code}, HTTPStatus.BAD_REQUEST)
             except (ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
-                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error)}, HTTPStatus.BAD_REQUEST)
             return
         if self.path == "/api/explanation":
             try:
@@ -1378,16 +1422,16 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 if not isinstance(request_data, dict) or set(request_data) != {"snapshot_id"} or \
                         not isinstance(request_data["snapshot_id"], str):
                     raise ValueError("A snapshot ID is required")
-                record = current_agent_snapshot(request_data["snapshot_id"])
+                record = current_paid_agent_snapshot(request_data["snapshot_id"])
                 load_local_key()
-                self.send_json(AGENT_TEAM.run(record))
+                self.send_json(AGENT_TEAM.run(record, eligibility_check=lambda: current_paid_agent_snapshot(request_data["snapshot_id"])))
             except (ValueError, json.JSONDecodeError):
                 self.send_json({"error": "Invalid AI research request."}, HTTPStatus.BAD_REQUEST)
             except AgentError as error:
                 status = (HTTPStatus.SERVICE_UNAVAILABLE if error.code in {"UNAVAILABLE", "LEDGER_UNAVAILABLE"} else
                           HTTPStatus.TOO_MANY_REQUESTS if error.code == "COST_LIMIT" else
-                          HTTPStatus.CONFLICT if error.code == "STALE_SNAPSHOT" else HTTPStatus.BAD_REQUEST)
-                self.send_json({"error": str(error), "code": error.code}, status)
+                          HTTPStatus.CONFLICT if error.code in {"STALE_SNAPSHOT", "STALE_EVIDENCE"} else HTTPStatus.BAD_REQUEST)
+                self.send_json({"error": public_error(error), "code": error.code}, status)
             except Exception:
                 self.send_json({"error": "AI Research Team could not complete the request.", "code": "AGENT_ERROR"},
                                HTTPStatus.BAD_GATEWAY)

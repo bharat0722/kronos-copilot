@@ -1,0 +1,564 @@
+{
+  "adversarial_team_offline": "3/3",
+  "blind_forecast_performance": "WEAK - PRESERVED",
+  "budget": {
+    "authorization_lan_auth_csrf_origin": "UNCHANGED",
+    "bull_only_max_calls": 2,
+    "daily_count_after": 13,
+    "daily_count_before": 12,
+    "daily_usage_still_recorded": true,
+    "max_input_bytes": 48000,
+    "max_output_tokens": 1600,
+    "max_retries": 1,
+    "provider_limits": "UNCHANGED",
+    "sdk_retries": 0,
+    "workflow_max_calls": 6
+  },
+  "generated_at": "2026-10-10T12:19:44.444123+00:00",
+  "health": {
+    "ai_research_team": "GREEN",
+    "architecture": "GREEN",
+    "bear": "GREEN",
+    "bull": "GREEN",
+    "dashboard": "GREEN",
+    "evidence_fusion": "GREEN",
+    "pipeline": "GREEN",
+    "risk": "GREEN",
+    "security": "GREEN",
+    "system": "GREEN"
+  },
+  "health_basis": "Full current offline teams + prior V4 dual-live success and real Bear/Risk acceptances + targeted current Bull live success",
+  "historical_artifacts_preserved": true,
+  "historical_audit_limitations": [
+    "Rejected evidence ID, use and action were not persisted; no exact output replay is possible"
+  ],
+  "historical_replay": {
+    "exact_bull_action": null,
+    "exact_evidence_id": null,
+    "exact_original_output_reproduced": false,
+    "exact_requested_use": null,
+    "historical_run_id": "a835edc3d41e8d0dd002a7e19b226d16",
+    "historical_snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c",
+    "live_confirmation": {
+      "api_calls": 1,
+      "daily_count_after": 13,
+      "daily_count_before": 12,
+      "finished_at": "2026-10-10T12:12:17.935338+00:00",
+      "maximum_calls": 2,
+      "provider_calls": 1,
+      "started_at": "2026-10-10T12:12:11.409877+00:00",
+      "status": "PASS",
+      "transport_calls": 1
+    },
+    "live_selected_evidence": [
+      {
+        "available_fields": [
+          "technical_trend"
+        ],
+        "direction": "BEARISH",
+        "evidence_id": "technicals.trend",
+        "family": "TECHNICAL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "observed_at": "2026-10-05 15:15:00+05:30",
+        "priority": 1,
+        "provenance_reference": "technicals.trend",
+        "quality": "PASS",
+        "risk_flags": [],
+        "risk_relevance": false,
+        "role_compatibility": {
+          "bear": [
+            "SUPPORT"
+          ],
+          "bull": [
+            "COUNTER"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Technical evidence",
+        "use": "COUNTER"
+      },
+      {
+        "available_fields": [
+          "forecast_direction"
+        ],
+        "direction": "BEARISH",
+        "evidence_id": "kronos.direction",
+        "family": "FORECAST",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "observed_at": "2026-10-05 15:15:00+05:30",
+        "priority": 2,
+        "provenance_reference": "kronos.direction",
+        "quality": "PASS",
+        "risk_flags": [],
+        "risk_relevance": true,
+        "role_compatibility": {
+          "bear": [
+            "SUPPORT",
+            "RISK"
+          ],
+          "bull": [
+            "COUNTER",
+            "RISK"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Kronos forecast",
+        "use": "COUNTER"
+      },
+      {
+        "available_fields": [],
+        "direction": "NON_DIRECTIONAL",
+        "evidence_id": "context.missing_evidence",
+        "family": "DATA_QUALITY",
+        "freshness": "FRESH",
+        "lineage_ids": [],
+        "priority": 3,
+        "quality": "WARN",
+        "risk_flags": [
+          "MISSING_NEWS"
+        ],
+        "risk_relevance": true,
+        "role_compatibility": {
+          "bear": [
+            "RISK"
+          ],
+          "bull": [
+            "RISK"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Missing primary evidence",
+        "use": "RISK"
+      }
+    ],
+    "no_symbol_or_id_whitelist": true,
+    "primary_cause_classification": "OTHER",
+    "proven_primary_gap": "Provider schema admits role/ID/use combinations forbidden by the backend catalogue",
+    "provenance_note": "The reconstructed pair is not claimed to be either original provider response",
+    "reason_exact_replay_unavailable": "Rejected evidence ID, use and action were not persisted; no exact output replay is possible",
+    "retained_attempts": [
+      {
+        "agent_type": "bull",
+        "api_error_code": null,
+        "api_error_param": null,
+        "api_error_type": null,
+        "attempt": 1,
+        "attempt_id": "a835edc3d41e8d0dd002a7e19b226d16.1",
+        "budget_reserved": true,
+        "completion_reason": null,
+        "evidence_native_validator_version": "evidence_selection_validator_v1",
+        "exception_class": "ClaimValidationError",
+        "failure_stage": "CLAIM_VALIDATION",
+        "finished_at": "2026-10-10T10:38:58.508463+00:00",
+        "http_status": null,
+        "input_hash": "83f9a851e7eff96c90e00a59a442bdf5aeb1edc9179f19d5d7b605f116f3b220",
+        "latency_ms": 5968,
+        "max_output_tokens": 1600,
+        "model": "gpt-5-mini",
+        "output_item_types": [
+          "reasoning",
+          "message",
+          "output_text"
+        ],
+        "output_schema_version": "agent_output_v4",
+        "prompt_version": "bull_agent_prompt_v10",
+        "request_id": "req_f0f2e14890ed4c4faec0aa90a8a0e675",
+        "response_error_code": null,
+        "response_id": "resp_0d3c64311c316a32006aca15c0194487d18db9efcdb66f505d",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "response_status": "completed",
+        "retry_decision": "RETRY",
+        "run_id": "a835edc3d41e8d0dd002a7e19b226d16",
+        "sanitized_error": "Agent evidence selection failed",
+        "schema_version": "agent_attempt_v4",
+        "sdk_attempted": true,
+        "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c",
+        "started_at": "2026-10-10T10:38:52.534126+00:00",
+        "status": "FAILED",
+        "token_usage": {
+          "input_tokens": 3802,
+          "output_tokens": 182,
+          "total_tokens": 3984
+        },
+        "validation_diagnostic": {
+          "attempt": 1,
+          "json_path": "$.selected_evidence[0].use",
+          "prompt_version": "bull_agent_prompt_v10",
+          "reason": "role admissibility",
+          "rule_code": "role_admissibility",
+          "run_id": "a835edc3d41e8d0dd002a7e19b226d16",
+          "schema_version": "agent_output_v4",
+          "validator_version": "evidence_selection_validator_v1"
+        }
+      },
+      {
+        "agent_type": "bull",
+        "api_error_code": null,
+        "api_error_param": null,
+        "api_error_type": null,
+        "attempt": 2,
+        "attempt_id": "a835edc3d41e8d0dd002a7e19b226d16.2",
+        "budget_reserved": true,
+        "completion_reason": null,
+        "evidence_native_validator_version": "evidence_selection_validator_v1",
+        "exception_class": "ClaimValidationError",
+        "failure_stage": "CLAIM_VALIDATION",
+        "finished_at": "2026-10-10T10:39:01.103045+00:00",
+        "http_status": null,
+        "input_hash": "83f9a851e7eff96c90e00a59a442bdf5aeb1edc9179f19d5d7b605f116f3b220",
+        "latency_ms": 2485,
+        "max_output_tokens": 1600,
+        "model": "gpt-5-mini",
+        "output_item_types": [
+          "reasoning",
+          "message",
+          "output_text"
+        ],
+        "output_schema_version": "agent_output_v4",
+        "prompt_version": "bull_agent_prompt_v10",
+        "request_id": "req_47ce067424404ca8bd3a14b3a011c877",
+        "response_error_code": null,
+        "response_id": "resp_0cca94acf159526e006aca15c333a487d19e8e7071a29ceb20",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "response_status": "completed",
+        "retry_decision": "STOP",
+        "run_id": "a835edc3d41e8d0dd002a7e19b226d16",
+        "sanitized_error": "Agent evidence selection failed",
+        "schema_version": "agent_attempt_v4",
+        "sdk_attempted": true,
+        "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c",
+        "started_at": "2026-10-10T10:38:58.621489+00:00",
+        "status": "FAILED",
+        "token_usage": {
+          "input_tokens": 3802,
+          "output_tokens": 190,
+          "total_tokens": 3992
+        },
+        "validation_diagnostic": {
+          "attempt": 2,
+          "json_path": "$.selected_evidence[0].use",
+          "prompt_version": "bull_agent_prompt_v10",
+          "reason": "role admissibility",
+          "rule_code": "role_admissibility",
+          "run_id": "a835edc3d41e8d0dd002a7e19b226d16",
+          "schema_version": "agent_output_v4",
+          "validator_version": "evidence_selection_validator_v1"
+        }
+      }
+    ],
+    "status": "PARTIAL",
+    "structural_equivalent_only": {
+      "allowed_uses": [
+        "COUNTER",
+        "RISK"
+      ],
+      "corrected_output": {
+        "action": "PRESENT_CASE",
+        "agent_type": "bull",
+        "explanation_status": "OMITTED",
+        "optional_explanation": null,
+        "schema_version": "agent_output_v4",
+        "selected_evidence": [
+          {
+            "evidence_id": "kronos.direction",
+            "priority": 1,
+            "use": "COUNTER"
+          }
+        ],
+        "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c"
+      },
+      "corrected_result": "PASS",
+      "direction": "BEARISH",
+      "evidence_id": "kronos.direction",
+      "family": "FORECAST",
+      "json_path": "$.selected_evidence[0].use",
+      "new_provider_schema_admits_invalid_pair": false,
+      "old_provider_schema_admitted": true,
+      "original_output": {
+        "action": "PRESENT_CASE",
+        "agent_type": "bull",
+        "optional_explanation": null,
+        "schema_version": "agent_output_v4",
+        "selected_evidence": [
+          {
+            "evidence_id": "kronos.direction",
+            "priority": 1,
+            "use": "SUPPORT"
+          }
+        ],
+        "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c"
+      },
+      "original_validator_result": "FAIL_AS_EXPECTED",
+      "requested_use": "SUPPORT",
+      "role_compatibility": {
+        "bear": [
+          "SUPPORT",
+          "RISK"
+        ],
+        "bull": [
+          "COUNTER",
+          "RISK"
+        ],
+        "risk": [
+          "RISK"
+        ]
+      },
+      "rule_code": "role_admissibility"
+    }
+  },
+  "legacy_daily_guard": "Preserved only for explicit V2/V3 historical replay harnesses; not current production",
+  "live_calls_maximum": 2,
+  "live_confirmation": {
+    "api_calls": 1,
+    "daily_count_after": 13,
+    "daily_count_before": 12,
+    "finished_at": "2026-10-10T12:12:17.935338+00:00",
+    "maximum_calls": 2,
+    "provider_calls": 1,
+    "started_at": "2026-10-10T12:12:11.409877+00:00",
+    "status": "PASS",
+    "transport_calls": 1
+  },
+  "live_confirmation_reason": "Real provider must exercise tightened strict schema; exact historical rejected shape unavailable",
+  "live_confirmation_required": true,
+  "live_confirmation_result": "PASS",
+  "live_integration_checks": {
+    "backend_direction": true,
+    "bull_in_fusion": true,
+    "dashboard_adapter": true,
+    "durable_bull": true,
+    "fusion_refresh": true,
+    "no_extra_roles": true,
+    "production_immutable": true,
+    "role_use": true,
+    "snapshot_immutable": true,
+    "snapshot_ownership": true,
+    "structured_acceptance": true
+  },
+  "live_scope": "Bull ONLY; deliberately PARTIAL live team, not claimed as a new 3/3 live run",
+  "live_token_usage": {
+    "input_tokens": 3909,
+    "output_tokens": 237,
+    "total_tokens": 4146
+  },
+  "model_performance_followup": "PHASE_9_HISTORICAL_EVALUATION / SEPARATE_FINE_TUNING_TRACK",
+  "monad_development_permission": true,
+  "monad_development_readiness": "GREEN",
+  "next_action": "Checkpoint and push the healthy pre-Monad foundation. Preserve the weak blind-performance result as Phase 9 evidence. Then begin Monad research, audit and architecture.",
+  "normal_team_offline": "3/3",
+  "offline_integration_checks": {
+    "A": {
+      "attempts": true,
+      "cache": true,
+      "conflicts": true,
+      "dashboard": true,
+      "durable": true,
+      "fusion": true,
+      "immutability": true,
+      "ledger": true,
+      "lineage": true,
+      "pipeline": true,
+      "team": true
+    },
+    "B": {
+      "attempts": true,
+      "cache": true,
+      "conflicts": true,
+      "dashboard": true,
+      "durable": true,
+      "fusion": true,
+      "immutability": true,
+      "ledger": true,
+      "lineage": true,
+      "pipeline": true,
+      "team": true
+    }
+  },
+  "old_daily_project_guard": "REMOVED_FROM_PRODUCTION_V4_EXECUTION_AND_HEALTH_GATING",
+  "preservation_files_verified": 187,
+  "primary_cause": "OTHER: provider-schema / backend-validator role-use pairing mismatch",
+  "prior_baseline_mae_wins": {
+    "drift": "3/3",
+    "momentum": "0/3",
+    "persistence": "0/3"
+  },
+  "prior_kronos_direction_hits": "1/3",
+  "prior_market_performance": "WEAK_IN_THIS_THREE_WINDOW_CHALLENGE",
+  "prompt_content_unchanged": true,
+  "prompts": {
+    "bear": "bear_agent_prompt_v9",
+    "bull": "bull_agent_prompt_v10",
+    "risk": "risk_agent_prompt_v9"
+  },
+  "remaining_software_blockers": [],
+  "review": {
+    "architecture": "GREEN",
+    "architecture_score": 8.9,
+    "checks": {
+      "auth_csrf_origin_source_unchanged": true,
+      "backend_fact_ownership": true,
+      "bounded_workflows": true,
+      "cache_version_invalidation": true,
+      "fusion_weights_source_unchanged": true,
+      "no_role_specific_hacks": true,
+      "parameterized_atomic_usage_accounting": true,
+      "prose_not_in_acceptance": true,
+      "role_matrix_unchanged": true,
+      "schema_and_validator_same_admissibility": true
+    },
+    "finding_count": 0,
+    "gstack": "PARTIAL",
+    "independent_external_model_review": "NOT_RUN: no extra LLM judge calls authorized",
+    "local_browser_qa": "PASS",
+    "native_aside": "UNAVAILABLE: command lookup returned NEEDS_ASIDE",
+    "native_learning_log": "UNAVAILABLE: gstack-learnings-log returned bun: command not found",
+    "scoped_review": "PASS",
+    "scoped_security": "PASS",
+    "score_scope": "Scoped engineering assessment, not a measured product or model-performance score",
+    "tooling_limits_are_not_software_health_blockers": true,
+    "upgrade_not_performed": "Targeted repair scope; existing review/checklists used without unrelated tool updates"
+  },
+  "reviews": {
+    "architecture": "GREEN",
+    "architecture_score": 8.9,
+    "checks": {
+      "auth_csrf_origin_source_unchanged": true,
+      "backend_fact_ownership": true,
+      "bounded_workflows": true,
+      "cache_version_invalidation": true,
+      "fusion_weights_source_unchanged": true,
+      "no_role_specific_hacks": true,
+      "parameterized_atomic_usage_accounting": true,
+      "prose_not_in_acceptance": true,
+      "role_matrix_unchanged": true,
+      "schema_and_validator_same_admissibility": true
+    },
+    "finding_count": 0,
+    "gstack": "PARTIAL",
+    "independent_external_model_review": "NOT_RUN: no extra LLM judge calls authorized",
+    "local_browser_qa": "PASS",
+    "native_aside": "UNAVAILABLE: command lookup returned NEEDS_ASIDE",
+    "native_learning_log": "UNAVAILABLE: gstack-learnings-log returned bun: command not found",
+    "scoped_review": "PASS",
+    "scoped_security": "PASS",
+    "score_scope": "Scoped engineering assessment, not a measured product or model-performance score",
+    "tooling_limits_are_not_software_health_blockers": true,
+    "upgrade_not_performed": "Targeted repair scope; existing review/checklists used without unrelated tool updates"
+  },
+  "role_use_contract": {
+    "actions": {
+      "bear": [
+        "PRESENT_CASE",
+        "ABSTAIN"
+      ],
+      "bull": [
+        "PRESENT_CASE",
+        "ABSTAIN"
+      ],
+      "risk": [
+        "FLAG_RISK",
+        "ABSTAIN"
+      ]
+    },
+    "authority": "Backend catalogue role_compatibility, generated by one _roles function",
+    "bear": {
+      "eligible_bearish": [
+        "SUPPORT"
+      ],
+      "eligible_bullish": [
+        "COUNTER"
+      ],
+      "risk_or_neutral": [
+        "RISK"
+      ]
+    },
+    "bull": {
+      "eligible_bearish": [
+        "COUNTER"
+      ],
+      "eligible_bullish": [
+        "SUPPORT"
+      ],
+      "risk_or_neutral": [
+        "RISK"
+      ]
+    },
+    "consumers": [
+      "catalogue",
+      "admissible_uses",
+      "strict schema",
+      "validator",
+      "prompt enum labels",
+      "tests"
+    ],
+    "empty_catalogue": "ABSTAIN only, maxItems=0",
+    "explanation_nonblocking": true,
+    "ineligible_directional": "FAIL quality or STALE freshness cannot SUPPORT/COUNTER; risk qualification may remain",
+    "limits": {
+      "bear": 3,
+      "bull": 3,
+      "risk": 4
+    },
+    "model_fact_direction_ownership": false,
+    "no_support": "ABSTAIN remains valid; counter-only PRESENT_CASE is valid but backend support is INSUFFICIENT",
+    "rank_and_duplicates": "Consecutive integer priorities; duplicate IDs rejected",
+    "risk": "RISK for risk-relevant sources or eligible directional evidence",
+    "role_rules_changed": false,
+    "schema": "agent_output_v4",
+    "schema_pair_binding": "Grouped nested anyOf; each evidence ID has only its catalogue-approved use enums",
+    "schema_reference": "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "snapshot_bound": true,
+    "use_enums": [
+      "SUPPORT",
+      "COUNTER",
+      "RISK"
+    ],
+    "validator": "evidence_selection_validator_v2",
+    "version": "v4_role_use_contract_v2"
+  },
+  "safety": {
+    "git_commit": false,
+    "git_push": false,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "locked_test_accesses": 0,
+    "model_weight_changes": 0,
+    "monad_calls": 0,
+    "monad_implementation": false,
+    "new_market_data_calls": 0,
+    "openai_calls": 1,
+    "tavily_calls": 0,
+    "validation_reruns": 0,
+    "yahoo_calls": 0
+  },
+  "schema": "agent_output_v4",
+  "schema_version": "final_pre_monad_health_gate_v1",
+  "single_source_of_truth": "PASS",
+  "software_reliability_status": "PASS",
+  "status": "PARTIAL",
+  "status_reason": "Software reliability closed; exact historical payload replay cannot be fulfilled because rejected JSON was not retained",
+  "tests": {
+    "blocked_external_attempts": 0,
+    "errors": 0,
+    "external_calls": 0,
+    "failed": 0,
+    "failure_details": [],
+    "passed": 419,
+    "run": 420,
+    "skipped": 1
+  },
+  "v4_architecture": "UNCHANGED responsibility boundary; response-schema constraints tightened",
+  "validator": "evidence_selection_validator_v2"
+}

@@ -1,0 +1,774 @@
+{
+  "examples": [
+    {
+      "display_text": "Forecast horizon: 24 bars",
+      "evidence_id": "kronos.config",
+      "field_key": "forecast_horizon",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "bars",
+      "value": 24
+    },
+    {
+      "display_text": "Kronos direction: Bullish",
+      "evidence_id": "kronos.direction",
+      "field_key": "forecast_direction",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "state",
+      "value": "up"
+    },
+    {
+      "display_text": "Kronos final price: 101.2 (native quote units)",
+      "evidence_id": "kronos.forecast_final_close",
+      "field_key": "forecast_final_price",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "price",
+      "value": 101.2
+    },
+    {
+      "display_text": "Kronos forecast return: 1.2%",
+      "evidence_id": "kronos.forecast_pct_change",
+      "field_key": "forecast_return_pct",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "percent",
+      "value": 1.2
+    },
+    {
+      "display_text": "Observed price: 100.0 (native quote units)",
+      "evidence_id": "kronos.last_observed_close",
+      "field_key": "observed_price",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "price",
+      "value": 100.0
+    },
+    {
+      "display_text": "Kronos model: NeoQuasar/Kronos-base",
+      "evidence_id": "kronos.model_id",
+      "field_key": "model_identity",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "FORECAST",
+      "unit": "text",
+      "value": "NeoQuasar/Kronos-base"
+    },
+    {
+      "display_text": "Data quality: PASS",
+      "evidence_id": "market_data.quality",
+      "field_key": "data_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "MARKET_DATA",
+      "unit": "state",
+      "value": "PASS"
+    },
+    {
+      "display_text": "News title: TESTCO announced a service partnership.",
+      "evidence_id": "news.article.0",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO announced a service partnership."
+    },
+    {
+      "display_text": "News relevance: 0.8",
+      "evidence_id": "news.article.0",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.8
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.0",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO discussed service delivery planning.",
+      "evidence_id": "news.article.1",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO discussed service delivery planning."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.1",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.45",
+      "evidence_id": "news.article.1",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.45
+    },
+    {
+      "display_text": "News title: TESTCO scheduled an earnings briefing.",
+      "evidence_id": "news.article.2",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO scheduled an earnings briefing."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.2",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.2",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO appointed an operations manager.",
+      "evidence_id": "news.article.3",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO appointed an operations manager."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.3",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.3",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO published a compliance update.",
+      "evidence_id": "news.article.4",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO published a compliance update."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.4",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.4",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO reported a product maintenance window.",
+      "evidence_id": "news.article.5",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO reported a product maintenance window."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.5",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.5",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO hosted an industry discussion.",
+      "evidence_id": "news.article.6",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO hosted an industry discussion."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.6",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.6",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News title: TESTCO published its governance calendar.",
+      "evidence_id": "news.article.7",
+      "field_key": "news_title",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO published its governance calendar."
+    },
+    {
+      "display_text": "News relevance: 0.5",
+      "evidence_id": "news.article.7",
+      "field_key": "news_relevance",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.5
+    },
+    {
+      "display_text": "News source quality: 0.85",
+      "evidence_id": "news.article.7",
+      "field_key": "news_source_quality",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.85
+    },
+    {
+      "display_text": "News event headline: TESTCO announced a service partnership.",
+      "evidence_id": "news.event.0",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO announced a service partnership."
+    },
+    {
+      "display_text": "News event impact: 0.25",
+      "evidence_id": "news.event.0",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.25
+    },
+    {
+      "display_text": "News event headline: TESTCO discussed service delivery planning.",
+      "evidence_id": "news.event.1",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO discussed service delivery planning."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.1",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO scheduled an earnings briefing.",
+      "evidence_id": "news.event.2",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO scheduled an earnings briefing."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.2",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO appointed an operations manager.",
+      "evidence_id": "news.event.3",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO appointed an operations manager."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.3",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO published a compliance update.",
+      "evidence_id": "news.event.4",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO published a compliance update."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.4",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO reported a product maintenance window.",
+      "evidence_id": "news.event.5",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO reported a product maintenance window."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.5",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO hosted an industry discussion.",
+      "evidence_id": "news.event.6",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO hosted an industry discussion."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.6",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News event headline: TESTCO published its governance calendar.",
+      "evidence_id": "news.event.7",
+      "field_key": "news_event_headline",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "text",
+      "value": "TESTCO published its governance calendar."
+    },
+    {
+      "display_text": "News event impact: 0.0",
+      "evidence_id": "news.event.7",
+      "field_key": "news_event_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.0
+    },
+    {
+      "display_text": "News impact: 0.25",
+      "evidence_id": "news.impact_score",
+      "field_key": "news_impact",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "NEWS",
+      "unit": "unitless",
+      "value": 0.25
+    },
+    {
+      "display_text": "RSI: 58",
+      "evidence_id": "technicals.indicator.0",
+      "field_key": "rsi",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 58
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.0",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.0",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Ema20: 101 (native quote units)",
+      "evidence_id": "technicals.indicator.1",
+      "field_key": "ema20",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 101
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.1",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.1",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Volume sma: 100000 volume units",
+      "evidence_id": "technicals.indicator.10",
+      "field_key": "volume_sma",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "volume_units",
+      "value": 100000
+    },
+    {
+      "display_text": "Technical signal: neutral",
+      "evidence_id": "technicals.indicator.10",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "neutral"
+    },
+    {
+      "display_text": "Technical strength: 0.25",
+      "evidence_id": "technicals.indicator.10",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.25
+    },
+    {
+      "display_text": "Volume spike: 1.2",
+      "evidence_id": "technicals.indicator.11",
+      "field_key": "volume_spike",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 1.2
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.11",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.11",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Ema50: 99 (native quote units)",
+      "evidence_id": "technicals.indicator.2",
+      "field_key": "ema50",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 99
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.2",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.2",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Sma20: 100.5 (native quote units)",
+      "evidence_id": "technicals.indicator.3",
+      "field_key": "sma20",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 100.5
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.3",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.3",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Sma50: 98.5 (native quote units)",
+      "evidence_id": "technicals.indicator.4",
+      "field_key": "sma50",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 98.5
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.4",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.4",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Macd: 0.6 (native quote units)",
+      "evidence_id": "technicals.indicator.5",
+      "field_key": "macd",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 0.6
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.5",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.5",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Macd signal: 0.4 (native quote units)",
+      "evidence_id": "technicals.indicator.6",
+      "field_key": "macd_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 0.4
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.6",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.6",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Technical signal: neutral",
+      "evidence_id": "technicals.indicator.7",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "neutral"
+    },
+    {
+      "display_text": "Technical strength: 0.25",
+      "evidence_id": "technicals.indicator.7",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.25
+    },
+    {
+      "display_text": "Atr: 1.4 (native quote units)",
+      "evidence_id": "technicals.indicator.8",
+      "field_key": "atr",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "price",
+      "value": 1.4
+    },
+    {
+      "display_text": "Technical signal: neutral",
+      "evidence_id": "technicals.indicator.8",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "neutral"
+    },
+    {
+      "display_text": "Technical strength: 0.25",
+      "evidence_id": "technicals.indicator.8",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.25
+    },
+    {
+      "display_text": "Roc: 1.1%",
+      "evidence_id": "technicals.indicator.9",
+      "field_key": "roc",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "percent",
+      "value": 1.1
+    },
+    {
+      "display_text": "Technical signal: bullish",
+      "evidence_id": "technicals.indicator.9",
+      "field_key": "technical_signal",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    },
+    {
+      "display_text": "Technical strength: 0.55",
+      "evidence_id": "technicals.indicator.9",
+      "field_key": "technical_strength",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "unitless",
+      "value": 0.55
+    },
+    {
+      "display_text": "Market regime: TRENDING_BULL",
+      "evidence_id": "technicals.regime",
+      "field_key": "market_regime",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "TRENDING_BULL"
+    },
+    {
+      "display_text": "Technical trend: bullish",
+      "evidence_id": "technicals.trend",
+      "field_key": "technical_trend",
+      "renderer_version": "canonical_fact_renderer_v1",
+      "source_family": "TECHNICAL",
+      "unit": "state",
+      "value": "bullish"
+    }
+  ],
+  "format_policy": "Preserve canonical raw values; percentages retain sign; prices use native quote units, never inferred currency.",
+  "ownership": "Backend resolves existing field_bindings; v3 rejects aliases and model values/units.",
+  "source_reference_preserved": true,
+  "unknown_or_unsafe_binding": "REJECT",
+  "version": "canonical_fact_renderer_v1"
+}

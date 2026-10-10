@@ -1,0 +1,228 @@
+{
+  "status": "PARTIAL",
+  "native_workflows": "UNAVAILABLE locally",
+  "scope": "Current structured claim repair only; installed documentation/checklists applied offline",
+  "skills_used": [
+    "review",
+    "cso",
+    "qa-only"
+  ],
+  "native_limitations": [
+    "Browse distribution absent",
+    "Bash not on PATH",
+    "Installed version metadata unavailable"
+  ],
+  "review_status": "PASS",
+  "security_checklist_status": "PASS",
+  "browser_qa_status": "PASS",
+  "browser_qa": {
+    "status": "PASS",
+    "scope": "Fully intercepted synthetic mock COMPLETE results and existing dashboard; no live provider or LAN browser flow.",
+    "external_calls": 0,
+    "agent_post_requests": 0,
+    "results": [
+      {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000,
+        "pass": true,
+        "initial": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "reloaded": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "errors": [],
+        "blocked": []
+      },
+      {
+        "name": "phone",
+        "width": 390,
+        "height": 844,
+        "pass": true,
+        "initial": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "reloaded": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "errors": [],
+        "blocked": []
+      },
+      {
+        "name": "ipad",
+        "width": 834,
+        "height": 1112,
+        "pass": true,
+        "initial": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "reloaded": {
+          "team": "New analysis for this evidence snapshot.",
+          "roles": [
+            {
+              "agent": "bull",
+              "status": "Complete",
+              "message": "forecast_direction = up state"
+            },
+            {
+              "agent": "bear",
+              "status": "Complete",
+              "message": "technical_trend = bullish state"
+            },
+            {
+              "agent": "risk",
+              "status": "Complete",
+              "message": "forecast_final_price = 101.2 price"
+            }
+          ],
+          "overflow": false,
+          "privateContent": false,
+          "pipeline": "HEALTHY",
+          "pipelineRows": true,
+          "typedFacts": true
+        },
+        "errors": [],
+        "blocked": []
+      }
+    ]
+  },
+  "resolved_findings": [
+    "Exact real indicator-label bindings",
+    "Risk display ignored supported model/event/data/conflict claim categories",
+    "Numeric headline string FACT bypass"
+  ],
+  "open_critical": 0,
+  "open_high": 0,
+  "scoped_actionable_medium_or_low": 0,
+  "not_performed": [
+    "Outside model calls",
+    "Live API/LAN browser tests",
+    "Network CVE/supply-chain research",
+    "Native gstack browser",
+    "Full repository-wide security audit"
+  ],
+  "review_checks": [
+    "Closed shape/type validation before persistence",
+    "Exact field/value/unit/sign bindings",
+    "All roles share validator",
+    "No HTML/eval execution of agent output",
+    "No tools/new providers/secret logging",
+    "Cache schema/prompt invalidation",
+    "Ledger before cache",
+    "Budget/origin/auth source unchanged",
+    "Enum consumers render new nullable facts"
+  ],
+  "operational_learning": "Production technical indicator labels differ from synthetic labels; bind only explicit known aliases and test real labels.",
+  "external_calls": 0
+}

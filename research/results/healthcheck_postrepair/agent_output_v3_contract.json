@@ -1,0 +1,1568 @@
+{
+  "canonical_fields": [
+    "forecast_direction",
+    "forecast_return_pct",
+    "forecast_final_price",
+    "observed_price",
+    "volume",
+    "technical_trend",
+    "market_regime",
+    "news_impact",
+    "data_quality",
+    "rsi",
+    "macd",
+    "macd_signal",
+    "ema20",
+    "ema50",
+    "sma20",
+    "sma50",
+    "atr",
+    "roc",
+    "volume_sma",
+    "volume_spike",
+    "technical_signal",
+    "technical_strength",
+    "news_title",
+    "news_relevance",
+    "news_source_quality",
+    "news_event_headline",
+    "news_event_impact",
+    "forecast_horizon",
+    "model_identity"
+  ],
+  "fact_ownership": "BACKEND",
+  "fact_ref_keys": [
+    "evidence_id",
+    "field_key"
+  ],
+  "fact_source_family": "Derived from exact evidence ID and binding; never supplied by model",
+  "interpretation_support_families": "Derived from all citations; legitimate multi-family synthesis allowed",
+  "interpretations": "INTERPRETATION / INTERPRETIVE, number-free, cited, cautious, separate from facts",
+  "limitations": [
+    "Bounded deterministic guards are not universal NLP semantic entailment.",
+    "Qualitative support labels are not calibrated probabilities.",
+    "Live provider v3 behavior not yet tested."
+  ],
+  "model_values_and_units": false,
+  "role_stances": {
+    "bear": [
+      "BEARISH",
+      "NEUTRAL",
+      "MIXED",
+      "UNCERTAIN"
+    ],
+    "bull": [
+      "BULLISH",
+      "NEUTRAL",
+      "MIXED",
+      "UNCERTAIN"
+    ],
+    "risk": [
+      "RISK",
+      "NEUTRAL",
+      "MIXED",
+      "UNCERTAIN"
+    ]
+  },
+  "schema_version": "agent_output_v3",
+  "strict_schema_examples": {
+    "bear": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_type": {
+          "enum": [
+            "bear"
+          ],
+          "type": "string"
+        },
+        "arguments": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "argument_id": {
+                "enum": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4"
+                ],
+                "type": "string"
+              },
+              "evidence_fact_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "evidence_id": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "field_key": {
+                      "enum": [
+                        "forecast_direction",
+                        "forecast_return_pct",
+                        "forecast_final_price",
+                        "observed_price",
+                        "volume",
+                        "technical_trend",
+                        "market_regime",
+                        "news_impact",
+                        "data_quality",
+                        "rsi",
+                        "macd",
+                        "macd_signal",
+                        "ema20",
+                        "ema50",
+                        "sma20",
+                        "sma50",
+                        "atr",
+                        "roc",
+                        "volume_sma",
+                        "volume_spike",
+                        "technical_signal",
+                        "technical_strength",
+                        "news_title",
+                        "news_relevance",
+                        "news_source_quality",
+                        "news_event_headline",
+                        "news_event_impact",
+                        "forecast_horizon",
+                        "model_identity"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "evidence_id",
+                    "field_key"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "interpretation": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_type": {
+                    "enum": [
+                      "INTERPRETATION"
+                    ],
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "items": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "support_type": {
+                    "enum": [
+                      "INTERPRETIVE"
+                    ],
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_type",
+                  "support_type",
+                  "text",
+                  "evidence_ids"
+                ],
+                "type": "object"
+              },
+              "stance": {
+                "enum": [
+                  "BEARISH",
+                  "NEUTRAL",
+                  "MIXED",
+                  "UNCERTAIN"
+                ],
+                "type": "string"
+              },
+              "support_level": {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "INSUFFICIENT"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "argument_id",
+              "stance",
+              "evidence_fact_refs",
+              "interpretation",
+              "support_level"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "risk_level": {
+          "enum": [
+            "LOW",
+            "MODERATE",
+            "HIGH",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        },
+        "schema_version": {
+          "enum": [
+            "agent_output_v3"
+          ],
+          "type": "string"
+        },
+        "snapshot_id": {
+          "type": "string"
+        },
+        "stance": {
+          "enum": [
+            "BEARISH",
+            "NEUTRAL",
+            "MIXED",
+            "UNCERTAIN"
+          ],
+          "type": "string"
+        },
+        "support_level": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "INSUFFICIENT"
+          ],
+          "type": "string"
+        },
+        "uncertainty": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "agent_type",
+        "snapshot_id",
+        "stance",
+        "risk_level",
+        "support_level",
+        "arguments",
+        "limitations",
+        "uncertainty"
+      ],
+      "type": "object"
+    },
+    "bull": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_type": {
+          "enum": [
+            "bull"
+          ],
+          "type": "string"
+        },
+        "arguments": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "argument_id": {
+                "enum": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4"
+                ],
+                "type": "string"
+              },
+              "evidence_fact_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "evidence_id": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "field_key": {
+                      "enum": [
+                        "forecast_direction",
+                        "forecast_return_pct",
+                        "forecast_final_price",
+                        "observed_price",
+                        "volume",
+                        "technical_trend",
+                        "market_regime",
+                        "news_impact",
+                        "data_quality",
+                        "rsi",
+                        "macd",
+                        "macd_signal",
+                        "ema20",
+                        "ema50",
+                        "sma20",
+                        "sma50",
+                        "atr",
+                        "roc",
+                        "volume_sma",
+                        "volume_spike",
+                        "technical_signal",
+                        "technical_strength",
+                        "news_title",
+                        "news_relevance",
+                        "news_source_quality",
+                        "news_event_headline",
+                        "news_event_impact",
+                        "forecast_horizon",
+                        "model_identity"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "evidence_id",
+                    "field_key"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "interpretation": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_type": {
+                    "enum": [
+                      "INTERPRETATION"
+                    ],
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "items": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "support_type": {
+                    "enum": [
+                      "INTERPRETIVE"
+                    ],
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_type",
+                  "support_type",
+                  "text",
+                  "evidence_ids"
+                ],
+                "type": "object"
+              },
+              "stance": {
+                "enum": [
+                  "BULLISH",
+                  "NEUTRAL",
+                  "MIXED",
+                  "UNCERTAIN"
+                ],
+                "type": "string"
+              },
+              "support_level": {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "INSUFFICIENT"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "argument_id",
+              "stance",
+              "evidence_fact_refs",
+              "interpretation",
+              "support_level"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "risk_level": {
+          "enum": [
+            "LOW",
+            "MODERATE",
+            "HIGH",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        },
+        "schema_version": {
+          "enum": [
+            "agent_output_v3"
+          ],
+          "type": "string"
+        },
+        "snapshot_id": {
+          "type": "string"
+        },
+        "stance": {
+          "enum": [
+            "BULLISH",
+            "NEUTRAL",
+            "MIXED",
+            "UNCERTAIN"
+          ],
+          "type": "string"
+        },
+        "support_level": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "INSUFFICIENT"
+          ],
+          "type": "string"
+        },
+        "uncertainty": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "agent_type",
+        "snapshot_id",
+        "stance",
+        "risk_level",
+        "support_level",
+        "arguments",
+        "limitations",
+        "uncertainty"
+      ],
+      "type": "object"
+    },
+    "risk": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_type": {
+          "enum": [
+            "risk"
+          ],
+          "type": "string"
+        },
+        "arguments": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "argument_id": {
+                "enum": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4"
+                ],
+                "type": "string"
+              },
+              "evidence_fact_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "evidence_id": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "field_key": {
+                      "enum": [
+                        "forecast_direction",
+                        "forecast_return_pct",
+                        "forecast_final_price",
+                        "observed_price",
+                        "volume",
+                        "technical_trend",
+                        "market_regime",
+                        "news_impact",
+                        "data_quality",
+                        "rsi",
+                        "macd",
+                        "macd_signal",
+                        "ema20",
+                        "ema50",
+                        "sma20",
+                        "sma50",
+                        "atr",
+                        "roc",
+                        "volume_sma",
+                        "volume_spike",
+                        "technical_signal",
+                        "technical_strength",
+                        "news_title",
+                        "news_relevance",
+                        "news_source_quality",
+                        "news_event_headline",
+                        "news_event_impact",
+                        "forecast_horizon",
+                        "model_identity"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "evidence_id",
+                    "field_key"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "interpretation": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_type": {
+                    "enum": [
+                      "INTERPRETATION"
+                    ],
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "items": {
+                      "enum": [
+                        "instrument.canonical_symbol",
+                        "instrument.exchange",
+                        "instrument.provider_symbol",
+                        "kronos.config",
+                        "kronos.direction",
+                        "kronos.forecast_final_close",
+                        "kronos.forecast_fingerprint",
+                        "kronos.forecast_pct_change",
+                        "kronos.forecast_sha256",
+                        "kronos.last_observed_close",
+                        "kronos.model_id",
+                        "market_data.bronze_sha256",
+                        "market_data.cache_status",
+                        "market_data.capture_id",
+                        "market_data.input_sha256",
+                        "market_data.provider",
+                        "market_data.quality",
+                        "market_data.retrieved_at",
+                        "market_data.silver_sha256",
+                        "news.article.0",
+                        "news.article.1",
+                        "news.article.2",
+                        "news.article.3",
+                        "news.article.4",
+                        "news.article.5",
+                        "news.article.6",
+                        "news.article.7",
+                        "news.event.0",
+                        "news.event.1",
+                        "news.event.2",
+                        "news.event.3",
+                        "news.event.4",
+                        "news.event.5",
+                        "news.event.6",
+                        "news.event.7",
+                        "news.evidence_status",
+                        "news.formula_version",
+                        "news.impact_score",
+                        "news.provider",
+                        "news.retrieved_at",
+                        "news.uncertainty",
+                        "research_view.analysis_version",
+                        "research_view.confidence",
+                        "research_view.contradicting_evidence",
+                        "research_view.direction",
+                        "research_view.primary_risk",
+                        "research_view.status",
+                        "research_view.supporting_evidence",
+                        "research_view.why",
+                        "technicals.as_of",
+                        "technicals.indicator.0",
+                        "technicals.indicator.1",
+                        "technicals.indicator.10",
+                        "technicals.indicator.11",
+                        "technicals.indicator.2",
+                        "technicals.indicator.3",
+                        "technicals.indicator.4",
+                        "technicals.indicator.5",
+                        "technicals.indicator.6",
+                        "technicals.indicator.7",
+                        "technicals.indicator.8",
+                        "technicals.indicator.9",
+                        "technicals.regime",
+                        "technicals.trend",
+                        "technicals.version"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "support_type": {
+                    "enum": [
+                      "INTERPRETIVE"
+                    ],
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_type",
+                  "support_type",
+                  "text",
+                  "evidence_ids"
+                ],
+                "type": "object"
+              },
+              "stance": {
+                "enum": [
+                  "RISK",
+                  "NEUTRAL",
+                  "MIXED",
+                  "UNCERTAIN"
+                ],
+                "type": "string"
+              },
+              "support_level": {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "INSUFFICIENT"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "argument_id",
+              "stance",
+              "evidence_fact_refs",
+              "interpretation",
+              "support_level"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "risk_level": {
+          "enum": [
+            "LOW",
+            "MODERATE",
+            "HIGH",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        },
+        "schema_version": {
+          "enum": [
+            "agent_output_v3"
+          ],
+          "type": "string"
+        },
+        "snapshot_id": {
+          "type": "string"
+        },
+        "stance": {
+          "enum": [
+            "RISK",
+            "NEUTRAL",
+            "MIXED",
+            "UNCERTAIN"
+          ],
+          "type": "string"
+        },
+        "support_level": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "INSUFFICIENT"
+          ],
+          "type": "string"
+        },
+        "uncertainty": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_ids": {
+                "items": {
+                  "enum": [
+                    "instrument.canonical_symbol",
+                    "instrument.exchange",
+                    "instrument.provider_symbol",
+                    "kronos.config",
+                    "kronos.direction",
+                    "kronos.forecast_final_close",
+                    "kronos.forecast_fingerprint",
+                    "kronos.forecast_pct_change",
+                    "kronos.forecast_sha256",
+                    "kronos.last_observed_close",
+                    "kronos.model_id",
+                    "market_data.bronze_sha256",
+                    "market_data.cache_status",
+                    "market_data.capture_id",
+                    "market_data.input_sha256",
+                    "market_data.provider",
+                    "market_data.quality",
+                    "market_data.retrieved_at",
+                    "market_data.silver_sha256",
+                    "news.article.0",
+                    "news.article.1",
+                    "news.article.2",
+                    "news.article.3",
+                    "news.article.4",
+                    "news.article.5",
+                    "news.article.6",
+                    "news.article.7",
+                    "news.event.0",
+                    "news.event.1",
+                    "news.event.2",
+                    "news.event.3",
+                    "news.event.4",
+                    "news.event.5",
+                    "news.event.6",
+                    "news.event.7",
+                    "news.evidence_status",
+                    "news.formula_version",
+                    "news.impact_score",
+                    "news.provider",
+                    "news.retrieved_at",
+                    "news.uncertainty",
+                    "research_view.analysis_version",
+                    "research_view.confidence",
+                    "research_view.contradicting_evidence",
+                    "research_view.direction",
+                    "research_view.primary_risk",
+                    "research_view.status",
+                    "research_view.supporting_evidence",
+                    "research_view.why",
+                    "technicals.as_of",
+                    "technicals.indicator.0",
+                    "technicals.indicator.1",
+                    "technicals.indicator.10",
+                    "technicals.indicator.11",
+                    "technicals.indicator.2",
+                    "technicals.indicator.3",
+                    "technicals.indicator.4",
+                    "technicals.indicator.5",
+                    "technicals.indicator.6",
+                    "technicals.indicator.7",
+                    "technicals.indicator.8",
+                    "technicals.indicator.9",
+                    "technicals.regime",
+                    "technicals.trend",
+                    "technicals.version"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "agent_type",
+        "snapshot_id",
+        "stance",
+        "risk_level",
+        "support_level",
+        "arguments",
+        "limitations",
+        "uncertainty"
+      ],
+      "type": "object"
+    }
+  },
+  "support_levels": [
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "INSUFFICIENT"
+  ],
+  "validator_version": "evidence_native_grounding_v1"
+}

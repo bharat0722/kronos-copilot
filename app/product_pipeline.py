@@ -136,10 +136,12 @@ class ProductPipeline:
                                                    latency_ms=int((time.monotonic() - started) * 1000),
                                                    provider=manifest["provider"],
                                                    cache_status="hit" if payload.get("cache_hit") else "miss")
-            manifest["stages"]["intelligence"] = _stage("DEGRADED", rows=len(forecast), updated=updated,
-                   warnings=["Ensemble remains research-only"],
+            manifest["stages"]["intelligence"] = _stage("HEALTHY", rows=len(forecast), updated=updated,
+                   warnings=[],
                    provider="local Kronos + deterministic technicals",
                    cache_status="hit" if payload.get("cache_hit") else "miss")
+            manifest["stages"]["intelligence"].update({"research_status": "NOT_HISTORICALLY_CALIBRATED",
+                "completeness": "PRODUCT_COMPONENTS_COMPLETE", "limitations": ["Ensemble remains research-only"]})
             manifest["updated_at"] = updated
             self._write_latest(manifest)
 
@@ -161,7 +163,7 @@ class ProductPipeline:
         stages = manifest["stages"]
         updated = pd.Timestamp(manifest["updated_at"])
         if (pd.Timestamp.now(tz="UTC") - updated).total_seconds() > 3600:
-            stages = {name: {**stage, "status": "STALE" if stage["status"] == "HEALTHY" else stage["status"]}
+            stages = {name: {**stage, "status": "STALE" if stage["status"] in {"HEALTHY", "DEGRADED"} else stage["status"]}
                       for name, stage in stages.items()}
         return {"schema_version": manifest["schema_version"], "symbol": manifest.get("symbol"),
                 "interval": manifest.get("interval"), "updated_at": manifest.get("updated_at"),

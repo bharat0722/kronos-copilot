@@ -1,0 +1,202 @@
+{
+  "agent_schema": "agent_output_v3",
+  "daily_call_limit": 12,
+  "execution_conditions": [
+    "Fresh explicit authorization required.",
+    "All fixture/source hashes must match.",
+    "Existing one-hour snapshot/acquisition freshness guard must pass.",
+    "If expired, separately authorize a timestamp-only fresh freeze; never silently edit fixtures.",
+    "Use an empty live cache namespace, never the offline mock namespace.",
+    "Daily persisted production budget must have sufficient allowance; do not reset or override it.",
+    "Stop on failed preflight; no diagnostic calls or contract edits during execution."
+  ],
+  "expires_at": "2026-10-09T18:54:13.708264+00:00",
+  "fixtures": {
+    "A": {
+      "fixture_file_sha256": "e16ae51c10965d71680eb6ae106454564a1ae305de18d7e8d1b3965d282d6326",
+      "fixture_id": "synthetic_production_v1_TESTCO",
+      "fixture_path": "research/results/healthcheck_postrepair/v3_fixtures/A.json",
+      "future_live_cache_miss_required": true,
+      "future_live_cache_scope": "outputs/agent_research/v3_live/A",
+      "input_bytes": 27091,
+      "input_headroom_bytes": 20909,
+      "input_sha256": "4ce7a07eced3c1b649a829f3953b832efd1d4ddb503391878f53b867cdc55108",
+      "mock_cache_scope": "outputs/agent_research/v3_offline",
+      "offline_checks": {
+        "attempts": true,
+        "cache": true,
+        "conflicts": true,
+        "dashboard_adapter": true,
+        "durable": true,
+        "fusion": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "team": true
+      },
+      "offline_output_estimates": {
+        "bear": {
+          "estimated_tokens": 198,
+          "json_bytes": 792,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        },
+        "bull": {
+          "estimated_tokens": 280,
+          "json_bytes": 1119,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        },
+        "risk": {
+          "estimated_tokens": 285,
+          "json_bytes": 1137,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        }
+      },
+      "preflight": {
+        "harness_version": "agent_run_v4",
+        "input_bytes": 27091,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v8",
+          "bull": "bull_agent_prompt_v9",
+          "risk": "risk_agent_prompt_v8"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v3",
+        "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+    },
+    "B": {
+      "fixture_file_sha256": "6e6c706fdb77d3078bfe5779dec34d2b4a83835252474037ecbd39c5e8da19d2",
+      "fixture_id": "synthetic_adversarial_v1_TESTCO",
+      "fixture_path": "research/results/healthcheck_postrepair/v3_fixtures/B.json",
+      "future_live_cache_miss_required": true,
+      "future_live_cache_scope": "outputs/agent_research/v3_live/B",
+      "input_bytes": 27505,
+      "input_headroom_bytes": 20495,
+      "input_sha256": "089ab34b8bd9e4129acc2fa70c2a302e9d50f8cf3bce6128f892927a79ea4283",
+      "mock_cache_scope": "outputs/agent_research/v3_offline",
+      "offline_checks": {
+        "attempts": true,
+        "cache": true,
+        "conflicts": true,
+        "dashboard_adapter": true,
+        "durable": true,
+        "fusion": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "team": true
+      },
+      "offline_output_estimates": {
+        "bear": {
+          "estimated_tokens": 195,
+          "json_bytes": 777,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        },
+        "bull": {
+          "estimated_tokens": 280,
+          "json_bytes": 1119,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        },
+        "risk": {
+          "estimated_tokens": 387,
+          "json_bytes": 1548,
+          "method": "UTF-8 bytes divided by four, rounded up. Heuristic only; no tokenizer or measured API usage."
+        }
+      },
+      "preflight": {
+        "harness_version": "agent_run_v4",
+        "input_bytes": 27505,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v8",
+          "bull": "bull_agent_prompt_v9",
+          "risk": "risk_agent_prompt_v8"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v3",
+        "snapshot_id": "6e42d907e8faf748b7609c96893533eba50120a6c036e5c143da62e3086a9c96",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "snapshot_id": "6e42d907e8faf748b7609c96893533eba50120a6c036e5c143da62e3086a9c96"
+    }
+  },
+  "frozen_at": "2026-10-09T17:54:13.708264+00:00",
+  "live_authorized": false,
+  "live_executed": false,
+  "loop_limit": 1,
+  "max_input_bytes": 48000,
+  "max_live_calls": 12,
+  "max_output_tokens": 1600,
+  "max_workflows": 2,
+  "model": "gpt-5-mini",
+  "monad_permission": false,
+  "prompt_versions": {
+    "bear": "bear_agent_prompt_v8",
+    "bull": "bull_agent_prompt_v9",
+    "risk": "risk_agent_prompt_v8"
+  },
+  "renderer": "canonical_fact_renderer_v1",
+  "retry_limit": 1,
+  "schema_version": "v3_dual_live_manifest_v1",
+  "source_hashes": {
+    "app/agent_output_v3.py": "486377878ff7038acf5e39281f9e05775fb3027cae97637ec80e3ce4f02a69b9",
+    "app/agent_research.py": "77917a5e333e870f36d8aa089a86f8ddbdbfc69a3187eea12298fcc7b4530a5c",
+    "app/dashboard.js": "43f756907f3b59490bfb37cb437c780f0567a00e7f335ce580f37b7a7db0fb08",
+    "app/evidence_fusion.py": "dbb3185330dd7d331545ea939edb5dfa5a61c78781ee5d3e0c7c82a58e8affb1",
+    "app/evidence_snapshot.py": "9f17cbdef3ba023a497f9ca2a818b60f923ef963c9266ccaa29bcc8505b4753f",
+    "app/security.py": "92b78ce8ff5f09cae65f8b4f5d73488da9992f0e1cf51970a5e889f89c99c92d",
+    "app/server.py": "93dcf921deb5459af4d83e44cf4fd0d1fd4c3adadbd86059ba94eb4dbcf36d49",
+    "app/structured_claims.py": "1d7799701d771c6f9c256230adb09b917cc0314ee7cef512b6deebd7aa9ce6b0",
+    "app/usage_budget.py": "f8ea5caea7f6798ca02d7ecb4f33de17f4cbc69a6f87c53dbf9bf975bf87eb9f",
+    "research/tests/fixtures/dual_retest_fixtures.py": "3d9da119b7e0826092178a1bff2edccaecc175765c18ca45b776a2954b3cff8d"
+  },
+  "tools": "NONE",
+  "validator": "evidence_native_grounding_v1"
+}

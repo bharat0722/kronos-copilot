@@ -1,0 +1,533 @@
+{
+  "schema_version": "before_after_matrix_v1",
+  "categories": [
+    {
+      "area": "Repository integrity",
+      "before": {
+        "area": "Repository integrity",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Repository integrity",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Environment",
+      "before": {
+        "area": "Environment",
+        "score": 8,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Environment",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Server/API",
+      "before": {
+        "area": "Server/API",
+        "score": 7,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Server/API",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Market data",
+      "before": {
+        "area": "Market data",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Market data",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Bronze/Silver/Gold",
+      "before": {
+        "area": "Bronze/Silver/Gold",
+        "score": 8,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Bronze/Silver/Gold",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Kronos wrapper",
+      "before": {
+        "area": "Kronos wrapper",
+        "score": 7.5,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Kronos wrapper",
+        "score": 8,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Technicals",
+      "before": {
+        "area": "Technicals",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Technicals",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "News",
+      "before": {
+        "area": "News",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "News",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Evidence snapshot",
+      "before": {
+        "area": "Evidence snapshot",
+        "score": 7.5,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Evidence snapshot",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "AI Research Team",
+      "before": {
+        "area": "AI Research Team",
+        "score": 4,
+        "state": "RED",
+        "weight": 3
+      },
+      "after": {
+        "area": "AI Research Team",
+        "score": 7,
+        "state": "YELLOW",
+        "weight": 3
+      },
+      "interpretation": "Provider confirmation pending; offline path passes"
+    },
+    {
+      "area": "Evidence Fusion",
+      "before": {
+        "area": "Evidence Fusion",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Evidence Fusion",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Pipeline health",
+      "before": {
+        "area": "Pipeline health",
+        "score": 5.5,
+        "state": "YELLOW",
+        "weight": 2
+      },
+      "after": {
+        "area": "Pipeline health",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 2
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Dashboard",
+      "before": {
+        "area": "Dashboard",
+        "score": 7,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Dashboard",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Auth/security",
+      "before": {
+        "area": "Auth/security",
+        "score": 8.5,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Auth/security",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Caching",
+      "before": {
+        "area": "Caching",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Caching",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Ledger",
+      "before": {
+        "area": "Ledger",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Ledger",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Observability",
+      "before": {
+        "area": "Observability",
+        "score": 5,
+        "state": "RED",
+        "weight": 2
+      },
+      "after": {
+        "area": "Observability",
+        "score": 8.5,
+        "state": "GREEN",
+        "weight": 2
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Scientific integrity",
+      "before": {
+        "area": "Scientific integrity",
+        "score": 10,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "after": {
+        "area": "Scientific integrity",
+        "score": 10,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Test coverage",
+      "before": {
+        "area": "Test coverage",
+        "score": 7,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Test coverage",
+        "score": 9,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    },
+    {
+      "area": "Architecture",
+      "before": {
+        "area": "Architecture",
+        "score": 7.5,
+        "state": "YELLOW",
+        "weight": 1
+      },
+      "after": {
+        "area": "Architecture",
+        "score": 8,
+        "state": "GREEN",
+        "weight": 1
+      },
+      "interpretation": "No actionable local finding remains in tested scope; not a guarantee of live availability"
+    }
+  ],
+  "findings": [
+    {
+      "id": "H1",
+      "severity": "HIGH",
+      "title": "Production agent responses exhaust the output cap",
+      "evidence": [
+        "outputs/agent_research/attempts/fa1dadc302c30166a822927c5f969d1f.1.json",
+        "outputs/agent_research/attempts/3449ef071353084329f3e02c0320fc0c.1.json",
+        "outputs/agent_research/attempts/794e1cdfb23a127b88b7c546e4988d59.1.json",
+        "app/agent_research.py:588",
+        "app/agent_research.py:879"
+      ],
+      "verified": "Latest six attempts: RESPONSE_INCOMPLETE / max_output_tokens, 900 output tokens each, no usable report. September 30 matching team latency = 54,030 ms. Offline mocked incomplete responses reproduce FAILED after six bounded attempts.",
+      "smallest_fix": "Authorize a focused budget-fit repair: measure and compact redundant evidence/request representation and establish response-fit checks for unchanged strict v2 outputs. Explicitly classify deterministic truncation instead of blindly retrying identical requests. Do not assume compaction alone proves live recovery; retain limits and grounding. Separate live authorization required for any later verification.",
+      "resolution": "OPEN BLOCKER",
+      "after": "Response headroom 1600, concise typed claims, budget preflight and OUTPUT_TRUNCATED diagnostics implemented; actual provider recovery is unconfirmed.",
+      "repair_evidence": [
+        "test_production_size_and_budget_preflight",
+        "test_concise_validation_preserves_typed_contract",
+        "test_truncation_failed_restart_six_attempts_no_cache"
+      ]
+    },
+    {
+      "id": "M1",
+      "severity": "MEDIUM",
+      "title": "FAILED becomes READY in team headline and reload",
+      "evidence": [
+        "app/dashboard.js:707",
+        "app/agent_research.py:804",
+        "app/agent_research.py:1104"
+      ],
+      "verified": "Real browser: all cards Failed while headline Ready to analyze the saved evidence. Mocked failed run -> result READY; restarted team -> health READY, despite durable failed ledgers. Health errors empty; last status is global, not snapshot-scoped.",
+      "smallest_fix": "Derive snapshot-specific last attempt state from durable records; render FAILED/PARTIAL/READY distinctly and expose a sanitized primary failure reason. Distinguish SUCCESS/COMPLETE from cache state.",
+      "resolution": "RESOLVED",
+      "after": "Durable snapshot-specific canonical team state; individual failures, partial and complete survive restart; UI and health consume the same state.",
+      "repair_evidence": [
+        "test_complete_restart_and_fusion_refresh_immutable",
+        "test_partial_restart_new_snapshot_distinction",
+        "test_interrupted_running_restores_failed_not_ready",
+        "browser_qa.json"
+      ]
+    },
+    {
+      "id": "M2",
+      "severity": "MEDIUM",
+      "title": "Offline suite depends on ignored machine-local fixtures",
+      "evidence": [
+        "research/tests/test_phase7_2a_diagnostics.py:28",
+        "research/tests/test_news_intelligence.py:95",
+        "app/news_intelligence.py:364",
+        ".gitignore"
+      ],
+      "verified": "Tracked-source mirror without synthetic_live_smoke_spec.json and instrument_master_cache.json: 2 assertion failures and 58 error/subtest entries. Restoring exact local copies: 183 pass / 0 fail / 1 skip. Final Phase 7/8 reports/contracts are tracked, but the synthetic smoke fixture is not.",
+      "smallest_fix": "Package only synthetic fixtures in a tracked fixture directory and mock the instrument-name dependency. No private runtime caches or real credentials should become test prerequisites.",
+      "resolution": "RESOLVED",
+      "after": "Tracked synthetic fixture replaces ignored smoke-spec dependency; instrument names mocked; production-sized payload and real local HTTP integration added.",
+      "repair_evidence": [
+        "fixtures/synthetic_agent_evidence.json",
+        "test_production_size_and_budget_preflight",
+        "test_http_team_fusion_status_and_sanitized_dashboard"
+      ]
+    },
+    {
+      "id": "M3",
+      "severity": "MEDIUM",
+      "title": "Agent snapshot validation checks identity, not temporal expiry",
+      "evidence": [
+        "app/agent_research.py:814",
+        "app/server.py:94",
+        "app/evidence_fusion.py:123"
+      ],
+      "verified": "Unchanged snapshot with created_at in 2020 passes both current_agent_snapshot and preflight with matching synthetic saved hashes. Fusion separately evaluates evidence freshness, but paid agent execution has no age gate.",
+      "smallest_fix": "Add explicit forecast/source age policy before execution, with a labeled historical-analysis mode if needed; preserve content identity and existing fusion thresholds.",
+      "resolution": "RESOLVED",
+      "after": "Paid execution verifies current canonical pointer, content/forecast ownership and <=3600s snapshot/source age before each SDK attempt; historical result reads remain available.",
+      "repair_evidence": [
+        "test_expired_future_missing_and_stale_acquisition_stop_before_call",
+        "test_current_identity_and_public_path_sanitization",
+        "test_eligibility_changes_between_roles_prevent_more_requests"
+      ]
+    },
+    {
+      "id": "M4",
+      "severity": "MEDIUM",
+      "title": "Pipeline health conflates operational health and research limitations",
+      "evidence": [
+        "app/product_pipeline.py:135",
+        "app/product_pipeline.py:154",
+        "app/news_intelligence.py:509",
+        "app/evidence_fusion.py:618"
+      ],
+      "verified": "Intelligence DEGRADED is unconditional after a successful Gold completion solely because ensemble is research-only. Old DEGRADED stages are never converted to STALE. Web-news health is Tavily-only, not the whole Yahoo/RSS chain. Fusion health has no age expiry and also labels mixed/missing evidence as operational degradation.",
+      "smallest_fix": "Keep outcome, feature availability, freshness and operational status separate; scope health to current symbol/snapshot and disclose component-specific latency/cache state.",
+      "resolution": "RESOLVED",
+      "after": "Operational success is separate from research status/completeness. Old DEGRADED stages age to STALE; whole-chain news and snapshot-scoped fusion health are truthful. Unknown fallback latency is null.",
+      "repair_evidence": [
+        "test_pipeline_operational_and_research_status_are_separate",
+        "test_fusion_mixed_is_operational_success_but_old_run_stale",
+        "test_http_team_fusion_status_and_sanitized_dashboard",
+        "test_rss_fallback_preserves_publisher_and_provenance"
+      ]
+    },
+    {
+      "id": "M5",
+      "severity": "MEDIUM",
+      "title": "Public dashboard missing-file error exposes filesystem path",
+      "evidence": [
+        "app/server.py:1073",
+        "app/server.py:1204"
+      ],
+      "verified": "Actual handler, synthetic FileNotFoundError: GET /api/dashboard returns 400 containing C:\\synthetic-private\\outputs\\forecast_summary.json. No real secret contents were requested.",
+      "smallest_fix": "Return stable public error codes/messages and keep any path detail in protected local diagnostics. Review equivalent explanation error handling.",
+      "resolution": "RESOLVED",
+      "after": "Non-domain exceptions receive generic public messages; trusted AgentError contracts remain structured. Synthetic path-bearing handler errors do not expose paths.",
+      "repair_evidence": [
+        "test_current_identity_and_public_path_sanitization",
+        "test_http_team_fusion_status_and_sanitized_dashboard"
+      ]
+    },
+    {
+      "id": "L1",
+      "severity": "LOW",
+      "title": "New-request controls differ from saved-result identity",
+      "evidence": [
+        "app/dashboard.js:913",
+        "app/dashboard.js:1355",
+        "browser QA"
+      ],
+      "verified": "Saved RENTOMOJO.NS is correctly labeled in result/chart, but request field remains RELIANCE. Selecting 120 updates request helper while old 75-bar result remains visible. This is pending-request vs saved-result behavior, not a proven backend horizon defect.",
+      "smallest_fix": "Clarify new-request and saved-result labels without changing forecast values or forcing a new run.",
+      "resolution": "RESOLVED",
+      "after": "Saved ticker initializes request controls; pending 120-bar request is clearly distinguished from unchanged saved 75-bar result.",
+      "repair_evidence": [
+        "browser_qa.json"
+      ]
+    },
+    {
+      "id": "L2",
+      "severity": "LOW",
+      "title": "Cold startup imports the heavy forecasting dependency path",
+      "evidence": [
+        "app/server.py:32",
+        "src/first_forecast.py:13"
+      ],
+      "verified": "Isolated server module import took 6.882 seconds; torch is CPU-only. Model weights were not loaded. Synchronous agent execution blocks that request while other server threads remain available.",
+      "smallest_fix": "Defer heavy imports only in a later authorized performance task; avoid broad restructuring during repair.",
+      "resolution": "ACCEPTED NON-BLOCKER",
+      "after": "Heavy imports and synchronous per-request work remain. Browser timeout is bounded, active state is visible, and other server threads remain available. No broad performance refactor.",
+      "repair_evidence": [
+        "test_live_running_status_and_cancel_recover_without_extra_calls",
+        "test_frontend_state_timeout_and_scoped_pipeline_contract"
+      ]
+    }
+  ],
+  "roles": {
+    "bull": {
+      "before": "YELLOW",
+      "offline_after": "GREEN",
+      "live_after": "YELLOW"
+    },
+    "bear": {
+      "before": "YELLOW",
+      "offline_after": "GREEN",
+      "live_after": "YELLOW"
+    },
+    "risk": {
+      "before": "YELLOW",
+      "offline_after": "GREEN",
+      "live_after": "YELLOW"
+    }
+  },
+  "harness": {
+    "before": "YELLOW",
+    "after": "GREEN"
+  },
+  "gate": {
+    "schema_version": "monad_readiness_gate_postrepair_v1",
+    "status": "YELLOW",
+    "permission": "NO",
+    "offline_remediation": "PASS",
+    "actual_provider_recovery": "UNCONFIRMED",
+    "live_confirmation_needed": true,
+    "remaining_red": [],
+    "open_blockers": [
+      "H1 actual provider completion under the new 1600-token concise contract needs fresh authorized synthetic confirmation"
+    ],
+    "accepted_non_blockers": [
+      "L2 startup/server concentration",
+      "Full dependency vulnerability/type/lint scans unavailable offline"
+    ],
+    "safety": {
+      "openai_calls": 0,
+      "other_llm_calls": 0,
+      "external_api_calls": 0,
+      "tavily_calls": 0,
+      "yahoo_calls": 0,
+      "kronos_inference": 0,
+      "kronos_training": 0,
+      "model_weight_changes": 0,
+      "validation_reruns": 0,
+      "locked_test_target_accesses": 0,
+      "git_commits": 0,
+      "git_pushes": 0,
+      "monad_code_added": false,
+      "phase9_started": false
+    },
+    "next_action": "Obtain fresh authorization for exactly one synthetic production-like three-agent live smoke test."
+  }
+}

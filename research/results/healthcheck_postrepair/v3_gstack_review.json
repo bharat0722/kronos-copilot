@@ -1,0 +1,24 @@
+{
+  "schema_version": "v3_scoped_gstack_review_v1",
+  "status": "PARTIAL",
+  "scope": "Evidence-native agent contract, shared harness integration and fusion/dashboard adapters",
+  "installed_browse_build_id": "0530392821c277b95e5cd65aa9d9fda4248718b2",
+  "review": {"status": "PASS", "method": "Installed gstack review skill and critical/informational checklist, scoped manual verification"},
+  "security": {"status": "PASS", "method": "Installed CSO AI trust-boundary checklist, offline security regression evidence"},
+  "qa": {"status": "PASS", "method": "Installed qa-only checklist with local Playwright fallback", "artifact": "v3_qa/qa.json", "viewports": [1440, 390, 834], "cases": ["A", "B"], "reload_checked": true},
+  "native_workflow": "UNAVAILABLE: current skill requires Aside; Aside/Bash command unavailable",
+  "outside_model_review": "NOT RUN",
+  "closed_verified_findings": [
+    "Native Risk arguments now reach the existing fusion risk list.",
+    "Wrong-snapshot and unknown-schema agent reports cannot influence risk-only fusion paths.",
+    "V3 cache-write failure cannot publish a misleading COMPLETE result.",
+    "Categorical production news quality remains categorical rather than numeric probability."
+  ],
+  "open_scoped_blockers": [],
+  "limitations": [
+    "No full native gstack execution, dependency/CVE scan or full secret archaeology.",
+    "No live provider, LAN, external model, install, upgrade or telemetry calls.",
+    "QA proves scoped agent/fusion/pipeline display, not live market/news alignment."
+  ],
+  "external_calls": 0
+}

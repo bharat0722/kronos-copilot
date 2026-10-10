@@ -1,6 +1,7 @@
 """Offline Bull numerical-grounding and rejection-diagnostic regression tests."""
 
 from __future__ import annotations
+from research.tests.legacy_agent_harness import LegacyAgentTeam
 
 import copy
 import json
@@ -13,7 +14,7 @@ from unittest.mock import patch
 from app import agent_research
 from app.agent_research import (AGENTS, MAX_REASONING_ROUNDS, MAX_RETRIES, AgentTeam,
                                 ClaimValidationError, NumericalGroundingError,
-                                PROMPT_VERSIONS, evidence_catalog, validate_output)
+                                LEGACY_PROMPT_VERSIONS as PROMPT_VERSIONS, evidence_catalog, validate_output)
 from app.evidence_snapshot import snapshot_id
 from research.tests.test_phase7_2a_diagnostics import MockClient, mock_response, synthetic_record
 from research.tests.test_phase7_agents import typed_claim, valid_report
@@ -33,10 +34,9 @@ def bull_claim(record, text, references, *, argument=False):
                       "news": "NEWS", "research_view": "RESEARCH_VIEW", "instrument": "INSTRUMENT"}
                      .get(next(iter(prefixes)), "FORECAST") if len(prefixes) == 1 else
                      "MULTI_SOURCE" if prefixes else "FORECAST")
-    numeric = any(character.isdigit() for character in text)
     claim = typed_claim(text, references,
-                        claim_type="NUMERICAL_FACT" if numeric else "INTERPRETATION",
-                        support_type="DIRECT" if numeric else "INTERPRETIVE",
+                        claim_type="RISK" if any(character.isdigit() for character in text) else "INTERPRETATION",
+                        support_type="DERIVED" if any(character.isdigit() for character in text) else "INTERPRETIVE",
                         evidence_type=evidence_type)
     if argument:
         report["argument"] = claim
@@ -164,10 +164,10 @@ class BullNumericalGroundingTests(unittest.TestCase):
         self.assertIn("15%", diagnostic_text)
 
     def test_prompt_version_and_cache_key_are_bull_only(self):
-        self.assertEqual(PROMPT_VERSIONS["bull"], "bull_agent_prompt_v5")
-        self.assertEqual(PROMPT_VERSIONS["bear"], "bear_agent_prompt_v4")
-        self.assertEqual(PROMPT_VERSIONS["risk"], "risk_agent_prompt_v4")
-        team = AgentTeam(Path("unused"))
+        self.assertEqual(PROMPT_VERSIONS["bull"], "bull_agent_prompt_v9")
+        self.assertEqual(PROMPT_VERSIONS["bear"], "bear_agent_prompt_v8")
+        self.assertEqual(PROMPT_VERSIONS["risk"], "risk_agent_prompt_v8")
+        team = LegacyAgentTeam(Path("unused"))
         current = {name: team._key(self.record["snapshot_id"], name) for name in AGENTS}
         with patch.dict(PROMPT_VERSIONS, {"bull": "bull_agent_prompt_v3"}):
             old = {name: team._key(self.record["snapshot_id"], name) for name in AGENTS}
@@ -187,7 +187,7 @@ class BullNumericalGroundingTests(unittest.TestCase):
         original = copy.deepcopy(self.record)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             result = team.run(self.record)
             self.assertEqual(result["status"], "PARTIAL")
             self.assertEqual(result["api_calls"], 4)
@@ -207,7 +207,7 @@ class BullNumericalGroundingTests(unittest.TestCase):
             parent = next(json.loads(path.read_text()) for path in (root / "runs").glob("*.json")
                           if json.loads(path.read_text())["agent_type"] == "bull")
             self.assertEqual(parent["validation_diagnostic_attempt_refs"], parent["attempt_refs"])
-            self.assertEqual(team.result(self.record)["agents"]["bull"]["status"], "NOT_RUN")
+            self.assertEqual(team.result(self.record)["agents"]["bull"]["status"], "AGENT_FAILED")
         self.assertEqual(self.record, original)
 
     def test_first_attempt_diagnostic_survives_successful_retry_and_ledger_precedes_cache(self):
@@ -223,7 +223,7 @@ class BullNumericalGroundingTests(unittest.TestCase):
         client = MockClient(response)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             events = []
             original_ledger = team._ledger
             original_atomic = agent_research._atomic_json
@@ -255,7 +255,7 @@ class BullNumericalGroundingTests(unittest.TestCase):
     def test_old_bull_prompt_cache_is_not_reused(self):
         client = MockClient(lambda name: mock_response(name, self.record["snapshot_id"]))
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
-            team = AgentTeam(Path(directory), client_factory=lambda: client)
+            team = LegacyAgentTeam(Path(directory), client_factory=lambda: client)
             with patch.dict(PROMPT_VERSIONS, {"bull": "bull_agent_prompt_v3"}):
                 self.assertEqual(team.run(self.record)["status"], "SUCCESS")
             result = team.result(self.record)
@@ -271,9 +271,9 @@ class BullNumericalGroundingTests(unittest.TestCase):
                 self.assertEqual(validate_output(report, name, self.record["snapshot_id"], self.catalog), report)
         self.assertEqual(MAX_REASONING_ROUNDS, 1)
         self.assertEqual(MAX_RETRIES, 1)
-        team = AgentTeam(Path("unused"))
+        team = LegacyAgentTeam(Path("unused"))
         self.assertEqual(team.config.model, "gpt-5-mini")
-        self.assertEqual(team.config.max_output_tokens, 900)
+        self.assertEqual(team.config.max_output_tokens, 1600)
         request = team._request_args("bull", agent_research.canonical_bytes(
             {"evidence": self.record["evidence"], "evidence_catalog": self.catalog}))
         self.assertEqual(request["tools"], [])

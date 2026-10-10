@@ -1,0 +1,708 @@
+{
+  "attempt_inventory": [
+    {
+      "agent": "bull",
+      "artifact": "v3_live_A.json",
+      "attempt": 1,
+      "attempt_id": "0f1380efe3c061ab0eb86d6bee5c2774.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_A.json",
+      "attempt": 2,
+      "attempt_id": "0f1380efe3c061ab0eb86d6bee5c2774.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_A.json",
+      "attempt": 1,
+      "attempt_id": "c7484468b36146273da95517d3e325d4.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_A.json",
+      "attempt": 2,
+      "attempt_id": "c7484468b36146273da95517d3e325d4.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "SCHEMA_VALIDATION"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_A.json",
+      "attempt": 1,
+      "attempt_id": "f6cee1b274d0c43f731e03c8a8677ea6.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_A.json",
+      "attempt": 2,
+      "attempt_id": "f6cee1b274d0c43f731e03c8a8677ea6.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_B.json",
+      "attempt": 1,
+      "attempt_id": "b7f0be22b19cc91987fc2209d4d128dc.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_B.json",
+      "attempt": 2,
+      "attempt_id": "b7f0be22b19cc91987fc2209d4d128dc.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_B.json",
+      "attempt": 1,
+      "attempt_id": "10c3b83aa304409bd32c0392c02fdc68.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "model_generated_number"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_B.json",
+      "attempt": 2,
+      "attempt_id": "10c3b83aa304409bd32c0392c02fdc68.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_B.json",
+      "attempt": 1,
+      "attempt_id": "99596d950988a1337ac42e41afbbe6f8.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_B.json",
+      "attempt": 2,
+      "attempt_id": "99596d950988a1337ac42e41afbbe6f8.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": null,
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bull",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 1,
+      "attempt_id": "be8630531cb38558b4682d7a55bdef14.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[2].interpretation.text",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "The forecast implies a modest change relative to the last observed price while the market data quality is reported as passing; this suggests the signal exists but that the magnitude and realization remain uncertain.",
+      "rule": "deterministic_fact_in_prose"
+    },
+    {
+      "agent": "bull",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 2,
+      "attempt_id": "be8630531cb38558b4682d7a55bdef14.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[2].stance",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "MIXED",
+      "rule": "unsupported_directional_conflict"
+    },
+    {
+      "agent": "bear",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 1,
+      "attempt_id": "af39b23c191be8cdef7170ae22c92e92.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[0].stance",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "MIXED",
+      "rule": "unsupported_directional_conflict"
+    },
+    {
+      "agent": "bear",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 2,
+      "attempt_id": "af39b23c191be8cdef7170ae22c92e92.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[0].stance",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "MIXED",
+      "rule": "unsupported_directional_conflict"
+    },
+    {
+      "agent": "risk",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 1,
+      "attempt_id": "ae9ba3169bdf5825953b23c7d431baf2.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[0].stance",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "MIXED",
+      "rule": "unsupported_directional_conflict"
+    },
+    {
+      "agent": "risk",
+      "artifact": "typed_prose_live_A.json",
+      "attempt": 2,
+      "attempt_id": "ae9ba3169bdf5825953b23c7d431baf2.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[0].interpretation.text",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Model direction and technical trend align with a positive orientation, while recent company messaging includes a single product partnership event characterized as supportive but not decisive. Together this suggests contextual bullish signal",
+      "rule": "schema_string"
+    },
+    {
+      "agent": "bull",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 1,
+      "attempt_id": "7546c3a788c684b654d690d0cec0bdf6.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.limitations[2].text",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technical regime is described as elevated volatility, which reduces the reliability of short-term directional signals.",
+      "rule": "deterministic_fact_in_prose"
+    },
+    {
+      "agent": "bull",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 2,
+      "attempt_id": "7546c3a788c684b654d690d0cec0bdf6.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.uncertainty[1].evidence_ids",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "News relevance and quality support the positive announcement but do not quantify likely price effect.",
+      "rule": "missing_or_duplicate_evidence"
+    },
+    {
+      "agent": "bear",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 1,
+      "attempt_id": "2e12a0065365f917e7d1fef6b52b6d04.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.uncertainty[0].text",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "The balance between model-driven upside and technical downside is unresolved; interpretation may change as new price or reported outcomes appear.",
+      "rule": "deterministic_fact_in_prose"
+    },
+    {
+      "agent": "bear",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 2,
+      "attempt_id": "2e12a0065365f917e7d1fef6b52b6d04.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[1].interpretation.evidence_ids",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "News coverage appears weak or unconfirmed on key items, which may provide limited bullish support and leaves the outlook vulnerable to technical downside.",
+      "rule": "missing_or_duplicate_evidence"
+    },
+    {
+      "agent": "risk",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 1,
+      "attempt_id": "3f0411f04321cafa0e9ae033849c663d.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[0].stance",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "MIXED",
+      "rule": "unsupported_directional_conflict"
+    },
+    {
+      "agent": "risk",
+      "artifact": "typed_prose_live_B.json",
+      "attempt": 2,
+      "attempt_id": "3f0411f04321cafa0e9ae033849c663d.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": "$.arguments[2].evidence_fact_refs[1]",
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "The market regime and research view indicate elevated volatility and identified primary risks; this suggests increased uncertainty and higher risk around short-term outcomes.",
+      "rule": "field_not_in_cited_evidence"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "492b46753dc84c8498ef511910d77456.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technicals show a bullish regime and multiple bullish indicators.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "492b46753dc84c8498ef511910d77456.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "News impact is limited to a single product partnership announcement with modest positive impact.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "ce73d690adde610be16b4214b96d8e24.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technicals regime is TRENDING_BULL with bullish indicators.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "ce73d690adde610be16b4214b96d8e24.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast direction is up.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "67c08f7315de8a22aea6949b1c24f3ea.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos direction is up and forecast_final_close is 101.2 (forecast_pct_change 1.2).",
+      "rule": "field_or_unit_mismatch"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "67c08f7315de8a22aea6949b1c24f3ea.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos direction is up, forecast_final_close equals 101.2 (FORECAST).",
+      "rule": "field_or_unit_mismatch"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "1015d20a70009ae6bc35bab30cde162b.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Multiple technical indicators are labeled bullish in the snapshot.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "1015d20a70009ae6bc35bab30cde162b.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Multiple technical indicators are marked bullish in the snapshot.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "1425cbfefd0e1c973ba085fa015ae753.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos direction is 'up'.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "1425cbfefd0e1c973ba085fa015ae753.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": "",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "38d7f86067f347339aa9cdd32e4d3a0d.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos' upside direction conflicts with a bearish technical trend; model support is limited by research_view noting low confidence and conflicting evidence.",
+      "rule": "incompatible_evidence_type"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "38d7f86067f347339aa9cdd32e4d3a0d.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast direction is 'up' while technicals.trend is 'bearish', an explicit directional conflict.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "5122573114a19fb29a9b1ede01c2a0be.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast is up with forecast_pct_change 1.2% and forecast_final_close 101.2, but small magnitude limits upside buffer relative to observations.",
+      "rule": "field_or_unit_mismatch"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "5122573114a19fb29a9b1ede01c2a0be.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast_direction is up and forecast_pct_change is 1.2%, which may be reversed if realised price diverges from the model.",
+      "rule": "field_or_unit_mismatch"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "8be39799c48f559ae813c2d758876fcc.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast direction is up.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "8be39799c48f559ae813c2d758876fcc.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": false,
+      "retained_excerpt": "",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "9e7aa4893b72cd2e4c9526e060bd2a41.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technicals.trend is labeled bullish in the snapshot.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bull",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "9e7aa4893b72cd2e4c9526e060bd2a41.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technicals block lists trend as 'bullish' and multiple indicators report 'bullish' signals.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "a996b046c34fae64d344b9a759e69ecc.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecasts a small upward move, which conflicts with bearish technicals.",
+      "rule": "unlabelled_interpretation"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "a996b046c34fae64d344b9a759e69ecc.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Technicals report a bearish trend in a HIGH_VOLATILITY regime.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "bf2092495f3a1e971ee4886755a11101.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos direction is 'up'.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "bear",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "bf2092495f3a1e971ee4886755a11101.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Kronos forecast direction is up.",
+      "rule": "unsupported_direct_fact"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 1,
+      "attempt_id": "cf385b9c5865d024671a121445a6f3bb.1",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Model forecast up is contradicted by research view stating 'Conflicting evidence'.",
+      "rule": "incompatible_evidence_type"
+    },
+    {
+      "agent": "risk",
+      "artifact": "v3_live_failure_replay.json",
+      "attempt": 2,
+      "attempt_id": "cf385b9c5865d024671a121445a6f3bb.2",
+      "equivalent_selection_with_original_prose_pass": true,
+      "path": null,
+      "proof_scope": "Offline structural equivalent, not reinterpretation or acceptance of the original contract.",
+      "retained_exact_text": true,
+      "retained_excerpt": "Model forecast direction is 'up' but research_view flags conflicting evidence and a primary risk that forecasts may not match market path.",
+      "rule": "incompatible_evidence_type"
+    }
+  ],
+  "classes": [
+    {
+      "classification": "STILL_RELEVANT",
+      "historical_category": "SCHEMA_VALIDATION",
+      "proof_tests": [
+        "test_bad_id",
+        "test_duplicate",
+        "test_malformed_twice_true_failure"
+      ],
+      "reason": "Unknown/duplicate IDs, malformed/schema/provider/system failures remain true structural failures; not bypassed.",
+      "retained_attempt_count": 1
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "deterministic_fact_in_prose",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 3
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "field_not_in_cited_evidence",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 1
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "field_or_unit_mismatch",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 4
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "incompatible_evidence_type",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 3
+    },
+    {
+      "classification": "STILL_RELEVANT",
+      "historical_category": "missing_or_duplicate_evidence",
+      "proof_tests": [
+        "test_bad_id",
+        "test_duplicate",
+        "test_malformed_twice_true_failure"
+      ],
+      "reason": "Unknown/duplicate IDs, malformed/schema/provider/system failures remain true structural failures; not bypassed.",
+      "retained_attempt_count": 2
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "model_generated_number",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 1
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "schema_string",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 1
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "unlabelled_interpretation",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 11
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "unsupported_direct_fact",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 16
+    },
+    {
+      "classification": "ELIMINATED_BY_DESIGN",
+      "historical_category": "unsupported_directional_conflict",
+      "proof_tests": [
+        "test_backend_direction_not_prose",
+        "test_prose_never_enters_fusion",
+        "test_number_explanation_nonblocking"
+      ],
+      "reason": "Removed model-owned semantic field or non-blocking optional prose. Backend resolves values/direction.",
+      "retained_attempt_count": 5
+    }
+  ],
+  "eliminated": 9,
+  "exact_text_missing": "Structural-equivalent replay only where prior text was not retained; no fabricated verbatim replay.",
+  "history_not_modified": true,
+  "retained_attempts": 48,
+  "still_relevant": 2
+}

@@ -1,0 +1,301 @@
+{
+  "abstention": "Valid completed structured result, zero directional influence; not a provider failure.",
+  "backend_result": {
+    "action": "PRESENT_CASE",
+    "agent_type": "bull",
+    "conflict": true,
+    "direction": "MIXED",
+    "explanation": "Bull prioritized Conflicting primary directions, Technical evidence, Kronos forecast. Selected primary directions conflict.",
+    "explanation_authoritative": false,
+    "explanation_status": "REJECTED",
+    "fallback_explanation": "Bull prioritized Conflicting primary directions, Technical evidence, Kronos forecast. Selected primary directions conflict.",
+    "lineage_ids": [
+      "kronos.config",
+      "kronos.direction",
+      "news.article.0",
+      "news.event.0",
+      "news.impact_score",
+      "technicals.indicator.0",
+      "technicals.indicator.1",
+      "technicals.indicator.11",
+      "technicals.indicator.2",
+      "technicals.indicator.3",
+      "technicals.indicator.4",
+      "technicals.indicator.5",
+      "technicals.indicator.6",
+      "technicals.indicator.9",
+      "technicals.regime",
+      "technicals.trend"
+    ],
+    "renderer_version": "evidence_selection_renderer_v1",
+    "resolved_facts": [
+      {
+        "display_text": "Market regime: HIGH_VOLATILITY",
+        "evidence_id": "technicals.regime",
+        "field_key": "market_regime",
+        "renderer_version": "canonical_fact_renderer_v1",
+        "source_family": "TECHNICAL",
+        "unit": "state",
+        "value": "HIGH_VOLATILITY"
+      },
+      {
+        "display_text": "Forecast horizon: 24 bars",
+        "evidence_id": "kronos.config",
+        "field_key": "forecast_horizon",
+        "renderer_version": "canonical_fact_renderer_v1",
+        "source_family": "FORECAST",
+        "unit": "bars",
+        "value": 24
+      }
+    ],
+    "risk_level": "HIGH",
+    "schema_version": "agent_output_v4",
+    "selected_evidence": [
+      {
+        "available_fields": [],
+        "direction": "NON_DIRECTIONAL",
+        "evidence_id": "context.directional_conflict",
+        "family": "DATA_QUALITY",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "news.article.0",
+          "news.event.0",
+          "news.impact_score",
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.11",
+          "technicals.indicator.2",
+          "technicals.indicator.3",
+          "technicals.indicator.4",
+          "technicals.indicator.5",
+          "technicals.indicator.6",
+          "technicals.indicator.9",
+          "technicals.trend"
+        ],
+        "priority": 1,
+        "quality": "WARN",
+        "risk_flags": [
+          "DIRECTIONAL_CONFLICT"
+        ],
+        "risk_relevance": true,
+        "role_compatibility": {
+          "bear": [
+            "RISK"
+          ],
+          "bull": [
+            "RISK"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Conflicting primary directions",
+        "use": "RISK"
+      },
+      {
+        "available_fields": [
+          "market_regime"
+        ],
+        "direction": "NON_DIRECTIONAL",
+        "evidence_id": "technicals.regime",
+        "family": "TECHNICAL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.regime"
+        ],
+        "observed_at": "2026-10-10T06:51:15.159395+00:00",
+        "priority": 2,
+        "provenance_reference": "technicals.regime",
+        "quality": "PASS",
+        "risk_flags": [
+          "ELEVATED_VOLATILITY"
+        ],
+        "risk_relevance": true,
+        "role_compatibility": {
+          "bear": [
+            "RISK"
+          ],
+          "bull": [
+            "RISK"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Technical evidence",
+        "use": "RISK"
+      },
+      {
+        "available_fields": [
+          "forecast_horizon"
+        ],
+        "direction": "NON_DIRECTIONAL",
+        "evidence_id": "kronos.config",
+        "family": "FORECAST",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.config"
+        ],
+        "observed_at": "2026-10-10T06:51:15.159395+00:00",
+        "priority": 3,
+        "provenance_reference": "kronos.config",
+        "quality": "PASS",
+        "risk_flags": [],
+        "risk_relevance": true,
+        "role_compatibility": {
+          "bear": [
+            "RISK"
+          ],
+          "bull": [
+            "RISK"
+          ],
+          "risk": [
+            "RISK"
+          ]
+        },
+        "short_backend_label": "Kronos forecast",
+        "use": "RISK"
+      }
+    ],
+    "snapshot_id": "2bf2f6c97e682ba67746882e47f45a91a02c275577298c09ed2b6467461cb0af",
+    "support_level": "INSUFFICIENT",
+    "uncertainty_flags": [
+      "DIRECTIONAL_CONFLICT",
+      "ELEVATED_VOLATILITY",
+      "NO_ROLE_ALIGNED_SUPPORT"
+    ],
+    "validator_version": "evidence_selection_validator_v1"
+  },
+  "explanation_policy": "Optional; safety-rejected/omitted uses backend fallback, safe prose is labelled unverified. Never consumed by fusion.",
+  "primary_acceptance": [
+    "identity",
+    "role",
+    "action",
+    "selection_limit",
+    "known_unique_ids",
+    "admissible_use",
+    "consecutive_priority"
+  ],
+  "prose_affects_structured_acceptance": false,
+  "schema_version": "agent_output_v4",
+  "validator": "evidence_selection_validator_v1",
+  "wire_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "action": {
+        "enum": [
+          "PRESENT_CASE",
+          "ABSTAIN"
+        ],
+        "type": "string"
+      },
+      "agent_type": {
+        "enum": [
+          "bull"
+        ],
+        "type": "string"
+      },
+      "optional_explanation": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "schema_version": {
+        "enum": [
+          "agent_output_v4"
+        ],
+        "type": "string"
+      },
+      "selected_evidence": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "evidence_id": {
+              "enum": [
+                "kronos.config",
+                "kronos.direction",
+                "kronos.forecast_final_close",
+                "kronos.forecast_pct_change",
+                "kronos.last_observed_close",
+                "kronos.model_id",
+                "market_data.quality",
+                "news.article.0",
+                "news.article.1",
+                "news.article.2",
+                "news.article.3",
+                "news.article.4",
+                "news.article.5",
+                "news.article.6",
+                "news.article.7",
+                "news.event.0",
+                "news.event.1",
+                "news.event.2",
+                "news.event.3",
+                "news.event.4",
+                "news.event.5",
+                "news.event.6",
+                "news.event.7",
+                "news.evidence_status",
+                "news.impact_score",
+                "news.uncertainty",
+                "technicals.indicator.0",
+                "technicals.indicator.1",
+                "technicals.indicator.10",
+                "technicals.indicator.11",
+                "technicals.indicator.2",
+                "technicals.indicator.3",
+                "technicals.indicator.4",
+                "technicals.indicator.5",
+                "technicals.indicator.6",
+                "technicals.indicator.7",
+                "technicals.indicator.8",
+                "technicals.indicator.9",
+                "technicals.regime",
+                "technicals.trend",
+                "context.directional_conflict"
+              ],
+              "type": "string"
+            },
+            "priority": {
+              "enum": [
+                1,
+                2,
+                3
+              ],
+              "type": "integer"
+            },
+            "use": {
+              "enum": [
+                "SUPPORT",
+                "COUNTER",
+                "RISK"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "evidence_id",
+            "priority",
+            "use"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "snapshot_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "schema_version",
+      "agent_type",
+      "snapshot_id",
+      "action",
+      "selected_evidence",
+      "optional_explanation"
+    ],
+    "type": "object"
+  }
+}

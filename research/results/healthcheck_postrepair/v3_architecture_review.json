@@ -1,0 +1,33 @@
+{
+  "schema_version": "v3_scoped_architecture_review_v1",
+  "status": "PASS_OFFLINE",
+  "score": 8.6,
+  "scale": 10,
+  "method": "Custom scoped engineering assessment, not gstack composite or whole-project health score",
+  "decisions": {
+    "fact_ownership": "BACKEND",
+    "role_validators": "One shared evidence-native validator",
+    "model_numbers_values_units_aliases": "REJECTED",
+    "interpretation_semantics": "Typed, cited, number-free; bounded guards, not universal entailment",
+    "fusion": "Thin validated derived-evidence adapter; existing financial weights unchanged",
+    "dashboard": "Backend presentation adapter; textContent rendering; no raw schema dependency",
+    "cache": "Schema/prompt/model/snapshot/role/validator identity",
+    "ledger": "Validation then durable ledger then cache/publication",
+    "legacy": "Historical contracts and artifacts preserved; test-only compatibility harness"
+  },
+  "tradeoffs": [
+    "Existing broad harness/server ownership remains architectural debt.",
+    "Legacy compatibility increases test maintenance but prevents rewriting historical meaning.",
+    "Qualitative support is not calibrated statistical confidence."
+  ],
+  "tests": {"passed": 299, "failed": 0, "skipped": 1, "native_v3_tests": 46},
+  "normal_offline_team": "3/3",
+  "adversarial_offline_team": "3/3",
+  "open_offline_blockers": [],
+  "live_provider_status": "UNPROVEN_V3",
+  "ai_team_health": "YELLOW_PENDING_LIVE_V3",
+  "monad_permission": false,
+  "external_calls": 0,
+  "git_commit": false,
+  "git_push": false
+}

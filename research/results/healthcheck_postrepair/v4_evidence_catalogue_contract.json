@@ -1,0 +1,81 @@
+{
+  "derived_meta_evidence": {
+    "context.directional_conflict": {
+      "available_fields": [],
+      "direction": "NON_DIRECTIONAL",
+      "evidence_id": "context.directional_conflict",
+      "family": "DATA_QUALITY",
+      "freshness": "FRESH",
+      "lineage_ids": [
+        "kronos.direction",
+        "news.article.0",
+        "news.event.0",
+        "news.impact_score",
+        "technicals.indicator.0",
+        "technicals.indicator.1",
+        "technicals.indicator.11",
+        "technicals.indicator.2",
+        "technicals.indicator.3",
+        "technicals.indicator.4",
+        "technicals.indicator.5",
+        "technicals.indicator.6",
+        "technicals.indicator.9",
+        "technicals.trend"
+      ],
+      "quality": "WARN",
+      "risk_flags": [
+        "DIRECTIONAL_CONFLICT"
+      ],
+      "risk_relevance": true,
+      "role_compatibility": {
+        "bear": [
+          "RISK"
+        ],
+        "bull": [
+          "RISK"
+        ],
+        "risk": [
+          "RISK"
+        ]
+      },
+      "short_backend_label": "Conflicting primary directions"
+    }
+  },
+  "example": {
+    "available_fields": [
+      "forecast_direction"
+    ],
+    "direction": "BULLISH",
+    "evidence_id": "kronos.direction",
+    "family": "FORECAST",
+    "freshness": "FRESH",
+    "lineage_ids": [
+      "kronos.direction"
+    ],
+    "observed_at": "2026-10-10T06:51:15.159395+00:00",
+    "provenance_reference": "kronos.direction",
+    "quality": "PASS",
+    "risk_flags": [],
+    "risk_relevance": true,
+    "role_compatibility": {
+      "bear": [
+        "COUNTER",
+        "RISK"
+      ],
+      "bull": [
+        "SUPPORT",
+        "RISK"
+      ],
+      "risk": [
+        "RISK"
+      ]
+    },
+    "short_backend_label": "Kronos forecast"
+  },
+  "fact_resolver": "Existing canonical fact resolver/renderer shared with historical v3; no new fact source or indicator",
+  "freshness_policy": "Market reference: <=1h FRESH, <=1d AGING; news <=3d FRESH, <=7d AGING; otherwise STALE. Missing/future timestamps UNKNOWN; snapshot live eligibility remains independently bounded.",
+  "provenance": "Canonical snapshot hash + evidence ID + available fields + lineage + original source hashes in snapshot.",
+  "quality_policy": "FAIL/STALE cannot SUPPORT or COUNTER. May be selected as explicit RISK limitation.",
+  "source": "Existing EvidenceSnapshotV1 allowlisted fields",
+  "version": "admissible_evidence_catalogue_v1"
+}

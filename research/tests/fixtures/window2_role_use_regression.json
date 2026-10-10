@@ -1,0 +1,130 @@
+{
+  "raw": {
+    "kronos.config": {
+      "forecast_rows": 75,
+      "input_rows": 400,
+      "sample_count": 1,
+      "sampling_T": 1.0,
+      "sampling_top_k": 0,
+      "sampling_top_p": 0.9
+    },
+    "kronos.direction": "down",
+    "kronos.forecast_final_close": 1217.8048,
+    "kronos.forecast_pct_change": -0.36,
+    "kronos.last_observed_close": 1222.2,
+    "kronos.model_id": "NeoQuasar/Kronos-base",
+    "market_data.quality": "PASS",
+    "market_data.retrieved_at": "2026-10-10T10:25:03.789445+00:00",
+    "news.evidence_status": "DEGRADED",
+    "news.impact_score": 0.0,
+    "news.retrieved_at": null,
+    "news.uncertainty": [],
+    "technicals.as_of": "2026-10-05 15:15:00+05:30",
+    "technicals.indicator.0": {
+      "indicator": "EMA20",
+      "reason": "Close relative to the 20-bar exponential mean.",
+      "signal": "bearish",
+      "strength": 1.0,
+      "value": 1225.9703483604903
+    },
+    "technicals.indicator.1": {
+      "indicator": "EMA50",
+      "reason": "Close relative to the 50-bar exponential mean.",
+      "signal": "bearish",
+      "strength": 1.0,
+      "value": 1226.9399955637296
+    },
+    "technicals.indicator.10": {
+      "indicator": "Volume SMA20",
+      "reason": "Mean volume across the latest 20 bars; no directional claim.",
+      "signal": "normal",
+      "strength": 0.0,
+      "value": 141861.95
+    },
+    "technicals.indicator.11": {
+      "indicator": "Volume spike",
+      "reason": "Latest volume divided by its 20-bar mean.",
+      "signal": "normal",
+      "strength": 0.0636,
+      "value": 1.1271521362846062
+    },
+    "technicals.indicator.2": {
+      "indicator": "SMA20",
+      "reason": "Close relative to the 20-bar simple mean.",
+      "signal": "bearish",
+      "strength": 1.0,
+      "value": 1228.689990234375
+    },
+    "technicals.indicator.3": {
+      "indicator": "SMA50",
+      "reason": "Close relative to the 50-bar simple mean.",
+      "signal": "bearish",
+      "strength": 1.0,
+      "value": 1226.8799975585937
+    },
+    "technicals.indicator.4": {
+      "indicator": "RSI14",
+      "reason": "Wilder-style 14-bar gain/loss momentum relative to 50.",
+      "signal": "bearish",
+      "strength": 0.362,
+      "value": 40.94879490407299
+    },
+    "technicals.indicator.5": {
+      "indicator": "MACD",
+      "reason": "12/26 EMA difference relative to its 9-bar signal.",
+      "signal": "bearish",
+      "strength": 0.3222,
+      "value": -1.8655653718417398
+    },
+    "technicals.indicator.6": {
+      "indicator": "MACD signal",
+      "reason": "Nine-bar exponential mean of MACD relative to zero.",
+      "signal": "bearish",
+      "strength": 0.2634,
+      "value": -0.839112919257227
+    },
+    "technicals.indicator.7": {
+      "indicator": "Bollinger Bands",
+      "reason": "Close position within 20-bar, two-standard-deviation bands.",
+      "signal": "bearish",
+      "strength": 0.297,
+      "value": {
+        "lower": 1217.7630020444417,
+        "middle": 1228.689990234375,
+        "upper": 1239.6169784243084
+      }
+    },
+    "technicals.indicator.8": {
+      "indicator": "ATR14",
+      "reason": "Wilder-smoothed true range; volatility, not direction.",
+      "signal": "normal",
+      "strength": 0.0869,
+      "value": 3.1855901069213575
+    },
+    "technicals.indicator.9": {
+      "indicator": "ROC10",
+      "reason": "Ten-bar percentage rate of change.",
+      "signal": "bearish",
+      "strength": 0.313,
+      "value": -0.6260731026374144
+    },
+    "technicals.regime": "LOW_VOLATILITY",
+    "technicals.trend": "bearish"
+  },
+  "reconstruction": {
+    "action": "PRESENT_CASE",
+    "agent_type": "bull",
+    "optional_explanation": null,
+    "schema_version": "agent_output_v4",
+    "selected_evidence": [
+      {
+        "evidence_id": "kronos.direction",
+        "priority": 1,
+        "use": "SUPPORT"
+      }
+    ],
+    "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c"
+  },
+  "snapshot_id": "29bb71d3d16adc772a39bcd0e88368eadba231a4e15fe0efe080fdee96b7c87c",
+  "source": "Frozen Window 2 visible evidence; rejected output is a structural equivalent, not recovered JSON"
+}

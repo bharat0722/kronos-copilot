@@ -1,0 +1,180 @@
+{
+  "agent_schema_version": "agent_output_v2_1",
+  "budget_reset_or_bypass": false,
+  "daily_budget_day_utc": "2026-10-09",
+  "daily_budget_used_read_only": 12,
+  "daily_call_cap": 12,
+  "execution_conditions": [
+    "Fresh explicit user authorization",
+    "Current production budget sufficient; never reset/bypass cap",
+    "Exact frozen evidence must pass current one-hour guard. If expired, obtain authorization to create a newly timestamped deterministic freeze; never silently refresh.",
+    "Verify source, schema, prompt and fixture hashes; normal production cache miss; do not use mock output as live evidence"
+  ],
+  "fixtures": {
+    "A": {
+      "checks": {
+        "agents_in_fusion": true,
+        "cache_invalidation": true,
+        "conflicts": true,
+        "durable_reload": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "primary_available": true,
+        "team": true
+      },
+      "current_freshness_pass": false,
+      "expires_at": "2026-10-09T14:54:18.024052+00:00",
+      "fixture_file_sha256": "1eadc0d2f6b8975622c1289fa258a1dab34726dca5fd7459f8c15627b580f105",
+      "fixture_id": "synthetic_production_v1_TESTCO",
+      "fixture_path": "research/tests/fixtures/dual_live_retest_A_v2.json",
+      "frozen_at": "2026-10-09T13:54:18.024052+00:00",
+      "historical_clock_preflight": {
+        "harness_version": "agent_run_v3",
+        "input_bytes": 21420,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v7",
+          "bull": "bull_agent_prompt_v8",
+          "risk": "risk_agent_prompt_v7"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v2_1",
+        "snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "offline_clock_note": "Exact original evidence replayed at its recorded time; production stale guard unchanged.",
+      "offline_team": "3/3",
+      "production_cache_miss": true,
+      "serialized_bytes": 21420,
+      "snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "wire_sha256": "4e58162e73dba05ee27e714774b57ef9ff952a85c6c99c0a64a342e187ccd328"
+    },
+    "B": {
+      "checks": {
+        "agents_in_fusion": true,
+        "cache_invalidation": true,
+        "conflicts": true,
+        "durable_reload": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "primary_available": true,
+        "team": true
+      },
+      "current_freshness_pass": false,
+      "expires_at": "2026-10-09T14:54:18.024052+00:00",
+      "fixture_file_sha256": "79ba7b858c489828e742ac2117f07a9f88b9640a1d9f78b2857e2d632975e595",
+      "fixture_id": "synthetic_adversarial_v1_TESTCO",
+      "fixture_path": "research/tests/fixtures/dual_live_retest_B_v2.json",
+      "frozen_at": "2026-10-09T13:54:18.024052+00:00",
+      "historical_clock_preflight": {
+        "harness_version": "agent_run_v3",
+        "input_bytes": 21834,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v7",
+          "bull": "bull_agent_prompt_v8",
+          "risk": "risk_agent_prompt_v7"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v2_1",
+        "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "offline_clock_note": "Exact original evidence replayed at its recorded time; production stale guard unchanged.",
+      "offline_team": "3/3",
+      "production_cache_miss": true,
+      "serialized_bytes": 21834,
+      "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+      "wire_sha256": "c8a08c72ea45b47df31a8cc6f45881b0d41ca51b5fdfde8695959a10cb2bb19f"
+    }
+  },
+  "generated_at": "2026-10-09T15:03:08.065436+00:00",
+  "git_commit": false,
+  "git_push": false,
+  "live_authorized": false,
+  "live_execution_ready_now": false,
+  "loop_limit": 1,
+  "max_input_bytes": 48000,
+  "max_live_calls": 12,
+  "max_output_tokens": 1600,
+  "max_retries": 1,
+  "max_workflows": 2,
+  "model": "gpt-5-mini",
+  "monad_permission": false,
+  "numerical_validator_version": "numerical_grounding_v4",
+  "offline_contract_ready": true,
+  "prompt_sha256": {
+    "bear": "7e19bffd47dfc4ec112ff1c74b7ef8fee7cadaceb1e7cc15cef253ba5aa71752",
+    "bull": "d21e4ad149274225091cfbac8cc322d6fff63ab41ba969516f6498077f7ab664",
+    "risk": "e223132843582ca76cda7f026f65ed176ade067999dc9920c77f50294a1d4a8d"
+  },
+  "prompt_versions": {
+    "bear": "bear_agent_prompt_v7",
+    "bull": "bull_agent_prompt_v8",
+    "risk": "risk_agent_prompt_v7"
+  },
+  "qualitative_validator_version": "qualitative_grounding_v1",
+  "schema_version": "final_dual_live_retest_manifest_v1",
+  "source_sha256": {
+    "app/agent_research.py": "4679b40d83e3261fab4be7bbe89c54eae6b5b1a9819b455505ab66cbf2a39bba",
+    "app/dashboard.js": "1a6dc3eb5bd15b145d372ab70d8d65db9c245a3e8d1b6d61c35d97dbf7bb43e1",
+    "app/evidence_fusion.py": "314bd83a5890e0b9c10272cd71650e50ca2f03db68a143ea07176424dd70c55d",
+    "app/evidence_snapshot.py": "9f17cbdef3ba023a497f9ca2a818b60f923ef963c9266ccaa29bcc8505b4753f",
+    "app/security.py": "92b78ce8ff5f09cae65f8b4f5d73488da9992f0e1cf51970a5e889f89c99c92d",
+    "app/server.py": "93dcf921deb5459af4d83e44cf4fd0d1fd4c3adadbd86059ba94eb4dbcf36d49",
+    "app/structured_claims.py": "1d7799701d771c6f9c256230adb09b917cc0314ee7cef512b6deebd7aa9ce6b0",
+    "app/usage_budget.py": "f8ea5caea7f6798ca02d7ecb4f33de17f4cbc69a6f87c53dbf9bf975bf87eb9f",
+    "research/technical_intelligence.py": "dc291d61c3570f1e0a1b20f9a0627c32c18e9a86e765d1a30fde3c3dcbae1943",
+    "research/tests/test_fixture_serialization_repair.py": "9b57f3854fe7d3f2b903759930f760c3a206f9886cb59a51d570f53305a9ebcf",
+    "research/tests/test_structured_claim_repair.py": "fea8e55e340050a1acb4fd16c3ac8b76b278c77a54a31eb1cbf983db876d6441",
+    "tools/run_offline_health_tests.py": "5ab87f808df024fcf1c52bfe4467835151a4c1edb08bf3fba79ee44ef089358d"
+  },
+  "structured_validator_version": "structured_claim_grounding_v1",
+  "tools": "NONE"
+}

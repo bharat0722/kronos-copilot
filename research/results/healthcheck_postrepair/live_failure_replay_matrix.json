@@ -1,0 +1,334 @@
+{
+  "schema_version": "live_failure_replay_matrix_v1",
+  "source_report": "live_three_agent_confirmation.json",
+  "source_sha256": "2c3acac665b917aa57b32a968745ac6f0534b48cacf7e61e3e45cd91a6fa54ea",
+  "source_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+  "counts": {
+    "FACT_MISCLASSIFIED_AS_DIRECT": 4,
+    "INTERPRETATION_MISLABELED_AS_FACT": 0,
+    "MIXED_EVIDENCE_FAMILY": 2,
+    "EVIDENCE_TYPE_MISMATCH": 0,
+    "NUMERICAL_SUPPORT_MISMATCH": 0,
+    "OTHER": 0
+  },
+  "cases": [
+    {
+      "agent": "bull",
+      "attempt": 1,
+      "claim_id": "key_factors.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_text": "Technicals.trend is labeled bullish in the snapshot.",
+        "claim_sha256": "d9b59c5519651dba3d5abe33795c4b4f04d31ef38d3cacd9d2950efcb45bf991",
+        "claim_type": "FACT",
+        "support_type": "DIRECT",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.trend"
+        ],
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "failure_reason": "unsupported_direct_fact"
+      },
+      "taxonomy": "FACT_MISCLASSIFIED_AS_DIRECT",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The bullish technical trend may support a constructive interpretation.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "INTERPRETIVE",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.trend"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "technicals.trend": "bullish"
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    },
+    {
+      "agent": "bull",
+      "attempt": 2,
+      "claim_id": "key_factors.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_text": "Technicals block lists trend as 'bullish' and multiple indicators report 'bullish' signals.",
+        "claim_sha256": "5b7664555aec00dcab9228d3206a26f75c63c5b6b92564ccb2c3dbd82b7f1910",
+        "claim_type": "FACT",
+        "support_type": "DIRECT",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.trend",
+          "technicals.indicator.0"
+        ],
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "failure_reason": "unsupported_direct_fact"
+      },
+      "taxonomy": "FACT_MISCLASSIFIED_AS_DIRECT",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The cited bullish technical signals may support a constructive interpretation.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "INTERPRETIVE",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.trend",
+          "technicals.indicator.0"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "technicals.trend": "bullish",
+        "technicals.indicator.0": {
+          "indicator": "RSI14",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        }
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    },
+    {
+      "agent": "bear",
+      "attempt": 1,
+      "claim_id": "key_factors.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_text": "Multiple technical indicators are labeled bullish in the snapshot.",
+        "claim_sha256": "ab4facf8b5aa3487fa5d8d54ddde61fad52c19f6ed41385ba4843aa1dea3fc7c",
+        "claim_type": "FACT",
+        "support_type": "DIRECT",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "failure_reason": "unsupported_direct_fact"
+      },
+      "taxonomy": "FACT_MISCLASSIFIED_AS_DIRECT",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The bullish technical signals may limit the downside case.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "INTERPRETIVE",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "technicals.indicator.0": {
+          "indicator": "RSI14",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        },
+        "technicals.indicator.1": {
+          "indicator": "EMA20",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        },
+        "technicals.indicator.2": {
+          "indicator": "EMA50",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        }
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    },
+    {
+      "agent": "bear",
+      "attempt": 2,
+      "claim_id": "key_factors.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_text": "Multiple technical indicators are marked bullish in the snapshot.",
+        "claim_sha256": "63eddc32c5eaf70230f4f51696a1601133aa8518e21050e4e7e6367fbde75155",
+        "claim_type": "FACT",
+        "support_type": "DIRECT",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "failure_reason": "unsupported_direct_fact"
+      },
+      "taxonomy": "FACT_MISCLASSIFIED_AS_DIRECT",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The cited bullish technical signals may weaken the downside interpretation.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "INTERPRETIVE",
+        "evidence_type": "TECHNICAL",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "technicals.indicator.0": {
+          "indicator": "RSI14",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        },
+        "technicals.indicator.1": {
+          "indicator": "EMA20",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        },
+        "technicals.indicator.2": {
+          "indicator": "EMA50",
+          "reason": "Synthetic deterministic evidence, not measured market performance.",
+          "signal": "bullish",
+          "strength": 0.55,
+          "value": 55.0
+        }
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    },
+    {
+      "agent": "risk",
+      "attempt": 1,
+      "claim_id": "risk_factors.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_text": "Model forecast up is contradicted by research view stating 'Conflicting evidence'.",
+        "claim_sha256": "df3e4a89422388ae52623ed78732c4a5409554186b2de93ca9c9e10755b890f3",
+        "claim_type": "INTERPRETATION",
+        "support_type": "INTERPRETIVE",
+        "evidence_type": "RESEARCH_VIEW",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.why",
+          "kronos.model_id"
+        ],
+        "actual_evidence_families": [
+          "FORECAST",
+          "RESEARCH_VIEW"
+        ],
+        "failure_reason": "incompatible_evidence_type"
+      },
+      "taxonomy": "MIXED_EVIDENCE_FAMILY",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The forecast and research view may indicate conflicting evidence.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "MIXED",
+        "evidence_type": "MULTI_SOURCE",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.why",
+          "kronos.model_id"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "kronos.direction": "up",
+        "research_view.why": "Conflicting evidence",
+        "kronos.model_id": "NeoQuasar/Kronos-base"
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    },
+    {
+      "agent": "risk",
+      "attempt": 2,
+      "claim_id": "model_risks.0",
+      "original_claim": {
+        "schema_version": "claim_support_diagnostic_v1",
+        "validator_version": "qualitative_grounding_v1",
+        "agent": "risk",
+        "claim_id": "model_risks.0",
+        "claim_text": "Model forecast direction is 'up' but research_view flags conflicting evidence and a primary risk that forecasts may not match market path.",
+        "claim_sha256": "89200873e1594448270396f4ea4ef5496d1608c466ccfc5031c706fa1c36ed06",
+        "claim_type": "INTERPRETATION",
+        "support_type": "DERIVED",
+        "evidence_type": "FORECAST",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.primary_risk",
+          "research_view.why"
+        ],
+        "actual_evidence_families": [
+          "FORECAST",
+          "RESEARCH_VIEW"
+        ],
+        "failure_reason": "incompatible_evidence_type"
+      },
+      "taxonomy": "MIXED_EVIDENCE_FAMILY",
+      "original_rejection_preserved": true,
+      "corrected_claim": {
+        "text": "The forecast and research view may support a cautious cross-source interpretation.",
+        "claim_type": "INTERPRETATION",
+        "support_type": "MIXED",
+        "evidence_type": "MULTI_SOURCE",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.primary_risk",
+          "research_view.why"
+        ],
+        "confidence": 0.6,
+        "material": true
+      },
+      "corrected_result": "PASS",
+      "cited_original_structured_sources": {
+        "kronos.direction": "up",
+        "research_view.primary_risk": "Forecast may not match realized market path",
+        "research_view.why": "Conflicting evidence"
+      },
+      "correction_is_offline_authored_example_not_model_regeneration": true
+    }
+  ],
+  "live_output_rewritten": false
+}

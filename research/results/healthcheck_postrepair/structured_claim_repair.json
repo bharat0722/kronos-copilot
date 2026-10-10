@@ -1,0 +1,443 @@
+{
+  "agent_schema_version": "agent_output_v2_1",
+  "architecture": {
+    "basis": [
+      "One shared field binding validator",
+      "Existing orchestrator/cache/ledger ownership unchanged",
+      "Schema and prompt versions invalidate old success caches",
+      "No server.py edits",
+      "Fusion v1 financial rules unchanged"
+    ],
+    "limitations": [
+      "No universal semantic entailment",
+      "Live provider contract remains unconfirmed",
+      "server.py remains existing broad orchestrator"
+    ],
+    "scope": "Custom scoped architecture assessment, not a gstack health score",
+    "score": 8.6
+  },
+  "files_changed_this_repair": [
+    "app/structured_claims.py",
+    "app/agent_research.py",
+    "app/dashboard.js",
+    "app/evidence_fusion.py",
+    "research/tests/test_structured_claim_repair.py",
+    "research/tests/test_fixture_serialization_repair.py",
+    "research/tests/test_phase7_agents.py",
+    "research/tests/test_phase7_2c_evidence_ids.py",
+    "research/tests/test_phase7_2e_numeric_grounding.py",
+    "research/tests/test_phase7_2f1_bull_only.py",
+    "research/tests/test_phase7_3a_claim_traceability.py",
+    "research/tests/test_phase7_3b_agent_output_v2.py",
+    "research/tests/test_claim_contract_repair.py",
+    "tools/run_offline_health_tests.py"
+  ],
+  "fixtures": {
+    "A": {
+      "checks": {
+        "agents_in_fusion": true,
+        "cache_invalidation": true,
+        "conflicts": true,
+        "durable_reload": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "primary_available": true,
+        "team": true
+      },
+      "current_freshness_pass": false,
+      "expires_at": "2026-10-09T14:54:18.024052+00:00",
+      "fixture_file_sha256": "1eadc0d2f6b8975622c1289fa258a1dab34726dca5fd7459f8c15627b580f105",
+      "fixture_id": "synthetic_production_v1_TESTCO",
+      "fixture_path": "research/tests/fixtures/dual_live_retest_A_v2.json",
+      "frozen_at": "2026-10-09T13:54:18.024052+00:00",
+      "historical_clock_preflight": {
+        "harness_version": "agent_run_v3",
+        "input_bytes": 21420,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v7",
+          "bull": "bull_agent_prompt_v8",
+          "risk": "risk_agent_prompt_v7"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v2_1",
+        "snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "offline_clock_note": "Exact original evidence replayed at its recorded time; production stale guard unchanged.",
+      "offline_team": "3/3",
+      "production_cache_miss": true,
+      "serialized_bytes": 21420,
+      "snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "wire_sha256": "4e58162e73dba05ee27e714774b57ef9ff952a85c6c99c0a64a342e187ccd328"
+    },
+    "B": {
+      "checks": {
+        "agents_in_fusion": true,
+        "cache_invalidation": true,
+        "conflicts": true,
+        "durable_reload": true,
+        "immutability": true,
+        "ledger": true,
+        "lineage": true,
+        "pipeline": true,
+        "primary_available": true,
+        "team": true
+      },
+      "current_freshness_pass": false,
+      "expires_at": "2026-10-09T14:54:18.024052+00:00",
+      "fixture_file_sha256": "79ba7b858c489828e742ac2117f07a9f88b9640a1d9f78b2857e2d632975e595",
+      "fixture_id": "synthetic_adversarial_v1_TESTCO",
+      "fixture_path": "research/tests/fixtures/dual_live_retest_B_v2.json",
+      "frozen_at": "2026-10-09T13:54:18.024052+00:00",
+      "historical_clock_preflight": {
+        "harness_version": "agent_run_v3",
+        "input_bytes": 21834,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v7",
+          "bull": "bull_agent_prompt_v8",
+          "risk": "risk_agent_prompt_v7"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v2_1",
+        "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+        "status": "PASS",
+        "tools": "none"
+      },
+      "offline_clock_note": "Exact original evidence replayed at its recorded time; production stale guard unchanged.",
+      "offline_team": "3/3",
+      "production_cache_miss": true,
+      "serialized_bytes": 21834,
+      "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+      "wire_sha256": "c8a08c72ea45b47df31a8cc6f45881b0d41ca51b5fdfde8695959a10cb2bb19f"
+    }
+  },
+  "gstack": {
+    "browser_qa": {
+      "agent_post_requests": 0,
+      "external_calls": 0,
+      "results": [
+        {
+          "blocked": [],
+          "errors": [],
+          "height": 1000,
+          "initial": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "name": "desktop",
+          "pass": true,
+          "reloaded": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "width": 1440
+        },
+        {
+          "blocked": [],
+          "errors": [],
+          "height": 844,
+          "initial": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "name": "phone",
+          "pass": true,
+          "reloaded": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "width": 390
+        },
+        {
+          "blocked": [],
+          "errors": [],
+          "height": 1112,
+          "initial": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "name": "ipad",
+          "pass": true,
+          "reloaded": {
+            "overflow": false,
+            "pipeline": "HEALTHY",
+            "pipelineRows": true,
+            "privateContent": false,
+            "roles": [
+              {
+                "agent": "bull",
+                "message": "forecast_direction = up state",
+                "status": "Complete"
+              },
+              {
+                "agent": "bear",
+                "message": "technical_trend = bullish state",
+                "status": "Complete"
+              },
+              {
+                "agent": "risk",
+                "message": "forecast_final_price = 101.2 price",
+                "status": "Complete"
+              }
+            ],
+            "team": "New analysis for this evidence snapshot.",
+            "typedFacts": true
+          },
+          "width": 834
+        }
+      ],
+      "scope": "Fully intercepted synthetic mock COMPLETE results and existing dashboard; no live provider or LAN browser flow.",
+      "status": "PASS"
+    },
+    "browser_qa_status": "PASS",
+    "external_calls": 0,
+    "native_limitations": [
+      "Browse distribution absent",
+      "Bash not on PATH",
+      "Installed version metadata unavailable"
+    ],
+    "native_workflows": "UNAVAILABLE locally",
+    "not_performed": [
+      "Outside model calls",
+      "Live API/LAN browser tests",
+      "Network CVE/supply-chain research",
+      "Native gstack browser",
+      "Full repository-wide security audit"
+    ],
+    "open_critical": 0,
+    "open_high": 0,
+    "operational_learning": "Production technical indicator labels differ from synthetic labels; bind only explicit known aliases and test real labels.",
+    "resolved_findings": [
+      "Exact real indicator-label bindings",
+      "Risk display ignored supported model/event/data/conflict claim categories",
+      "Numeric headline string FACT bypass"
+    ],
+    "review_checks": [
+      "Closed shape/type validation before persistence",
+      "Exact field/value/unit/sign bindings",
+      "All roles share validator",
+      "No HTML/eval execution of agent output",
+      "No tools/new providers/secret logging",
+      "Cache schema/prompt invalidation",
+      "Ledger before cache",
+      "Budget/origin/auth source unchanged",
+      "Enum consumers render new nullable facts"
+    ],
+    "review_status": "PASS",
+    "scope": "Current structured claim repair only; installed documentation/checklists applied offline",
+    "scoped_actionable_medium_or_low": 0,
+    "security_checklist_status": "PASS",
+    "skills_used": [
+      "review",
+      "cso",
+      "qa-only"
+    ],
+    "status": "PARTIAL"
+  },
+  "health": {
+    "bear": "GREEN OFFLINE",
+    "bull": "GREEN OFFLINE",
+    "monad_permission": false,
+    "risk": "GREEN OFFLINE",
+    "team": "YELLOW PENDING LIVE"
+  },
+  "historical_reports_unchanged": true,
+  "immediate_live_blockers": [
+    "Frozen snapshots expired",
+    "UTC daily production call budget exhausted",
+    "Fresh live authorization not granted in this task"
+  ],
+  "live_conditions": [
+    "Fresh explicit user authorization",
+    "Current production budget sufficient; never reset/bypass cap",
+    "Exact frozen evidence must pass current one-hour guard. If expired, obtain authorization to create a newly timestamped deterministic freeze; never silently refresh.",
+    "Verify source, schema, prompt and fixture hashes; normal production cache miss; do not use mock output as live evidence"
+  ],
+  "live_execution_ready_now": false,
+  "offline_code_blockers": [],
+  "prompt_versions": {
+    "bear": "bear_agent_prompt_v7",
+    "bull": "bull_agent_prompt_v8",
+    "risk": "risk_agent_prompt_v7"
+  },
+  "protected_files_unchanged": true,
+  "replays": "6 original failures rejected; corrected facts/interpretations accepted",
+  "safety": {
+    "external_calls": 0,
+    "git_commit": false,
+    "git_push": false,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "locked_test_accesses": 0,
+    "model_weight_changes": 0,
+    "monad_calls": 0,
+    "monad_started": false,
+    "openai_calls": 0,
+    "tavily_calls": 0,
+    "validation_reruns": 0,
+    "yahoo_calls": 0
+  },
+  "scope": "Offline structured claim repair; real provider confirmation pending",
+  "status": "PASS",
+  "tests": {
+    "blocked_external_attempts": 0,
+    "errors": 0,
+    "external_calls": 0,
+    "failed": 0,
+    "failure_details": [],
+    "passed": 253,
+    "run": 254,
+    "skipped": 1
+  },
+  "validator_version": "structured_claim_grounding_v1"
+}

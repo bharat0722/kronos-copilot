@@ -1,0 +1,10 @@
+{
+  "run": 336,
+  "passed": 335,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 1,
+  "blocked_external_attempts": 0,
+  "external_calls": 0,
+  "failure_details": []
+}

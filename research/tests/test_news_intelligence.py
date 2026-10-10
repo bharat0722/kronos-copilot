@@ -54,6 +54,9 @@ class FakeProvider:
 
 class NewsIntelligenceTests(unittest.TestCase):
     def setUp(self) -> None:
+        names = patch('app.news_intelligence._instrument_names', return_value={'RELIANCE.NS': 'Reliance Industries Limited'})
+        names.start()
+        self.addCleanup(names.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
@@ -131,6 +134,7 @@ class NewsIntelligenceTests(unittest.TestCase):
         result = service.get("HDFCBANK.NS", company_hint="HDFC Bank Limited")
         self.assertEqual(result["status"], "FRESH")
         self.assertEqual(result["provider"], "Google News RSS")
+        self.assertIsNone(service.pipeline_stage()["latency_ms"])
         self.assertEqual(result["events"][0]["event_type"], "product")
         self.assertEqual(result["events"][0]["source"], "Example Publisher")
         self.assertEqual(result["events"][0]["provenance"]["provider"], "Google News RSS")
@@ -182,7 +186,7 @@ class NewsIntelligenceTests(unittest.TestCase):
         call.assert_not_called()
         self.assertEqual(result["provider"], "mock news")
         self.assertEqual(result["tavily_health"]["status"], "UNAVAILABLE")
-        self.assertEqual(service.pipeline_stage()["rows"], 0)
+        self.assertEqual(service.pipeline_stage()["rows"], 1)
 
     def test_tavily_query_cache_avoids_second_request(self) -> None:
         tavily = TavilyNewsProvider(self.root, key_loader=lambda: "fixture-key")
@@ -273,8 +277,9 @@ class NewsIntelligenceTests(unittest.TestCase):
     def test_tavily_health_is_separate_from_market_pipeline(self) -> None:
         tavily = TavilyNewsProvider(self.root, key_loader=lambda: "")
         stage = NewsService(self.root, FakeProvider([]), tavily_provider=tavily).pipeline_stage()
-        self.assertEqual(stage["status"], "UNAVAILABLE")
-        self.assertEqual(stage["provider"], "Tavily")
+        self.assertEqual(stage["status"], "READY")
+        self.assertEqual(stage["tavily_health"]["status"], "UNAVAILABLE")
+        self.assertIsNone(stage["provider"])
         self.assertEqual(stage["requests"], 0)
 
     def test_tavily_unknown_publication_time_is_not_invented(self) -> None:

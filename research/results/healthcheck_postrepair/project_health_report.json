@@ -1,0 +1,630 @@
+{
+  "schema_version": "project_health_report_postrepair_v1",
+  "observed_at": "2026-10-09T10:19:57.856664+00:00",
+  "mode": "OFFLINE_IMPLEMENTATION_TEST_AUDIT",
+  "status": "PARTIAL",
+  "before_score": 7.2,
+  "overall_score": 8.4,
+  "score_method": "Risk-weighted expert rubric: AI team x3; pipeline health and observability x2; other areas x1. Gate overrides mean for HIGH product regression.",
+  "scores": [
+    {
+      "area": "Repository integrity",
+      "score": 9,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Environment",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Server/API",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Market data",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Bronze/Silver/Gold",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Kronos wrapper",
+      "score": 8,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Technicals",
+      "score": 9,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "News",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Evidence snapshot",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "AI Research Team",
+      "score": 7,
+      "state": "YELLOW",
+      "weight": 3
+    },
+    {
+      "area": "Evidence Fusion",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Pipeline health",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 2
+    },
+    {
+      "area": "Dashboard",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Auth/security",
+      "score": 9,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Caching",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Ledger",
+      "score": 9,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Observability",
+      "score": 8.5,
+      "state": "GREEN",
+      "weight": 2
+    },
+    {
+      "area": "Scientific integrity",
+      "score": 10,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Test coverage",
+      "score": 9,
+      "state": "GREEN",
+      "weight": 1
+    },
+    {
+      "area": "Architecture",
+      "score": 8,
+      "state": "GREEN",
+      "weight": 1
+    }
+  ],
+  "findings": [
+    {
+      "id": "H1",
+      "severity": "HIGH",
+      "title": "Production agent responses exhaust the output cap",
+      "evidence": [
+        "outputs/agent_research/attempts/fa1dadc302c30166a822927c5f969d1f.1.json",
+        "outputs/agent_research/attempts/3449ef071353084329f3e02c0320fc0c.1.json",
+        "outputs/agent_research/attempts/794e1cdfb23a127b88b7c546e4988d59.1.json",
+        "app/agent_research.py:588",
+        "app/agent_research.py:879"
+      ],
+      "verified": "Latest six attempts: RESPONSE_INCOMPLETE / max_output_tokens, 900 output tokens each, no usable report. September 30 matching team latency = 54,030 ms. Offline mocked incomplete responses reproduce FAILED after six bounded attempts.",
+      "smallest_fix": "Authorize a focused budget-fit repair: measure and compact redundant evidence/request representation and establish response-fit checks for unchanged strict v2 outputs. Explicitly classify deterministic truncation instead of blindly retrying identical requests. Do not assume compaction alone proves live recovery; retain limits and grounding. Separate live authorization required for any later verification.",
+      "resolution": "OPEN BLOCKER",
+      "after": "Response headroom 1600, concise typed claims, budget preflight and OUTPUT_TRUNCATED diagnostics implemented; actual provider recovery is unconfirmed.",
+      "repair_evidence": [
+        "test_production_size_and_budget_preflight",
+        "test_concise_validation_preserves_typed_contract",
+        "test_truncation_failed_restart_six_attempts_no_cache"
+      ]
+    },
+    {
+      "id": "M1",
+      "severity": "MEDIUM",
+      "title": "FAILED becomes READY in team headline and reload",
+      "evidence": [
+        "app/dashboard.js:707",
+        "app/agent_research.py:804",
+        "app/agent_research.py:1104"
+      ],
+      "verified": "Real browser: all cards Failed while headline Ready to analyze the saved evidence. Mocked failed run -> result READY; restarted team -> health READY, despite durable failed ledgers. Health errors empty; last status is global, not snapshot-scoped.",
+      "smallest_fix": "Derive snapshot-specific last attempt state from durable records; render FAILED/PARTIAL/READY distinctly and expose a sanitized primary failure reason. Distinguish SUCCESS/COMPLETE from cache state.",
+      "resolution": "RESOLVED",
+      "after": "Durable snapshot-specific canonical team state; individual failures, partial and complete survive restart; UI and health consume the same state.",
+      "repair_evidence": [
+        "test_complete_restart_and_fusion_refresh_immutable",
+        "test_partial_restart_new_snapshot_distinction",
+        "test_interrupted_running_restores_failed_not_ready",
+        "browser_qa.json"
+      ]
+    },
+    {
+      "id": "M2",
+      "severity": "MEDIUM",
+      "title": "Offline suite depends on ignored machine-local fixtures",
+      "evidence": [
+        "research/tests/test_phase7_2a_diagnostics.py:28",
+        "research/tests/test_news_intelligence.py:95",
+        "app/news_intelligence.py:364",
+        ".gitignore"
+      ],
+      "verified": "Tracked-source mirror without synthetic_live_smoke_spec.json and instrument_master_cache.json: 2 assertion failures and 58 error/subtest entries. Restoring exact local copies: 183 pass / 0 fail / 1 skip. Final Phase 7/8 reports/contracts are tracked, but the synthetic smoke fixture is not.",
+      "smallest_fix": "Package only synthetic fixtures in a tracked fixture directory and mock the instrument-name dependency. No private runtime caches or real credentials should become test prerequisites.",
+      "resolution": "RESOLVED",
+      "after": "Tracked synthetic fixture replaces ignored smoke-spec dependency; instrument names mocked; production-sized payload and real local HTTP integration added.",
+      "repair_evidence": [
+        "fixtures/synthetic_agent_evidence.json",
+        "test_production_size_and_budget_preflight",
+        "test_http_team_fusion_status_and_sanitized_dashboard"
+      ]
+    },
+    {
+      "id": "M3",
+      "severity": "MEDIUM",
+      "title": "Agent snapshot validation checks identity, not temporal expiry",
+      "evidence": [
+        "app/agent_research.py:814",
+        "app/server.py:94",
+        "app/evidence_fusion.py:123"
+      ],
+      "verified": "Unchanged snapshot with created_at in 2020 passes both current_agent_snapshot and preflight with matching synthetic saved hashes. Fusion separately evaluates evidence freshness, but paid agent execution has no age gate.",
+      "smallest_fix": "Add explicit forecast/source age policy before execution, with a labeled historical-analysis mode if needed; preserve content identity and existing fusion thresholds.",
+      "resolution": "RESOLVED",
+      "after": "Paid execution verifies current canonical pointer, content/forecast ownership and <=3600s snapshot/source age before each SDK attempt; historical result reads remain available.",
+      "repair_evidence": [
+        "test_expired_future_missing_and_stale_acquisition_stop_before_call",
+        "test_current_identity_and_public_path_sanitization",
+        "test_eligibility_changes_between_roles_prevent_more_requests"
+      ]
+    },
+    {
+      "id": "M4",
+      "severity": "MEDIUM",
+      "title": "Pipeline health conflates operational health and research limitations",
+      "evidence": [
+        "app/product_pipeline.py:135",
+        "app/product_pipeline.py:154",
+        "app/news_intelligence.py:509",
+        "app/evidence_fusion.py:618"
+      ],
+      "verified": "Intelligence DEGRADED is unconditional after a successful Gold completion solely because ensemble is research-only. Old DEGRADED stages are never converted to STALE. Web-news health is Tavily-only, not the whole Yahoo/RSS chain. Fusion health has no age expiry and also labels mixed/missing evidence as operational degradation.",
+      "smallest_fix": "Keep outcome, feature availability, freshness and operational status separate; scope health to current symbol/snapshot and disclose component-specific latency/cache state.",
+      "resolution": "RESOLVED",
+      "after": "Operational success is separate from research status/completeness. Old DEGRADED stages age to STALE; whole-chain news and snapshot-scoped fusion health are truthful. Unknown fallback latency is null.",
+      "repair_evidence": [
+        "test_pipeline_operational_and_research_status_are_separate",
+        "test_fusion_mixed_is_operational_success_but_old_run_stale",
+        "test_http_team_fusion_status_and_sanitized_dashboard",
+        "test_rss_fallback_preserves_publisher_and_provenance"
+      ]
+    },
+    {
+      "id": "M5",
+      "severity": "MEDIUM",
+      "title": "Public dashboard missing-file error exposes filesystem path",
+      "evidence": [
+        "app/server.py:1073",
+        "app/server.py:1204"
+      ],
+      "verified": "Actual handler, synthetic FileNotFoundError: GET /api/dashboard returns 400 containing C:\\synthetic-private\\outputs\\forecast_summary.json. No real secret contents were requested.",
+      "smallest_fix": "Return stable public error codes/messages and keep any path detail in protected local diagnostics. Review equivalent explanation error handling.",
+      "resolution": "RESOLVED",
+      "after": "Non-domain exceptions receive generic public messages; trusted AgentError contracts remain structured. Synthetic path-bearing handler errors do not expose paths.",
+      "repair_evidence": [
+        "test_current_identity_and_public_path_sanitization",
+        "test_http_team_fusion_status_and_sanitized_dashboard"
+      ]
+    },
+    {
+      "id": "L1",
+      "severity": "LOW",
+      "title": "New-request controls differ from saved-result identity",
+      "evidence": [
+        "app/dashboard.js:913",
+        "app/dashboard.js:1355",
+        "browser QA"
+      ],
+      "verified": "Saved RENTOMOJO.NS is correctly labeled in result/chart, but request field remains RELIANCE. Selecting 120 updates request helper while old 75-bar result remains visible. This is pending-request vs saved-result behavior, not a proven backend horizon defect.",
+      "smallest_fix": "Clarify new-request and saved-result labels without changing forecast values or forcing a new run.",
+      "resolution": "RESOLVED",
+      "after": "Saved ticker initializes request controls; pending 120-bar request is clearly distinguished from unchanged saved 75-bar result.",
+      "repair_evidence": [
+        "browser_qa.json"
+      ]
+    },
+    {
+      "id": "L2",
+      "severity": "LOW",
+      "title": "Cold startup imports the heavy forecasting dependency path",
+      "evidence": [
+        "app/server.py:32",
+        "src/first_forecast.py:13"
+      ],
+      "verified": "Isolated server module import took 6.882 seconds; torch is CPU-only. Model weights were not loaded. Synchronous agent execution blocks that request while other server threads remain available.",
+      "smallest_fix": "Defer heavy imports only in a later authorized performance task; avoid broad restructuring during repair.",
+      "resolution": "ACCEPTED NON-BLOCKER",
+      "after": "Heavy imports and synchronous per-request work remain. Browser timeout is bounded, active state is visible, and other server threads remain available. No broad performance refactor.",
+      "repair_evidence": [
+        "test_live_running_status_and_cancel_recover_without_extra_calls",
+        "test_frontend_state_timeout_and_scoped_pipeline_contract"
+      ]
+    }
+  ],
+  "gate": {
+    "schema_version": "monad_readiness_gate_postrepair_v1",
+    "status": "YELLOW",
+    "permission": "NO",
+    "offline_remediation": "PASS",
+    "actual_provider_recovery": "UNCONFIRMED",
+    "live_confirmation_needed": true,
+    "remaining_red": [],
+    "open_blockers": [
+      "H1 actual provider completion under the new 1600-token concise contract needs fresh authorized synthetic confirmation"
+    ],
+    "accepted_non_blockers": [
+      "L2 startup/server concentration",
+      "Full dependency vulnerability/type/lint scans unavailable offline"
+    ],
+    "safety": {
+      "openai_calls": 0,
+      "other_llm_calls": 0,
+      "external_api_calls": 0,
+      "tavily_calls": 0,
+      "yahoo_calls": 0,
+      "kronos_inference": 0,
+      "kronos_training": 0,
+      "model_weight_changes": 0,
+      "validation_reruns": 0,
+      "locked_test_target_accesses": 0,
+      "git_commits": 0,
+      "git_pushes": 0,
+      "monad_code_added": false,
+      "phase9_started": false
+    },
+    "next_action": "Obtain fresh authorization for exactly one synthetic production-like three-agent live smoke test."
+  },
+  "tests": {
+    "run": 202,
+    "passed": 201,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "blocked_external_attempts": 0,
+    "external_calls": 0,
+    "failure_details": []
+  },
+  "browser_qa": [
+    {
+      "name": "desktop",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u00e2\u2020\u2019 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    },
+    {
+      "name": "phone",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 390,
+      "scrollWidth": 390,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u00e2\u2020\u2019 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    },
+    {
+      "name": "ipad",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 834,
+      "scrollWidth": 834,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u00e2\u2020\u2019 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    }
+  ],
+  "agent_budget": {
+    "status": "OK",
+    "max_output_tokens": 1600,
+    "target_tokens": [
+      600,
+      900
+    ],
+    "max_claims": {
+      "bull": 3,
+      "bear": 3,
+      "risk": 4
+    },
+    "max_claim_characters": 240,
+    "team_max_calls": 6,
+    "team_max_output_tokens": 9600,
+    "daily_max_output_tokens": 19200,
+    "limitations_required": true,
+    "uncertainty_required": true
+  },
+  "synthetic_preflight": {
+    "status": "PASS",
+    "snapshot_id": "5ab1c144b886ee4d6f6644194c54c91b8f7a492fe9e5c47752fcb641da458485",
+    "input_bytes": 41477,
+    "model": "gpt-5-mini",
+    "prompt_versions": {
+      "bull": "bull_agent_prompt_v6",
+      "bear": "bear_agent_prompt_v5",
+      "risk": "risk_agent_prompt_v5"
+    },
+    "schema_version": "agent_output_v2",
+    "harness_version": "agent_run_v3",
+    "tools": "none",
+    "reasoning_rounds": 1,
+    "max_retries_per_agent": 1,
+    "output_budget": {
+      "status": "OK",
+      "max_output_tokens": 1600,
+      "target_tokens": [
+        600,
+        900
+      ],
+      "max_claims": {
+        "bull": 3,
+        "bear": 3,
+        "risk": 4
+      },
+      "max_claim_characters": 240,
+      "team_max_calls": 6,
+      "team_max_output_tokens": 9600,
+      "daily_max_output_tokens": 19200,
+      "limitations_required": true,
+      "uncertainty_required": true
+    }
+  },
+  "synthetic_output_sizes": {
+    "bull": {
+      "json_bytes": 1062,
+      "token_approximation": 266
+    },
+    "bear": {
+      "json_bytes": 1062,
+      "token_approximation": 266
+    },
+    "risk": {
+      "json_bytes": 1385,
+      "token_approximation": 346
+    }
+  },
+  "architecture_before": 7.5,
+  "architecture_after": 8.0,
+  "fusion_algorithm_rules_weights_unchanged": true,
+  "safety": {
+    "openai_calls": 0,
+    "other_llm_calls": 0,
+    "external_api_calls": 0,
+    "tavily_calls": 0,
+    "yahoo_calls": 0,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "model_weight_changes": 0,
+    "validation_reruns": 0,
+    "locked_test_target_accesses": 0,
+    "git_commits": 0,
+    "git_pushes": 0,
+    "monad_code_added": false,
+    "phase9_started": false
+  },
+  "files": [
+    {
+      "path": "app/agent_research.py",
+      "before": "9F201C61C76BFE114297E658D31E17F1C0CF7FB4BC3FF6DFB69C48BFC0C5BE77",
+      "after": "4bfbf2b251073691ccf163731adce8d8a0fab8ac251024e7d350b5d3dcefb83d",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "app/dashboard.js",
+      "before": "19D8F23F5D921BF644D77BE51A4BA341365320184BFCC3E3D9185BDD79CEB012",
+      "after": "96fcaaef560de0de7e826d620cd8fb35e3b5deeb87c9f700ecbc9da323279fa5",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "app/evidence_fusion.py",
+      "before": "CC7EA6084D7828C816D22165860768FF152EA6CA3E8670B8D10CA9A894C8739B",
+      "after": "d547838e8de1ee9d0160e1f6ca2f569daf763b975811452e9db5596e5eaa3ad1",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "app/news_intelligence.py",
+      "before": "E3E1BA76634B2B527693C92627B7CDE2DC37E59C831875C0C22CB4DECE1ADF52",
+      "after": "04a80c9b5034ddaef23d0b07e03861086c26495cfad846c9fd99f0673e64ba9a",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "app/product_pipeline.py",
+      "before": "18E1A1B643FB76B6C91D2F20D79218A3A7A5788E4B2EF2DC3E5246347687F1AB",
+      "after": "2c5f31926aa511bec062992ddf9b313fa412d1be28535f653ed055028582eec7",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "app/server.py",
+      "before": "74159FA18B6B7B810CB1C9BCF2375246C69D9832AF94F3AC64AF6B52754B5A58",
+      "after": "93dcf921deb5459af4d83e44cf4fd0d1fd4c3adadbd86059ba94eb4dbcf36d49",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_health_remediation.py",
+      "before": null,
+      "after": "5720a63747d8d10b8114e81978732da429d4a282ec30a19a86210642b861150d",
+      "kind": "ADDED"
+    },
+    {
+      "path": "research/tests/test_news_intelligence.py",
+      "before": "9BA0253C1239BE03FF3D68655B4559D5608256621308C69F3F47FC66310EE73F",
+      "after": "e5d7d2d9f687953c6a266361465d82f6c4f4570c8434180767df7f5759135636",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_2a_diagnostics.py",
+      "before": "6DC0B4EE703364603A47EDBDE9B5E4C5BA0AD3D5524D7716078BBB5A4B6DFB12",
+      "after": "ca44f020c89665a439dd6d24eef4a4ebbcca74257c11585b140482e132e67e34",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_2c_evidence_ids.py",
+      "before": "14A63B3E7C267D752A45C2BF350DA7438DDE007470F5F42E2654DFA44BF7AB0A",
+      "after": "4c2c0c91d789e4ade33c65ea8345e9f46f4982fc3424df228ef4774e8b734829",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_2e_numeric_grounding.py",
+      "before": "7F049DF6DF5C873A802BCA96D35CD433015CD56921D919C2DA06A5A2E2E7A3A9",
+      "after": "866f7e8d8e5c803201b6851ba7a278305da4cba77433a41ac1dc8ee2707445e1",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_2f1_bull_only.py",
+      "before": "CF361FCE2FAD4851CAB3EC9009CA0451845B7765CEF84425ACB81C8474253D86",
+      "after": "60581cb53fc4887d20e9d441c9157bd3f78b1bdce8386b987048bcffadfffe6a",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_3b_agent_output_v2.py",
+      "before": "450FEF4102CA28C52B855677F20CF7877A82CF7C1A1B7878C67831E322C39414",
+      "after": "007f3b0cef7b509683de4dc9dddc4e72760de510ea6edc92084d70631be0b365",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase7_agents.py",
+      "before": "1A6B35F642792AB7F0200B7BCF27C8C84C06C733AAC374AEA5F3917F3F4BB1F4",
+      "after": "950ea61bb94c3057469cb2b48c1c070fb4a17f86201edefe84c95b2150ccbb92",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/test_phase8_evidence_fusion.py",
+      "before": "22EF7F0ADA09372F42DE292F28CD406F711EDA8608CF0B3DA989BB7BE0EF4A37",
+      "after": "0687ba1b2ee1e3625fa2d7d82661e8f62203e27552d8a4f55ba27848d412632f",
+      "kind": "MODIFIED"
+    },
+    {
+      "path": "research/tests/fixtures/synthetic_agent_evidence.json",
+      "before": null,
+      "after": "8dffc8d058abe4cd9535b24c1a519adc76d832d668fa34b12f655b615ae529bb",
+      "kind": "ADDED"
+    },
+    {
+      "path": "tools/offline_dashboard_fixture.py",
+      "before": null,
+      "after": "6729f57139811bb3bf41cdf3a3275bb5f3b873647a65f452c07b0de91eadb96d",
+      "kind": "ADDED"
+    },
+    {
+      "path": "tools/offline_dashboard_qa.cjs",
+      "before": null,
+      "after": "4a4062c8a0f78e9fe74c2502a1ee36550d123a3d0b5d0fe235c0936bee077321",
+      "kind": "ADDED"
+    },
+    {
+      "path": "tools/run_offline_health_tests.py",
+      "before": null,
+      "after": "5002a8a7d3d64a2f8cdd1342528babcd1d267948abae24fbc760d6b99dee5da8",
+      "kind": "ADDED"
+    }
+  ],
+  "gstack": {
+    "version": "1.91.2.0",
+    "status": "PARTIAL",
+    "workflows": [
+      "review checklist",
+      "health offline-test dimension",
+      "cso security checklist",
+      "qa-only local Playwright"
+    ],
+    "native_preamble_telemetry": "NOT RUN: offline restrictions",
+    "outside_model": "NOT RUN: prohibited",
+    "test_dimension_score": 10,
+    "holistic_gstack_score": null,
+    "unavailable": [
+      "typecheck",
+      "lint",
+      "dead-code tooling",
+      "shell lint",
+      "gbrain",
+      "vulnerability feed"
+    ]
+  },
+  "limitations": [
+    "Mocks prove local downstream behavior, not live provider response completion or normal token consumption.",
+    "No fresh live Yahoo/Tavily availability or model accuracy measurement.",
+    "Browser QA uses local synthetic APIs, not a physical iPad session.",
+    "Existing product server must be restarted after copying to use updated code.",
+    "Byte/4 output sizing is a heuristic, not tokenizer measurement; max_output_tokens includes provider-managed reasoning.",
+    "No remote git fetch; checkpoint verification is local.",
+    "Historical science and locked targets were not opened or rewritten."
+  ],
+  "validation_history": [
+    "Earlier extra assertion used an invalid synthetic digest and produced one integration-test error; fixture fixed to a proper content hash, clean full rerun passed. Historical phase counts are not overwritten."
+  ]
+}

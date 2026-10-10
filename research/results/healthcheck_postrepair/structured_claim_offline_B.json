@@ -1,0 +1,1507 @@
+{
+  "agent_health": {
+    "agent_details": {
+      "bear": {
+        "attempt_refs": [
+          "15a9bf8f905e7aacba988771480d818d.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 218,
+        "run_id": "15a9bf8f905e7aacba988771480d818d",
+        "status": "SUCCESS"
+      },
+      "bull": {
+        "attempt_refs": [
+          "f5b67663b030299107522a9e5b8d1669.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 343,
+        "run_id": "f5b67663b030299107522a9e5b8d1669",
+        "status": "SUCCESS"
+      },
+      "risk": {
+        "attempt_refs": [
+          "b799fdd661dfdad8fb9ecac5e9f022b0.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 234,
+        "run_id": "b799fdd661dfdad8fb9ecac5e9f022b0",
+        "status": "SUCCESS"
+      }
+    },
+    "agents_completed": 3,
+    "cache_status": "hit",
+    "eligible": true,
+    "errors": [],
+    "last_update": "2026-10-09T14:54:31.684531+00:00",
+    "latency_ms": 1250,
+    "openai_available": true,
+    "provider": "OpenAI",
+    "rows": 3,
+    "run_id": "5e1a26659f87108a406b8ddd4a5ca6fd",
+    "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+    "status": "HEALTHY",
+    "team_status": "COMPLETE",
+    "warnings": []
+  },
+  "checks": {
+    "agents_in_fusion": true,
+    "cache_invalidation": true,
+    "conflicts": true,
+    "durable_reload": true,
+    "immutability": true,
+    "ledger": true,
+    "lineage": true,
+    "pipeline": true,
+    "primary_available": true,
+    "team": true
+  },
+  "external_calls": 0,
+  "fusion": {
+    "aggregation": {
+      "eligible_primary_sources": [
+        "kronos.direction",
+        "technicals.trend",
+        "news.impact_score"
+      ],
+      "internal_direction_score": -0.0282,
+      "semantics": "Deterministic ordinal heuristic; not a probability or calibrated accuracy."
+    },
+    "agreements": [
+      {
+        "agreement_type": "MULTI_SOURCE_ALIGNMENT",
+        "direction": "BULLISH",
+        "evidence_ids": [
+          "kronos.direction",
+          "news.impact_score"
+        ],
+        "explanation": "2 independent primary sources align bullish."
+      }
+    ],
+    "cache_status": "miss",
+    "conflicts": [
+      {
+        "conflict_id": "7f964108a40716668405",
+        "conflict_type": "PRIMARY_DIRECTION_CONFLICT",
+        "evidence_ids": [
+          "kronos.direction",
+          "technicals.trend"
+        ],
+        "explanation": "Kronos is bullish while TechnicalIntelligence is bearish.",
+        "severity": "HIGH"
+      },
+      {
+        "conflict_id": "ff6f4060fee0ddd2b9fd",
+        "conflict_type": "PRIMARY_DIRECTION_CONFLICT",
+        "evidence_ids": [
+          "news.impact_score",
+          "technicals.trend"
+        ],
+        "explanation": "TechnicalIntelligence is bearish while NewsImpact is bullish.",
+        "severity": "MEDIUM"
+      },
+      {
+        "conflict_id": "0b2916a5322f06afee0f",
+        "conflict_type": "AGENT_INTERPRETATION_CONFLICT",
+        "evidence_ids": [
+          "agent.bear",
+          "agent.bull"
+        ],
+        "explanation": "Bull and Bear agents present opposing interpretations of shared upstream evidence.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "deduplication": [
+      {
+        "evidence_id": "technicals.regime",
+        "reason": "Regime is derived from the same technical series."
+      },
+      {
+        "evidence_id": "agent.bull",
+        "reason": "Agent output interprets cited primary evidence."
+      },
+      {
+        "evidence_id": "agent.bear",
+        "reason": "Agent output interprets cited primary evidence."
+      },
+      {
+        "evidence_id": "agent.risk",
+        "reason": "Agent output interprets cited primary evidence."
+      }
+    ],
+    "disclaimer": "Research support only; not investment advice. Support is qualitative, not a probability.",
+    "evidence_items": [
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "market_data.quality",
+        "evidence_type": "DATA_QUALITY",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "market_data.quality"
+        ],
+        "metadata": {},
+        "observed_at": "2026-10-09T13:54:18.024052+00:00",
+        "provenance": {
+          "bronze_sha256": "6e35751584e5227821d716970543b117baf1e328337606dd7a99bdcdaec4b9ed",
+          "cache_status": "miss",
+          "input_sha256": "2311cfcfd5e8a5cd40c640c79a2f0f2153c195a36c575ced872d846088a2e843",
+          "provider": "synthetic",
+          "silver_sha256": "1c6bc4a57095ed27f710262246dde029eb47a1854154066bb5f2a451a1db3801"
+        },
+        "quality": "PASS",
+        "raw_value": "PASS",
+        "role": "META",
+        "schema_version": "evidence_item_v1",
+        "source_component": "MarketDataService",
+        "strength": 0.0,
+        "strength_label": "LOW",
+        "summary": "Market data quality is pass.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BULLISH",
+        "evidence_id": "kronos.direction",
+        "evidence_type": "FORECAST",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "metadata": {
+          "historical_validation_context": "UNAVAILABLE_IN_EVIDENCE_SNAPSHOT",
+          "weight": 1.0
+        },
+        "observed_at": "2026-10-09T13:54:18.024052+00:00",
+        "provenance": {
+          "config": {
+            "forecast_rows": 24,
+            "input_rows": 256,
+            "sample_count": 1,
+            "sampling_T": 0.85,
+            "sampling_top_k": 0,
+            "sampling_top_p": 0.9
+          },
+          "forecast_fingerprint": "956f6f58d9577171a212fcbb389b7f73d9d19db068eee3c2b3a0e117324c546b",
+          "forecast_sha256": "0f019f913c76b4ad3d3cde4cc69e78d792471d9cea0e7052aca2aceab5d189f5",
+          "model_id": "NeoQuasar/Kronos-base"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "direction": "up",
+          "forecast_pct_change": 1.2
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "Kronos",
+        "strength": 0.4,
+        "strength_label": "MEDIUM",
+        "summary": "Kronos forecast direction is bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BEARISH",
+        "evidence_id": "technicals.trend",
+        "evidence_type": "TECHNICAL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "metadata": {
+          "weight": 1.0
+        },
+        "observed_at": "2026-10-09T13:54:18.024052+00:00",
+        "provenance": {
+          "gold_sha256": "53b0cf811fd4c8408cc782e670e02d5027653f2ee13fef0ffebc79e228813bc8",
+          "version": "synthetic_technical_v1"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "indicators": [
+            {
+              "indicator": "RSI14",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 44
+            },
+            {
+              "indicator": "EMA20",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 99
+            },
+            {
+              "indicator": "EMA50",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 101
+            },
+            {
+              "indicator": "SMA20",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 99.5
+            },
+            {
+              "indicator": "SMA50",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 102
+            },
+            {
+              "indicator": "MACD",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": -0.4
+            },
+            {
+              "indicator": "MACD_SIGNAL",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": -0.2
+            },
+            {
+              "indicator": "BOLLINGER",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 100
+            },
+            {
+              "indicator": "ATR",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 3.5
+            },
+            {
+              "indicator": "ROC",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": -0.8
+            },
+            {
+              "indicator": "VOLUME_SMA",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 100000
+            },
+            {
+              "indicator": "VOLUME_SPIKE",
+              "reason": "Downward momentum context.",
+              "signal": "bearish",
+              "strength": 0.55,
+              "value": 1.8
+            }
+          ],
+          "trend": "bearish"
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "TechnicalIntelligence",
+        "strength": 0.55,
+        "strength_label": "MEDIUM",
+        "summary": "Deterministic technical trend is bearish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "technicals.regime",
+        "evidence_type": "REGIME",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.regime",
+          "technicals.trend"
+        ],
+        "metadata": {
+          "deduplication_reason": "Regime is derived from the same technical series."
+        },
+        "observed_at": "2026-10-09T13:54:18.024052+00:00",
+        "provenance": {
+          "gold_sha256": "53b0cf811fd4c8408cc782e670e02d5027653f2ee13fef0ffebc79e228813bc8",
+          "version": "synthetic_technical_v1"
+        },
+        "quality": "PASS",
+        "raw_value": "HIGH_VOLATILITY",
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "TechnicalIntelligence",
+        "strength": 0.35,
+        "strength_label": "MEDIUM",
+        "summary": "Market regime is high_volatility.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BULLISH",
+        "evidence_id": "news.impact_score",
+        "evidence_type": "NEWS",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "metadata": {
+          "interpretation": "Headline context, not measured price impact.",
+          "uncertainty": [
+            "Weak discussion is unconfirmed; contextual cues are not measured price impact."
+          ],
+          "weight": 0.75
+        },
+        "observed_at": "2026-10-09T13:54:18.024052+00:00",
+        "provenance": {
+          "evidence_sha256": "0f569147205e381ddc231668f057929ced94aba07444922a6dc5bab6cc3ce43b",
+          "formula_version": "synthetic_news_impact_v1",
+          "gold_sha256": "b33a4a3bb212cd09d5b3c3b43c5a2b494f115e85663d5c71db23b932ec5cd0c0",
+          "provider": "synthetic",
+          "providers_used": [
+            "synthetic"
+          ],
+          "source_urls": [
+            "https://example.org/synthetic/B/story-0",
+            "https://example.org/synthetic/B/story-1",
+            "https://example.org/synthetic/B/story-2",
+            "https://example.org/synthetic/B/story-3",
+            "https://example.org/synthetic/B/story-4",
+            "https://example.org/synthetic/B/story-5",
+            "https://example.org/synthetic/B/story-6",
+            "https://example.org/synthetic/B/story-7"
+          ]
+        },
+        "quality": "WARN",
+        "raw_value": {
+          "articles": [
+            {
+              "event_type": "product",
+              "id": "B-story-0",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.8,
+              "sentiment": "positive",
+              "sha256": "c3dcf48beb84170f97364203adee2fe867c7a7fad66b0e68ce0c552ed9c53a58",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "The fictional company announced a service partnership. The announcement describes service delivery, not a realized market return.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO announced a service partnership.",
+              "url": "https://example.org/synthetic/B/story-0"
+            },
+            {
+              "event_type": "other",
+              "id": "B-story-1",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.2,
+              "sentiment": "uncertain",
+              "sha256": "7117c1ec9d4a1501b7d5a3d16c26a0807360f77785d0240459733a7f2568bde7",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.45,
+              "summary": "The fictional company discussed expansion options. No completed agreement or increase in customer demand has been established.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO discussed a possible expansion.",
+              "url": "https://example.org/synthetic/B/story-1"
+            },
+            {
+              "event_type": "earnings",
+              "id": "B-story-2",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "10b13a8d78bd422cadebea2a675686d11900f8543a6531cdf89b1bea1446a0c4",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional earnings briefing is scheduled. Revenue and earnings results are not supplied, so the schedule alone establishes no growth claim.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO scheduled an earnings briefing.",
+              "url": "https://example.org/synthetic/B/story-2"
+            },
+            {
+              "event_type": "management",
+              "id": "B-story-3",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "93299e49bab0c57361d02b6d1b6f70da69de7bf1e2af4fa2dab105836534fd75",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional operations manager was appointed. The appointment supplies management context but does not establish a change in profitability.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO appointed an operations manager.",
+              "url": "https://example.org/synthetic/B/story-3"
+            },
+            {
+              "event_type": "regulatory",
+              "id": "B-story-4",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "7d8e68bcf2f764fe36c609e09d787a8eef5528450f53ad02368e606c0ae81f08",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional routine compliance update was published. The bulletin contains no sanction or regulatory finding and establishes no adverse catalyst.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO published a compliance update.",
+              "url": "https://example.org/synthetic/B/story-4"
+            },
+            {
+              "event_type": "product",
+              "id": "B-story-5",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "3e9719b8ccc04f1606d5087bd066c73242f27aeac6b7797477e29a81dd17afab",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional scheduled maintenance window was reported. No sales interruption or loss is established by the supplied operational notice.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO reported a product maintenance window.",
+              "url": "https://example.org/synthetic/B/story-5"
+            },
+            {
+              "event_type": "sector",
+              "id": "B-story-6",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "e4256d0369a67e17480b7d51e4328dd06b19583148308a766a16df63e406c5ae",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "The fictional company hosted an industry discussion. The event provides sector context, not a verified change in the company outlook.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO hosted an industry discussion.",
+              "url": "https://example.org/synthetic/B/story-6"
+            },
+            {
+              "event_type": "other",
+              "id": "B-story-7",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T13:54:18.024052+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "a501c65b9aacdba687304db22843842418781bd5aa4a7b7f4e439c02324861ec",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional governance calendar was published. Calendar information provides administrative context without supporting a directional price forecast.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO published its governance calendar.",
+              "url": "https://example.org/synthetic/B/story-7"
+            }
+          ],
+          "events": [
+            {
+              "article_ids": [
+                "B-story-0"
+              ],
+              "direction": "BULLISH",
+              "event_id": "B-event-0",
+              "event_type": "product",
+              "flags": [],
+              "headline": "TESTCO announced a service partnership.",
+              "impact": 0.25,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-0"
+            },
+            {
+              "article_ids": [
+                "B-story-1"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-1",
+              "event_type": "other",
+              "flags": [
+                "UNCONFIRMED_CONTEXT"
+              ],
+              "headline": "TESTCO discussed a possible expansion.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-1"
+            },
+            {
+              "article_ids": [
+                "B-story-2"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-2",
+              "event_type": "earnings",
+              "flags": [],
+              "headline": "TESTCO scheduled an earnings briefing.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-2"
+            },
+            {
+              "article_ids": [
+                "B-story-3"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-3",
+              "event_type": "management",
+              "flags": [],
+              "headline": "TESTCO appointed an operations manager.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-3"
+            },
+            {
+              "article_ids": [
+                "B-story-4"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-4",
+              "event_type": "regulatory",
+              "flags": [],
+              "headline": "TESTCO published a compliance update.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-4"
+            },
+            {
+              "article_ids": [
+                "B-story-5"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-5",
+              "event_type": "product",
+              "flags": [],
+              "headline": "TESTCO reported a product maintenance window.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-5"
+            },
+            {
+              "article_ids": [
+                "B-story-6"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-6",
+              "event_type": "sector",
+              "flags": [],
+              "headline": "TESTCO hosted an industry discussion.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-6"
+            },
+            {
+              "article_ids": [
+                "B-story-7"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "B-event-7",
+              "event_type": "other",
+              "flags": [],
+              "headline": "TESTCO published its governance calendar.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/B/story-7"
+            }
+          ],
+          "impact_score": 0.18
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "NewsImpact",
+        "strength": 0.18,
+        "strength_label": "LOW",
+        "summary": "Rule-based news impact is bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "BULLISH",
+        "evidence_id": "agent.bull",
+        "evidence_type": "AGENT_BULL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "research_view.confidence",
+          "research_view.primary_risk"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T14:54:30.734319+00:00",
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "FACT",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "evidence_type": "FORECAST",
+              "field_key": "forecast_direction",
+              "material": true,
+              "support_type": "DIRECT",
+              "text": "",
+              "unit": "state",
+              "value": "up"
+            },
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The uncalibrated confidence record limits interpretation.",
+              "unit": null,
+              "value": null
+            },
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "stance_or_risk": "BULL_CASE"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "BullAgent",
+        "strength": 0.6,
+        "strength_label": "MEDIUM",
+        "summary": "Bull Agent presents a bull case.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "BEARISH",
+        "evidence_id": "agent.bear",
+        "evidence_type": "AGENT_BEAR",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "research_view.confidence",
+          "research_view.primary_risk",
+          "technicals.trend"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T14:54:31.122405+00:00",
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "FACT",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "technicals.trend"
+              ],
+              "evidence_type": "TECHNICAL",
+              "field_key": "technical_trend",
+              "material": true,
+              "support_type": "DIRECT",
+              "text": "",
+              "unit": "state",
+              "value": "bearish"
+            },
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The uncalibrated confidence record limits interpretation.",
+              "unit": null,
+              "value": null
+            },
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "stance_or_risk": "BEAR_CASE"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "BearAgent",
+        "strength": 0.6,
+        "strength_label": "MEDIUM",
+        "summary": "Bear Agent presents a bear case.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "agent.risk",
+        "evidence_type": "AGENT_RISK",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "news.article.1",
+          "research_view.confidence",
+          "research_view.primary_risk",
+          "technicals.trend"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T14:54:31.477485+00:00",
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "RISK",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "kronos.direction",
+                "technicals.trend"
+              ],
+              "evidence_type": "MULTI_SOURCE",
+              "field_key": null,
+              "material": true,
+              "support_type": "MIXED",
+              "text": "The upward forecast and bearish technical trend may indicate conflicting evidence.",
+              "unit": null,
+              "value": null
+            },
+            {
+              "claim_type": "RISK",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "news.article.1"
+              ],
+              "evidence_type": "NEWS",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The unconfirmed discussion may limit event conviction.",
+              "unit": null,
+              "value": null
+            },
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            },
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The confidence record limits calibrated risk interpretation.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "stance_or_risk": "HIGH"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "RiskAgent",
+        "strength": 0.6,
+        "strength_label": "MEDIUM",
+        "summary": "Risk Agent reports high risk.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "pipeline.health",
+        "evidence_type": "DATA_QUALITY",
+        "freshness": "UNKNOWN",
+        "lineage_ids": [
+          "pipeline.health"
+        ],
+        "metadata": {},
+        "observed_at": null,
+        "provenance": {
+          "schema_version": null
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "failed_stages": [],
+          "warning_stages": []
+        },
+        "role": "META",
+        "schema_version": "evidence_item_v1",
+        "source_component": "ProductPipeline",
+        "strength": 0.0,
+        "strength_label": "LOW",
+        "summary": "Pipeline stages are healthy.",
+        "symbol": "NSE:TESTCO"
+      }
+    ],
+    "evidence_quality": "LIMITED",
+    "fusion_run_id": "7e8838d3cb1a062f07bfaf90d88bf0ef",
+    "fusion_version": "evidence_fusion_v1",
+    "generated_at": "2026-10-09T14:54:31.790556+00:00",
+    "latency_ms": 0,
+    "missing_evidence": [],
+    "opposing_evidence": [
+      {
+        "direction": "BULLISH",
+        "evidence_id": "kronos.direction",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "source_component": "Kronos",
+        "summary": "Kronos forecast direction is bullish."
+      },
+      {
+        "direction": "BEARISH",
+        "evidence_id": "technicals.trend",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "source_component": "TechnicalIntelligence",
+        "summary": "Deterministic technical trend is bearish."
+      },
+      {
+        "direction": "BULLISH",
+        "evidence_id": "news.impact_score",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "source_component": "NewsImpact",
+        "summary": "Rule-based news impact is bullish."
+      }
+    ],
+    "result_hash": "f015923061053a2d4870c2efce8a7cf3665fbca87b5e629149f79aa43eb9e95c",
+    "risk_level": "HIGH",
+    "risks": [
+      {
+        "evidence_ids": [
+          "kronos.direction",
+          "technicals.trend"
+        ],
+        "risk_level": "HIGH",
+        "source": "EvidenceFusion",
+        "text": "Kronos is bullish while TechnicalIntelligence is bearish."
+      },
+      {
+        "evidence_ids": [
+          "news.impact_score",
+          "technicals.trend"
+        ],
+        "risk_level": "MEDIUM",
+        "source": "EvidenceFusion",
+        "text": "TechnicalIntelligence is bearish while NewsImpact is bullish."
+      },
+      {
+        "evidence_ids": [
+          "agent.bear",
+          "agent.bull"
+        ],
+        "risk_level": "MEDIUM",
+        "source": "EvidenceFusion",
+        "text": "Bull and Bear agents present opposing interpretations of shared upstream evidence."
+      }
+    ],
+    "schema_version": "fusion_output_v1",
+    "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+    "source_lineage": [
+      {
+        "evidence_id": "market_data.quality",
+        "lineage_ids": [
+          "market_data.quality"
+        ],
+        "provenance": {
+          "bronze_sha256": "6e35751584e5227821d716970543b117baf1e328337606dd7a99bdcdaec4b9ed",
+          "cache_status": "miss",
+          "input_sha256": "2311cfcfd5e8a5cd40c640c79a2f0f2153c195a36c575ced872d846088a2e843",
+          "provider": "synthetic",
+          "silver_sha256": "1c6bc4a57095ed27f710262246dde029eb47a1854154066bb5f2a451a1db3801"
+        },
+        "role": "META",
+        "source_component": "MarketDataService"
+      },
+      {
+        "evidence_id": "kronos.direction",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "provenance": {
+          "config": {
+            "forecast_rows": 24,
+            "input_rows": 256,
+            "sample_count": 1,
+            "sampling_T": 0.85,
+            "sampling_top_k": 0,
+            "sampling_top_p": 0.9
+          },
+          "forecast_fingerprint": "956f6f58d9577171a212fcbb389b7f73d9d19db068eee3c2b3a0e117324c546b",
+          "forecast_sha256": "0f019f913c76b4ad3d3cde4cc69e78d792471d9cea0e7052aca2aceab5d189f5",
+          "model_id": "NeoQuasar/Kronos-base"
+        },
+        "role": "PRIMARY",
+        "source_component": "Kronos"
+      },
+      {
+        "evidence_id": "technicals.trend",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "provenance": {
+          "gold_sha256": "53b0cf811fd4c8408cc782e670e02d5027653f2ee13fef0ffebc79e228813bc8",
+          "version": "synthetic_technical_v1"
+        },
+        "role": "PRIMARY",
+        "source_component": "TechnicalIntelligence"
+      },
+      {
+        "evidence_id": "technicals.regime",
+        "lineage_ids": [
+          "technicals.regime",
+          "technicals.trend"
+        ],
+        "provenance": {
+          "gold_sha256": "53b0cf811fd4c8408cc782e670e02d5027653f2ee13fef0ffebc79e228813bc8",
+          "version": "synthetic_technical_v1"
+        },
+        "role": "PRIMARY",
+        "source_component": "TechnicalIntelligence"
+      },
+      {
+        "evidence_id": "news.impact_score",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "provenance": {
+          "evidence_sha256": "0f569147205e381ddc231668f057929ced94aba07444922a6dc5bab6cc3ce43b",
+          "formula_version": "synthetic_news_impact_v1",
+          "gold_sha256": "b33a4a3bb212cd09d5b3c3b43c5a2b494f115e85663d5c71db23b932ec5cd0c0",
+          "provider": "synthetic",
+          "providers_used": [
+            "synthetic"
+          ],
+          "source_urls": [
+            "https://example.org/synthetic/B/story-0",
+            "https://example.org/synthetic/B/story-1",
+            "https://example.org/synthetic/B/story-2",
+            "https://example.org/synthetic/B/story-3",
+            "https://example.org/synthetic/B/story-4",
+            "https://example.org/synthetic/B/story-5",
+            "https://example.org/synthetic/B/story-6",
+            "https://example.org/synthetic/B/story-7"
+          ]
+        },
+        "role": "PRIMARY",
+        "source_component": "NewsImpact"
+      },
+      {
+        "evidence_id": "agent.bull",
+        "lineage_ids": [
+          "kronos.direction",
+          "research_view.confidence",
+          "research_view.primary_risk"
+        ],
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "role": "DERIVED",
+        "source_component": "BullAgent"
+      },
+      {
+        "evidence_id": "agent.bear",
+        "lineage_ids": [
+          "research_view.confidence",
+          "research_view.primary_risk",
+          "technicals.trend"
+        ],
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "role": "DERIVED",
+        "source_component": "BearAgent"
+      },
+      {
+        "evidence_id": "agent.risk",
+        "lineage_ids": [
+          "kronos.direction",
+          "news.article.1",
+          "research_view.confidence",
+          "research_view.primary_risk",
+          "technicals.trend"
+        ],
+        "provenance": {
+          "cached": true,
+          "schema_version": "agent_output_v2_1",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4"
+        },
+        "role": "DERIVED",
+        "source_component": "RiskAgent"
+      },
+      {
+        "evidence_id": "pipeline.health",
+        "lineage_ids": [
+          "pipeline.health"
+        ],
+        "provenance": {
+          "schema_version": null
+        },
+        "role": "META",
+        "source_component": "ProductPipeline"
+      }
+    ],
+    "summary": "Primary evidence is mixed or too closely balanced for a directional research view. High risk lowers the support level without reversing direction.",
+    "support_level": "LOW",
+    "supporting_evidence": [],
+    "symbol": "NSE:TESTCO",
+    "view": "MIXED"
+  },
+  "fusion_health": {
+    "cache_status": "hit",
+    "conflicts": 3,
+    "errors": [],
+    "fusion_run_id": "4f0643a5a5a866ef4a652bd554d70a83",
+    "input_completeness": "COMPLETE",
+    "last_update": "2026-10-09T14:54:31.948593+00:00",
+    "latency_ms": 15,
+    "provider": "local deterministic fusion",
+    "research_status": "NOT_HISTORICALLY_CALIBRATED",
+    "research_view": "MIXED",
+    "rows": 9,
+    "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+    "status": "HEALTHY",
+    "warnings": [
+      "3 evidence conflict(s)"
+    ]
+  },
+  "mock_provider_attempts": 3,
+  "preflight": {
+    "harness_version": "agent_run_v3",
+    "input_bytes": 21834,
+    "max_retries_per_agent": 1,
+    "model": "gpt-5-mini",
+    "output_budget": {
+      "daily_max_output_tokens": 19200,
+      "limitations_required": true,
+      "max_claim_characters": 240,
+      "max_claims": {
+        "bear": 3,
+        "bull": 3,
+        "risk": 4
+      },
+      "max_output_tokens": 1600,
+      "status": "OK",
+      "target_tokens": [
+        600,
+        900
+      ],
+      "team_max_calls": 6,
+      "team_max_output_tokens": 9600,
+      "uncertainty_required": true
+    },
+    "prompt_versions": {
+      "bear": "bear_agent_prompt_v7",
+      "bull": "bull_agent_prompt_v8",
+      "risk": "risk_agent_prompt_v7"
+    },
+    "reasoning_rounds": 1,
+    "schema_version": "agent_output_v2_1",
+    "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+    "status": "PASS",
+    "tools": "none"
+  },
+  "result": {
+    "agents": {
+      "bear": {
+        "analyzed_at": "2026-10-09T14:54:31.122405+00:00",
+        "attempt_refs": [
+          "15a9bf8f905e7aacba988771480d818d.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 218,
+        "report": {
+          "agent_type": "bear",
+          "argument": {
+            "claim_type": "FACT",
+            "confidence": 0.6,
+            "direction": null,
+            "evidence_ids": [
+              "technicals.trend"
+            ],
+            "evidence_type": "TECHNICAL",
+            "field_key": "technical_trend",
+            "material": true,
+            "support_type": "DIRECT",
+            "text": "",
+            "unit": "state",
+            "value": "bearish"
+          },
+          "confidence_in_argument": 0.6,
+          "contradicting_evidence_ids": [],
+          "key_factors": [],
+          "limitations": [
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The uncalibrated confidence record limits interpretation.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+          "stance": "BEAR_CASE",
+          "supporting_evidence_ids": [
+            "technicals.trend"
+          ],
+          "uncertainty": [
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "unsupported_claims": []
+        },
+        "run_id": "15a9bf8f905e7aacba988771480d818d",
+        "status": "SUCCESS"
+      },
+      "bull": {
+        "analyzed_at": "2026-10-09T14:54:30.734319+00:00",
+        "attempt_refs": [
+          "f5b67663b030299107522a9e5b8d1669.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 343,
+        "report": {
+          "agent_type": "bull",
+          "argument": {
+            "claim_type": "FACT",
+            "confidence": 0.6,
+            "direction": null,
+            "evidence_ids": [
+              "kronos.direction"
+            ],
+            "evidence_type": "FORECAST",
+            "field_key": "forecast_direction",
+            "material": true,
+            "support_type": "DIRECT",
+            "text": "",
+            "unit": "state",
+            "value": "up"
+          },
+          "confidence_in_argument": 0.6,
+          "contradicting_evidence_ids": [],
+          "key_factors": [],
+          "limitations": [
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The uncalibrated confidence record limits interpretation.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+          "stance": "BULL_CASE",
+          "supporting_evidence_ids": [
+            "kronos.direction"
+          ],
+          "uncertainty": [
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "unsupported_claims": []
+        },
+        "run_id": "f5b67663b030299107522a9e5b8d1669",
+        "status": "SUCCESS"
+      },
+      "risk": {
+        "analyzed_at": "2026-10-09T14:54:31.477485+00:00",
+        "attempt_refs": [
+          "b799fdd661dfdad8fb9ecac5e9f022b0.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 234,
+        "report": {
+          "agent_type": "risk",
+          "confidence_in_risk_assessment": 0.6,
+          "conflicts": [
+            {
+              "claim_type": "RISK",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "kronos.direction",
+                "technicals.trend"
+              ],
+              "evidence_type": "MULTI_SOURCE",
+              "field_key": null,
+              "material": true,
+              "support_type": "MIXED",
+              "text": "The upward forecast and bearish technical trend may indicate conflicting evidence.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "data_risks": [],
+          "event_risks": [
+            {
+              "claim_type": "RISK",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "news.article.1"
+              ],
+              "evidence_type": "NEWS",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The unconfirmed discussion may limit event conviction.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "evidence_ids": [
+            "kronos.direction",
+            "news.article.1",
+            "research_view.confidence",
+            "research_view.primary_risk",
+            "technicals.trend"
+          ],
+          "limitations": [
+            {
+              "claim_type": "LIMITATION",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.confidence"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The confidence record limits calibrated risk interpretation.",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "missing_evidence": [],
+          "model_risks": [],
+          "risk_factors": [],
+          "risk_level": "HIGH",
+          "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+          "uncertainty": [
+            {
+              "claim_type": "UNCERTAINTY",
+              "confidence": 0.6,
+              "direction": null,
+              "evidence_ids": [
+                "research_view.primary_risk"
+              ],
+              "evidence_type": "RESEARCH_VIEW",
+              "field_key": null,
+              "material": true,
+              "support_type": "DERIVED",
+              "text": "The forecast may not match the realized market path.",
+              "unit": null,
+              "value": null
+            }
+          ]
+        },
+        "run_id": "b799fdd661dfdad8fb9ecac5e9f022b0",
+        "status": "SUCCESS"
+      }
+    },
+    "agents_completed": 3,
+    "api_calls": 3,
+    "latency_ms": 1250,
+    "run_id": "5e1a26659f87108a406b8ddd4a5ca6fd",
+    "snapshot_id": "f4a93fb9f8bd5268693700832d23610fb1e38e6787a7604e75bccc33963bc7a4",
+    "status": "SUCCESS",
+    "team_status": "COMPLETE"
+  }
+}

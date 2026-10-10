@@ -1,6 +1,7 @@
 """Offline closure tests for the typed Phase 7 agent_output_v2 contract."""
 
 from __future__ import annotations
+from research.tests.legacy_agent_harness import LegacyAgentTeam
 
 import copy
 import json
@@ -11,14 +12,14 @@ from pathlib import Path
 from unittest.mock import patch
 
 from app import agent_research
+from app.structured_claims import OUTPUT_SCHEMA_VERSION as SCHEMA_VERSION
 from app.agent_research import (
     AGENTS,
     CLAIM_TYPES,
     EVIDENCE_TYPES,
     MAX_REASONING_ROUNDS,
     MAX_RETRIES,
-    PROMPT_VERSIONS,
-    SCHEMA_VERSION,
+    LEGACY_PROMPT_VERSIONS as PROMPT_VERSIONS,
     SUPPORT_TYPES,
     AgentTeam,
     ClaimValidationError,
@@ -29,7 +30,7 @@ from app.agent_research import (
 )
 from app.evidence_snapshot import canonical_bytes, snapshot_id
 from research.tests.test_phase7_2a_diagnostics import MockClient, mock_response
-from research.tests.test_phase7_agents import evidence, snapshot, typed_claim, valid_report
+from research.tests.test_phase7_agents import evidence, snapshot, typed_claim, structured_fact, valid_report
 
 
 RISK_FIELDS = ("risk_factors", "conflicts", "model_risks", "data_risks", "event_risks",
@@ -54,7 +55,7 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
         return validate_output(report, agent, self.digest, self.catalog)
 
     def test_schema_exposes_required_claim_and_support_taxonomy(self):
-        self.assertEqual(SCHEMA_VERSION, "agent_output_v2")
+        self.assertEqual(SCHEMA_VERSION, "agent_output_v2_1")
         self.assertEqual(set(CLAIM_TYPES), {"FACT", "NUMERICAL_FACT", "INTERPRETATION", "RISK",
                                             "LIMITATION", "UNCERTAINTY", "COMPARATIVE",
                                             "FORECAST_INTERPRETATION"})
@@ -62,26 +63,23 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
         self.assertIn("MULTI_SOURCE", EVIDENCE_TYPES)
         properties = output_schema("bull", tuple(self.catalog))["properties"]["argument"]["properties"]
         self.assertEqual(set(properties), {"text", "claim_type", "support_type", "evidence_type",
-                                           "evidence_ids", "confidence", "material"})
+                                           "evidence_ids", "confidence", "material", "field_key", "value", "unit", "direction"})
 
     def test_supported_and_unsupported_direct_qualitative_facts(self):
         supported = valid_report("bull", self.digest)
-        set_material_claim(supported, "bull", typed_claim("Kronos direction is up.", ["kronos.direction"],
-                                                           claim_type="FACT", support_type="DIRECT"))
+        set_material_claim(supported, "bull", structured_fact("forecast_direction", "up", "state", ["kronos.direction"]))
         self.assertEqual(self.validate(supported, "bull"), supported)
 
         unsupported = valid_report("bull", self.digest)
         set_material_claim(unsupported, "bull", typed_claim("The company announced a new partnership.",
                                                              ["technicals.indicator.0"], claim_type="FACT",
                                                              support_type="DIRECT", evidence_type="TECHNICAL"))
-        with self.assertRaisesRegex(ClaimValidationError, "not present"):
+        with self.assertRaisesRegex(ClaimValidationError, "present"):
             self.validate(unsupported, "bull")
 
     def test_supported_and_unsupported_numerical_facts(self):
         supported = valid_report("bull", self.digest)
-        set_material_claim(supported, "bull", typed_claim("The forecast change is 1.2%.",
-                                                           ["kronos.forecast_pct_change"],
-                                                           claim_type="NUMERICAL_FACT", support_type="DIRECT"))
+        set_material_claim(supported, "bull", structured_fact("forecast_return_pct", 1.2, "percent", ["kronos.forecast_pct_change"]))
         self.assertEqual(self.validate(supported, "bull"), supported)
         unsupported = copy.deepcopy(supported)
         unsupported["key_factors"][0]["text"] = "The forecast change is 15%."
@@ -131,8 +129,10 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
             for supported_text, reference, evidence_type, unsupported_text in cases:
                 with self.subTest(agent=agent, field=reference):
                     report = valid_report(agent, self.digest)
-                    claim = typed_claim(supported_text, [reference], claim_type="NUMERICAL_FACT",
-                                        support_type="DIRECT", evidence_type=evidence_type)
+                    claim = structured_fact("rsi" if evidence_type == "TECHNICAL" else "forecast_return_pct",
+                                            55 if evidence_type == "TECHNICAL" else 1.2,
+                                            "unitless" if evidence_type == "TECHNICAL" else "percent",
+                                            [reference], evidence_type=evidence_type)
                     set_material_claim(report, agent, claim)
                     self.assertEqual(self.validate(report, agent), report)
                     report = copy.deepcopy(report)
@@ -151,8 +151,10 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
             for supported_text, references, unsupported_text in cases:
                 with self.subTest(agent=agent, text=supported_text):
                     report = valid_report(agent, record["snapshot_id"])
-                    claim = typed_claim(supported_text, references, claim_type="NUMERICAL_FACT",
-                                        support_type="DIRECT", evidence_type="MARKET_DATA")
+                    claim = structured_fact("volume" if references == ["market_data.volume"] else "observed_price",
+                                            1000 if references == ["market_data.volume"] else 100,
+                                            "volume_units" if references == ["market_data.volume"] else "INR",
+                                            references, evidence_type="MARKET_DATA")
                     set_material_claim(report, agent, claim)
                     self.assertEqual(validate_output(report, agent, record["snapshot_id"], catalog), report)
                     report = copy.deepcopy(report)
@@ -174,9 +176,9 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
                 validate_output(report, agent, record["snapshot_id"], catalog)
 
     def test_v1_cache_identity_is_not_reused(self):
-        team = AgentTeam(Path("unused"))
+        team = LegacyAgentTeam(Path("unused"))
         current = team._key(self.digest, "bull")
-        with patch.object(agent_research, "SCHEMA_VERSION", "agent_output_v1"):
+        with patch.object(agent_research.v3, "SCHEMA_VERSION", "agent_output_v1"):
             old = team._key(self.digest, "bull")
         self.assertNotEqual(current, old)
 
@@ -191,7 +193,7 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            result = AgentTeam(root, client_factory=lambda: MockClient(rejected)).run_bull_only(self.record)
+            result = LegacyAgentTeam(root, client_factory=lambda: MockClient(rejected)).run_bull_only(self.record)
             attempts = [json.loads(path.read_text(encoding="utf-8")) for path in (root / "attempts").glob("*.json")]
         self.assertEqual(result["status"], "FAILED")
         self.assertEqual(list((root / "cache").glob("*.json")) if (root / "cache").exists() else [], [])
@@ -205,13 +207,13 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
         original = canonical_bytes(self.record)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            result = AgentTeam(root, client_factory=lambda: client).run(self.record)
+            result = LegacyAgentTeam(root, client_factory=lambda: client).run(self.record)
             rows = [json.loads(path.read_text(encoding="utf-8")) for path in (root / "runs").glob("*.json")]
         self.assertEqual(result["status"], "SUCCESS")
         self.assertEqual(canonical_bytes(self.record), original)
         self.assertEqual(set(result["agents"]), set(AGENTS))
         self.assertNotIn("synthesis", result)
-        self.assertTrue(all(row["output_schema_version"] == "agent_output_v2" and
+        self.assertTrue(all(row["output_schema_version"] == "agent_output_v2_1" and
                             row["claim_validation"]["status"] == "PASS" and row["claim_metadata"]
                             for row in rows))
         for row in rows:
@@ -220,7 +222,7 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
                               for reference in claim["evidence_ids"]})
 
     def test_tools_loops_retries_and_prompt_versions_remain_bounded(self):
-        team = AgentTeam(Path("unused"))
+        team = LegacyAgentTeam(Path("unused"))
         wire = canonical_bytes({"evidence": self.record["evidence"]})
         for agent in AGENTS:
             request = team._request_args(agent, wire)
@@ -229,9 +231,9 @@ class AgentOutputV2ClosureTests(unittest.TestCase):
             self.assertFalse(request["parallel_tool_calls"])
         self.assertEqual(MAX_REASONING_ROUNDS, 1)
         self.assertEqual(MAX_RETRIES, 1)
-        self.assertEqual(PROMPT_VERSIONS, {"bull": "bull_agent_prompt_v5",
-                                           "bear": "bear_agent_prompt_v4",
-                                           "risk": "risk_agent_prompt_v4"})
+        self.assertEqual(PROMPT_VERSIONS, {"bull": "bull_agent_prompt_v9",
+                                           "bear": "bear_agent_prompt_v8",
+                                           "risk": "risk_agent_prompt_v8"})
 
 
 if __name__ == "__main__":

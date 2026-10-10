@@ -1,0 +1,381 @@
+{
+  "cases": [
+    {
+      "actual_evidence_families": [
+        "TECHNICAL"
+      ],
+      "agent": "bull",
+      "attempt": 1,
+      "claim_text": "Technicals show a bullish regime and multiple bullish indicators.",
+      "claim_type": "FACT",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "technicals.regime"
+          ],
+          "evidence_type": "TECHNICAL",
+          "field_key": "market_regime",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "state",
+          "value": "TRENDING_BULL"
+        }
+      ],
+      "current_rejection_reasons": [
+        "unsupported_direct_fact"
+      ],
+      "declared_evidence_family": "TECHNICAL",
+      "evidence_ids": [
+        "technicals.regime",
+        "technicals.indicator.0",
+        "technicals.indicator.1",
+        "technicals.indicator.2",
+        "technicals.indicator.3",
+        "technicals.indicator.5"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "technicals.regime",
+          "field_key": "market_regime",
+          "unit": "state",
+          "value": "TRENDING_BULL"
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [],
+        "text": "Technicals show a bullish regime and multiple bullish indicators."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "unsupported_direct_fact",
+      "original_shape_rejected": true,
+      "primary_category": "DIRECT_FACT_PARAPHRASE",
+      "secondary_categories": [],
+      "support_type": "DIRECT"
+    },
+    {
+      "actual_evidence_families": [
+        "NEWS"
+      ],
+      "agent": "bull",
+      "attempt": 2,
+      "claim_text": "News impact is limited to a single product partnership announcement with modest positive impact.",
+      "claim_type": "FACT",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "news.article.0"
+          ],
+          "evidence_type": "NEWS",
+          "field_key": "news_title",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "text",
+          "value": "TESTCO announced a service partnership."
+        },
+        {
+          "claim_type": "INTERPRETATION",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "news.article.0"
+          ],
+          "evidence_type": "NEWS",
+          "field_key": null,
+          "material": true,
+          "support_type": "INTERPRETIVE",
+          "text": "The partnership may provide constructive context, not measured price impact.",
+          "unit": null,
+          "value": null
+        }
+      ],
+      "current_rejection_reasons": [
+        "unsupported_direct_fact"
+      ],
+      "declared_evidence_family": "NEWS",
+      "evidence_ids": [
+        "news.article.0",
+        "news.event.0"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "news.article.0",
+          "field_key": "news_title",
+          "unit": "text",
+          "value": "TESTCO announced a service partnership."
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [],
+        "text": "News impact is limited to a single product partnership announcement with modest positive impact."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "unsupported_direct_fact",
+      "original_shape_rejected": true,
+      "primary_category": "FACT_AND_INTERPRETATION_COMBINED",
+      "secondary_categories": [],
+      "support_type": "DIRECT"
+    },
+    {
+      "actual_evidence_families": [
+        "TECHNICAL"
+      ],
+      "agent": "bear",
+      "attempt": 1,
+      "claim_text": "Technicals regime is TRENDING_BULL with bullish indicators.",
+      "claim_type": "FACT",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "technicals.regime"
+          ],
+          "evidence_type": "TECHNICAL",
+          "field_key": "market_regime",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "state",
+          "value": "TRENDING_BULL"
+        }
+      ],
+      "current_rejection_reasons": [
+        "unsupported_direct_fact"
+      ],
+      "declared_evidence_family": "TECHNICAL",
+      "evidence_ids": [
+        "technicals.regime",
+        "technicals.trend"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "technicals.regime",
+          "field_key": "market_regime",
+          "unit": "state",
+          "value": "TRENDING_BULL"
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [],
+        "text": "Technicals regime is TRENDING_BULL with bullish indicators."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "unsupported_direct_fact",
+      "original_shape_rejected": true,
+      "primary_category": "DIRECT_FACT_PARAPHRASE",
+      "secondary_categories": [],
+      "support_type": "DIRECT"
+    },
+    {
+      "actual_evidence_families": [
+        "FORECAST"
+      ],
+      "agent": "bear",
+      "attempt": 2,
+      "claim_text": "Kronos forecast direction is up.",
+      "claim_type": "FACT",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "kronos.direction"
+          ],
+          "evidence_type": "FORECAST",
+          "field_key": "forecast_direction",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "state",
+          "value": "up"
+        }
+      ],
+      "current_rejection_reasons": [
+        "unsupported_direct_fact"
+      ],
+      "declared_evidence_family": "FORECAST",
+      "evidence_ids": [
+        "kronos.direction"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [],
+        "text": "Kronos forecast direction is up."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "unsupported_direct_fact",
+      "original_shape_rejected": true,
+      "primary_category": "DIRECT_FACT_PARAPHRASE",
+      "secondary_categories": [],
+      "support_type": "DIRECT"
+    },
+    {
+      "actual_evidence_families": [
+        "FORECAST"
+      ],
+      "agent": "risk",
+      "attempt": 1,
+      "claim_text": "Kronos direction is up and forecast_final_close is 101.2 (forecast_pct_change 1.2).",
+      "claim_type": "NOT_RETAINED",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "NUMERICAL_FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "kronos.forecast_final_close"
+          ],
+          "evidence_type": "FORECAST",
+          "field_key": "forecast_final_price",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "price",
+          "value": 101.2
+        },
+        {
+          "claim_type": "NUMERICAL_FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "kronos.forecast_pct_change"
+          ],
+          "evidence_type": "FORECAST",
+          "field_key": "forecast_return_pct",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "percent",
+          "value": 1.2
+        }
+      ],
+      "current_rejection_reasons": [
+        "field_or_unit_mismatch",
+        "field_or_unit_mismatch"
+      ],
+      "declared_evidence_family": "NOT_RETAINED",
+      "evidence_ids": [
+        "kronos.direction",
+        "kronos.forecast_final_close",
+        "kronos.forecast_pct_change"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price",
+          "unit": "price",
+          "value": 101.2
+        },
+        {
+          "evidence_id": "kronos.forecast_pct_change",
+          "field_key": "forecast_return_pct",
+          "unit": "percent",
+          "value": 1.2
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [
+          "101.2",
+          "1.2"
+        ],
+        "text": "Kronos direction is up and forecast_final_close is 101.2 (forecast_pct_change 1.2)."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "field_or_unit_mismatch",
+      "original_shape_rejected": true,
+      "primary_category": "FIELD_ALIAS_MISMATCH",
+      "secondary_categories": [
+        "UNIT_MISMATCH",
+        "NUMERIC_VALUE_WORDING"
+      ],
+      "support_type": "NOT_RETAINED"
+    },
+    {
+      "actual_evidence_families": [
+        "FORECAST"
+      ],
+      "agent": "risk",
+      "attempt": 2,
+      "claim_text": "Kronos direction is up, forecast_final_close equals 101.2 (FORECAST).",
+      "claim_type": "NOT_RETAINED",
+      "corrected_shape_accepted": true,
+      "corrected_split_claims": [
+        {
+          "claim_type": "NUMERICAL_FACT",
+          "confidence": 0.6,
+          "direction": null,
+          "evidence_ids": [
+            "kronos.forecast_final_close"
+          ],
+          "evidence_type": "FORECAST",
+          "field_key": "forecast_final_price",
+          "material": true,
+          "support_type": "DIRECT",
+          "text": "",
+          "unit": "price",
+          "value": 101.2
+        }
+      ],
+      "current_rejection_reasons": [
+        "field_or_unit_mismatch",
+        "field_or_unit_mismatch"
+      ],
+      "declared_evidence_family": "NOT_RETAINED",
+      "evidence_ids": [
+        "kronos.direction",
+        "kronos.forecast_final_close",
+        "kronos.model_id"
+      ],
+      "expected_field_value_unit_bindings": [
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price",
+          "unit": "price",
+          "value": 101.2
+        }
+      ],
+      "model_produced_value_wording": {
+        "numbers_found": [
+          "101.2"
+        ],
+        "text": "Kronos direction is up, forecast_final_close equals 101.2 (FORECAST)."
+      },
+      "note": "Only retained diagnostic shapes are replayed; no full provider output is reconstructed.",
+      "original_rejection_reason": "field_or_unit_mismatch",
+      "original_shape_rejected": true,
+      "primary_category": "FIELD_ALIAS_MISMATCH",
+      "secondary_categories": [],
+      "support_type": "NOT_RETAINED"
+    }
+  ],
+  "external_calls": 0,
+  "primary_category_counts": {
+    "DIRECT_FACT_PARAPHRASE": 3,
+    "FACT_AND_INTERPRETATION_COMBINED": 1,
+    "FIELD_ALIAS_MISMATCH": 2
+  },
+  "schema_version": "live_shape_replay_v2",
+  "status": "PASS"
+}

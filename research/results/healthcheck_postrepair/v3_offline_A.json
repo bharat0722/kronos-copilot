@@ -1,0 +1,2072 @@
+{
+  "attempts": [
+    {
+      "agent_type": "risk",
+      "attempt": 1,
+      "attempt_id": "5b33c44194ae49d004a6100db695c84c.1",
+      "budget_reserved": true,
+      "completion_reason": null,
+      "evidence_native_validator_version": "evidence_native_grounding_v1",
+      "exception_class": null,
+      "failure_stage": null,
+      "finished_at": "2026-10-09T17:54:17.053661+00:00",
+      "input_hash": "4ce7a07eced3c1b649a829f3953b832efd1d4ddb503391878f53b867cdc55108",
+      "latency_ms": 139,
+      "max_output_tokens": 1600,
+      "model": "gpt-5-mini",
+      "output_item_types": [],
+      "output_schema_version": "agent_output_v3",
+      "prompt_version": "risk_agent_prompt_v8",
+      "request_id": "req_offline_v3",
+      "response_error_code": null,
+      "response_id": "resp_offline_v3",
+      "response_model": "gpt-5-mini",
+      "response_status": "completed",
+      "retry_decision": "STOP",
+      "run_id": "5b33c44194ae49d004a6100db695c84c",
+      "sanitized_error": null,
+      "schema_version": "agent_attempt_v4",
+      "sdk_attempted": true,
+      "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+      "started_at": "2026-10-09T17:54:16.906630+00:00",
+      "status": "SUCCESS",
+      "token_usage": {
+        "input_tokens": 100,
+        "output_tokens": 500,
+        "total_tokens": 600
+      }
+    },
+    {
+      "agent_type": "bear",
+      "attempt": 1,
+      "attempt_id": "dd8a4e11e8366cb136a7001fa4ad080b.1",
+      "budget_reserved": true,
+      "completion_reason": null,
+      "evidence_native_validator_version": "evidence_native_grounding_v1",
+      "exception_class": null,
+      "failure_stage": null,
+      "finished_at": "2026-10-09T17:54:16.721587+00:00",
+      "input_hash": "4ce7a07eced3c1b649a829f3953b832efd1d4ddb503391878f53b867cdc55108",
+      "latency_ms": 155,
+      "max_output_tokens": 1600,
+      "model": "gpt-5-mini",
+      "output_item_types": [],
+      "output_schema_version": "agent_output_v3",
+      "prompt_version": "bear_agent_prompt_v8",
+      "request_id": "req_offline_v3",
+      "response_error_code": null,
+      "response_id": "resp_offline_v3",
+      "response_model": "gpt-5-mini",
+      "response_status": "completed",
+      "retry_decision": "STOP",
+      "run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+      "sanitized_error": null,
+      "schema_version": "agent_attempt_v4",
+      "sdk_attempted": true,
+      "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+      "started_at": "2026-10-09T17:54:16.572554+00:00",
+      "status": "SUCCESS",
+      "token_usage": {
+        "input_tokens": 100,
+        "output_tokens": 500,
+        "total_tokens": 600
+      }
+    },
+    {
+      "agent_type": "bull",
+      "attempt": 1,
+      "attempt_id": "fa4f078f71bbed08cc0b3632b93832f3.1",
+      "budget_reserved": true,
+      "completion_reason": null,
+      "evidence_native_validator_version": "evidence_native_grounding_v1",
+      "exception_class": null,
+      "failure_stage": null,
+      "finished_at": "2026-10-09T17:54:16.367507+00:00",
+      "input_hash": "4ce7a07eced3c1b649a829f3953b832efd1d4ddb503391878f53b867cdc55108",
+      "latency_ms": 2296,
+      "max_output_tokens": 1600,
+      "model": "gpt-5-mini",
+      "output_item_types": [],
+      "output_schema_version": "agent_output_v3",
+      "prompt_version": "bull_agent_prompt_v9",
+      "request_id": "req_offline_v3",
+      "response_error_code": null,
+      "response_id": "resp_offline_v3",
+      "response_model": "gpt-5-mini",
+      "response_status": "completed",
+      "retry_decision": "STOP",
+      "run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+      "sanitized_error": null,
+      "schema_version": "agent_attempt_v4",
+      "sdk_attempted": true,
+      "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+      "started_at": "2026-10-09T17:54:14.075339+00:00",
+      "status": "SUCCESS",
+      "token_usage": {
+        "input_tokens": 100,
+        "output_tokens": 500,
+        "total_tokens": 600
+      }
+    }
+  ],
+  "cached_team": {
+    "agents": {
+      "bear": {
+        "analyzed_at": "2026-10-09T17:54:16.721587+00:00",
+        "cached": true,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "technicals.trend"
+              ],
+              "facts": [
+                {
+                  "display_text": "Technical trend: bullish",
+                  "evidence_id": "technicals.trend",
+                  "field_key": "technical_trend",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "TECHNICAL",
+                  "unit": "state",
+                  "value": "bullish"
+                }
+              ],
+              "interpretation": "Technical evidence appears insufficient for a strong downside case.",
+              "stance": "UNCERTAIN"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "stance": "UNCERTAIN",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "bear",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "technicals.trend",
+                  "field_key": "technical_trend"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "technicals.trend"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Technical evidence appears insufficient for a strong downside case."
+              },
+              "stance": "UNCERTAIN",
+              "support_level": "MEDIUM"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "UNCERTAIN",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+        "status": "CACHED"
+      },
+      "bull": {
+        "analyzed_at": "2026-10-09T17:54:16.367507+00:00",
+        "cached": true,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "facts": [
+                {
+                  "display_text": "Kronos direction: Bullish",
+                  "evidence_id": "kronos.direction",
+                  "field_key": "forecast_direction",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "FORECAST",
+                  "unit": "state",
+                  "value": "up"
+                }
+              ],
+              "interpretation": "Forecast evidence may support a constructive case, with limited certainty.",
+              "stance": "BULLISH"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_ids": [
+                "news.article.0"
+              ],
+              "facts": [
+                {
+                  "display_text": "News title: TESTCO announced a service partnership.",
+                  "evidence_id": "news.article.0",
+                  "field_key": "news_title",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "NEWS",
+                  "unit": "text",
+                  "value": "TESTCO announced a service partnership."
+                }
+              ],
+              "interpretation": "News context may support a constructive interpretation.",
+              "stance": "BULLISH"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "stance": "BULLISH",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "bull",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "kronos.direction",
+                  "field_key": "forecast_direction"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "kronos.direction"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Forecast evidence may support a constructive case, with limited certainty."
+              },
+              "stance": "BULLISH",
+              "support_level": "MEDIUM"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "news.article.0",
+                  "field_key": "news_title"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "news.article.0"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "News context may support a constructive interpretation."
+              },
+              "stance": "BULLISH",
+              "support_level": "LOW"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "BULLISH",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+        "status": "CACHED"
+      },
+      "risk": {
+        "analyzed_at": "2026-10-09T17:54:17.053661+00:00",
+        "cached": true,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "kronos.forecast_pct_change"
+              ],
+              "facts": [
+                {
+                  "display_text": "Kronos forecast return: 1.2%",
+                  "evidence_id": "kronos.forecast_pct_change",
+                  "field_key": "forecast_return_pct",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "FORECAST",
+                  "unit": "percent",
+                  "value": 1.2
+                }
+              ],
+              "interpretation": "Forecast evidence may not generalize; limited historical support warrants caution.",
+              "stance": "RISK"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_ids": [
+                "news.article.1"
+              ],
+              "facts": [
+                {
+                  "display_text": "News relevance: 0.5",
+                  "evidence_id": "news.article.1",
+                  "field_key": "news_relevance",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "NEWS",
+                  "unit": "unitless",
+                  "value": 0.5
+                }
+              ],
+              "interpretation": "Contextual news may not translate into price impact.",
+              "stance": "RISK"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "HIGH",
+          "schema_version": "agent_output_v3",
+          "stance": "RISK",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "risk",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "kronos.forecast_pct_change",
+                  "field_key": "forecast_return_pct"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "kronos.forecast_pct_change"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Forecast evidence may not generalize; limited historical support warrants caution."
+              },
+              "stance": "RISK",
+              "support_level": "MEDIUM"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "news.article.1",
+                  "field_key": "news_relevance"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "news.article.1"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Contextual news may not translate into price impact."
+              },
+              "stance": "RISK",
+              "support_level": "LOW"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "HIGH",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "RISK",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "5b33c44194ae49d004a6100db695c84c",
+        "status": "CACHED"
+      }
+    },
+    "agents_completed": 3,
+    "available": true,
+    "cached": true,
+    "eligible": true,
+    "last_update": "2026-10-09T17:54:17.227699+00:00",
+    "run_id": "85431e163059b80a9949e49defdf0e0e",
+    "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+    "status": "CACHED",
+    "team_status": "COMPLETE"
+  },
+  "checks": {
+    "attempts": true,
+    "cache": true,
+    "conflicts": true,
+    "dashboard_adapter": true,
+    "durable": true,
+    "fusion": true,
+    "immutability": true,
+    "ledger": true,
+    "lineage": true,
+    "pipeline": true,
+    "team": true
+  },
+  "external_calls": 0,
+  "fusion": {
+    "aggregation": {
+      "eligible_primary_sources": [
+        "kronos.direction",
+        "technicals.trend",
+        "news.impact_score"
+      ],
+      "internal_direction_score": 0.4136,
+      "semantics": "Deterministic ordinal heuristic; not a probability or calibrated accuracy."
+    },
+    "agreements": [
+      {
+        "agreement_type": "MULTI_SOURCE_ALIGNMENT",
+        "direction": "BULLISH",
+        "evidence_ids": [
+          "kronos.direction",
+          "news.impact_score",
+          "technicals.trend"
+        ],
+        "explanation": "3 independent primary sources align bullish."
+      }
+    ],
+    "cache_status": "miss",
+    "conflicts": [],
+    "deduplication": [
+      {
+        "evidence_id": "technicals.regime",
+        "reason": "Regime is derived from the same technical series."
+      },
+      {
+        "evidence_id": "agent.bull",
+        "reason": "Agent output interprets cited primary evidence."
+      },
+      {
+        "evidence_id": "agent.bear",
+        "reason": "Agent output interprets cited primary evidence."
+      },
+      {
+        "evidence_id": "agent.risk",
+        "reason": "Agent output interprets cited primary evidence."
+      }
+    ],
+    "disclaimer": "Research support only; not investment advice. Support is qualitative, not a probability.",
+    "evidence_items": [
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "market_data.quality",
+        "evidence_type": "DATA_QUALITY",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "market_data.quality"
+        ],
+        "metadata": {},
+        "observed_at": "2026-10-09T17:54:13.708264+00:00",
+        "provenance": {
+          "bronze_sha256": "b2bc05d1f3c1e845f03dd3b6119e2b3d8981d742856b955547eec0748c4cfaa8",
+          "cache_status": "miss",
+          "input_sha256": "564f5ddbd73b5e4d072decccbaa0cb3d98180fb9acdc10237636da54e7244443",
+          "provider": "synthetic",
+          "silver_sha256": "5113a934ca5671660bd0aa1ca476002191ba7cb3b8a96e7557a35aeb44b899d9"
+        },
+        "quality": "PASS",
+        "raw_value": "PASS",
+        "role": "META",
+        "schema_version": "evidence_item_v1",
+        "source_component": "MarketDataService",
+        "strength": 0.0,
+        "strength_label": "LOW",
+        "summary": "Market data quality is pass.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BULLISH",
+        "evidence_id": "kronos.direction",
+        "evidence_type": "FORECAST",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "metadata": {
+          "historical_validation_context": "UNAVAILABLE_IN_EVIDENCE_SNAPSHOT",
+          "weight": 1.0
+        },
+        "observed_at": "2026-10-09T17:54:13.708264+00:00",
+        "provenance": {
+          "config": {
+            "forecast_rows": 24,
+            "input_rows": 256,
+            "sample_count": 1,
+            "sampling_T": 0.85,
+            "sampling_top_k": 0,
+            "sampling_top_p": 0.9
+          },
+          "forecast_fingerprint": "4e31c184a562e55f019334ecaf1b8620fd77a1e5bf21cda0b3880549b9069d3f",
+          "forecast_sha256": "bbe687f7523aa91a02c947babad96d8c4a84cc385ff11bb53b6ad4533428bd88",
+          "model_id": "NeoQuasar/Kronos-base"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "direction": "up",
+          "forecast_pct_change": 1.2
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "Kronos",
+        "strength": 0.4,
+        "strength_label": "MEDIUM",
+        "summary": "Kronos forecast direction is bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BULLISH",
+        "evidence_id": "technicals.trend",
+        "evidence_type": "TECHNICAL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "metadata": {
+          "weight": 1.0
+        },
+        "observed_at": "2026-10-09T17:54:13.708264+00:00",
+        "provenance": {
+          "gold_sha256": "e9f2bd4afbc5ae7091c6afc5c4b9f6aa88a3a31cade5d076b2566b2000b418ed",
+          "version": "synthetic_technical_v1"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "indicators": [
+            {
+              "indicator": "RSI14",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 58
+            },
+            {
+              "indicator": "EMA20",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 101
+            },
+            {
+              "indicator": "EMA50",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 99
+            },
+            {
+              "indicator": "SMA20",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 100.5
+            },
+            {
+              "indicator": "SMA50",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 98.5
+            },
+            {
+              "indicator": "MACD",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 0.6
+            },
+            {
+              "indicator": "MACD_SIGNAL",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 0.4
+            },
+            {
+              "indicator": "BOLLINGER",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 100
+            },
+            {
+              "indicator": "ATR",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 1.4
+            },
+            {
+              "indicator": "ROC",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 1.1
+            },
+            {
+              "indicator": "VOLUME_SMA",
+              "reason": "Descriptive state, not independent directional evidence.",
+              "signal": "neutral",
+              "strength": 0.25,
+              "value": 100000
+            },
+            {
+              "indicator": "VOLUME_SPIKE",
+              "reason": "Upward trend context.",
+              "signal": "bullish",
+              "strength": 0.55,
+              "value": 1.2
+            }
+          ],
+          "trend": "bullish"
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "TechnicalIntelligence",
+        "strength": 0.55,
+        "strength_label": "MEDIUM",
+        "summary": "Deterministic technical trend is bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "BULLISH",
+        "evidence_id": "technicals.regime",
+        "evidence_type": "REGIME",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "technicals.regime",
+          "technicals.trend"
+        ],
+        "metadata": {
+          "deduplication_reason": "Regime is derived from the same technical series."
+        },
+        "observed_at": "2026-10-09T17:54:13.708264+00:00",
+        "provenance": {
+          "gold_sha256": "e9f2bd4afbc5ae7091c6afc5c4b9f6aa88a3a31cade5d076b2566b2000b418ed",
+          "version": "synthetic_technical_v1"
+        },
+        "quality": "PASS",
+        "raw_value": "TRENDING_BULL",
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "TechnicalIntelligence",
+        "strength": 0.35,
+        "strength_label": "MEDIUM",
+        "summary": "Market regime is trending_bull.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": true,
+        "direction": "BULLISH",
+        "evidence_id": "news.impact_score",
+        "evidence_type": "NEWS",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "metadata": {
+          "interpretation": "Headline context, not measured price impact.",
+          "uncertainty": [],
+          "weight": 0.75
+        },
+        "observed_at": "2026-10-09T17:54:13.708264+00:00",
+        "provenance": {
+          "evidence_sha256": "e1804d19e6422aef115036ba195173d9ae641931a16806a2349fd2951bd9c9a4",
+          "formula_version": "synthetic_news_impact_v1",
+          "gold_sha256": "ae7a1a964e56454c51f029a4f4417d74b79880c1afc2b7f6cf4115bb4c5bfa90",
+          "provider": "synthetic",
+          "providers_used": [
+            "synthetic"
+          ],
+          "source_urls": [
+            "https://example.org/synthetic/A/story-0",
+            "https://example.org/synthetic/A/story-1",
+            "https://example.org/synthetic/A/story-2",
+            "https://example.org/synthetic/A/story-3",
+            "https://example.org/synthetic/A/story-4",
+            "https://example.org/synthetic/A/story-5",
+            "https://example.org/synthetic/A/story-6",
+            "https://example.org/synthetic/A/story-7"
+          ]
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "articles": [
+            {
+              "event_type": "product",
+              "id": "A-story-0",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.8,
+              "sentiment": "positive",
+              "sha256": "a4ee9b2cf91dfa02b0ecf99fb4b93dee23c1eb21ba115edde9a1e8860dcd3a14",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "The fictional company announced a service partnership. The announcement describes service delivery, not a realized market return.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO announced a service partnership.",
+              "url": "https://example.org/synthetic/A/story-0"
+            },
+            {
+              "event_type": "other",
+              "id": "A-story-1",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "33a2b065d5953aa9dc795a87946ec5aa2e89d661abb3980966e1f4652513ac83",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.45,
+              "summary": "The fictional company discussed routine service delivery planning. No material demand change or completed expansion is established.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO discussed service delivery planning.",
+              "url": "https://example.org/synthetic/A/story-1"
+            },
+            {
+              "event_type": "earnings",
+              "id": "A-story-2",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "f2e1d281df7069208b58325e4d5aaf505ec630e523b6555cc8e75e73536e4010",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional earnings briefing is scheduled. Revenue and earnings results are not supplied, so the schedule alone establishes no growth claim.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO scheduled an earnings briefing.",
+              "url": "https://example.org/synthetic/A/story-2"
+            },
+            {
+              "event_type": "management",
+              "id": "A-story-3",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "cb91c807b150bfadcf1d69c0fa4461e4502bc1653a90fb7f50a33325e2ecbb59",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional operations manager was appointed. The appointment supplies management context but does not establish a change in profitability.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO appointed an operations manager.",
+              "url": "https://example.org/synthetic/A/story-3"
+            },
+            {
+              "event_type": "regulatory",
+              "id": "A-story-4",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "a51db04941db543778e73e8d7be6e2cddd1267d5a926ad6e971da35e42727395",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional routine compliance update was published. The bulletin contains no sanction or regulatory finding and establishes no adverse catalyst.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO published a compliance update.",
+              "url": "https://example.org/synthetic/A/story-4"
+            },
+            {
+              "event_type": "product",
+              "id": "A-story-5",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "5286bc776231bbe3818be3fad6494df80e90b754a262a6fbe427f0a85bfc7fc9",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional scheduled maintenance window was reported. No sales interruption or loss is established by the supplied operational notice.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO reported a product maintenance window.",
+              "url": "https://example.org/synthetic/A/story-5"
+            },
+            {
+              "event_type": "sector",
+              "id": "A-story-6",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "2b1ac564d7c99b97d7714a124dc8539521b3bc1e5e1beb00689881776c7815ed",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "The fictional company hosted an industry discussion. The event provides sector context, not a verified change in the company outlook.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO hosted an industry discussion.",
+              "url": "https://example.org/synthetic/A/story-6"
+            },
+            {
+              "event_type": "other",
+              "id": "A-story-7",
+              "provider": "synthetic",
+              "published_at": "2026-10-09T17:54:13.708264+00:00",
+              "relevance": 0.5,
+              "sentiment": "neutral",
+              "sha256": "5dc8d083f5e2504809f0f3ecfa5c730ee810bd12755f3a4bdc11545de2cfa26c",
+              "source": "Synthetic company bulletin",
+              "source_quality": 0.85,
+              "summary": "A fictional governance calendar was published. Calendar information provides administrative context without supporting a directional price forecast.",
+              "symbol": "NSE:TESTCO",
+              "title": "TESTCO published its governance calendar.",
+              "url": "https://example.org/synthetic/A/story-7"
+            }
+          ],
+          "events": [
+            {
+              "article_ids": [
+                "A-story-0"
+              ],
+              "direction": "BULLISH",
+              "event_id": "A-event-0",
+              "event_type": "product",
+              "flags": [],
+              "headline": "TESTCO announced a service partnership.",
+              "impact": 0.25,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-0"
+            },
+            {
+              "article_ids": [
+                "A-story-1"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-1",
+              "event_type": "other",
+              "flags": [],
+              "headline": "TESTCO discussed service delivery planning.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-1"
+            },
+            {
+              "article_ids": [
+                "A-story-2"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-2",
+              "event_type": "earnings",
+              "flags": [],
+              "headline": "TESTCO scheduled an earnings briefing.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-2"
+            },
+            {
+              "article_ids": [
+                "A-story-3"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-3",
+              "event_type": "management",
+              "flags": [],
+              "headline": "TESTCO appointed an operations manager.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-3"
+            },
+            {
+              "article_ids": [
+                "A-story-4"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-4",
+              "event_type": "regulatory",
+              "flags": [],
+              "headline": "TESTCO published a compliance update.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-4"
+            },
+            {
+              "article_ids": [
+                "A-story-5"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-5",
+              "event_type": "product",
+              "flags": [],
+              "headline": "TESTCO reported a product maintenance window.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-5"
+            },
+            {
+              "article_ids": [
+                "A-story-6"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-6",
+              "event_type": "sector",
+              "flags": [],
+              "headline": "TESTCO hosted an industry discussion.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-6"
+            },
+            {
+              "article_ids": [
+                "A-story-7"
+              ],
+              "direction": "NEUTRAL",
+              "event_id": "A-event-7",
+              "event_type": "other",
+              "flags": [],
+              "headline": "TESTCO published its governance calendar.",
+              "impact": 0.0,
+              "sources": [
+                "Synthetic company bulletin"
+              ],
+              "url": "https://example.org/synthetic/A/story-7"
+            }
+          ],
+          "impact_score": 0.25
+        },
+        "role": "PRIMARY",
+        "schema_version": "evidence_item_v1",
+        "source_component": "NewsImpact",
+        "strength": 0.25,
+        "strength_label": "LOW",
+        "summary": "Rule-based news impact is bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "BULLISH",
+        "evidence_id": "agent.bull",
+        "evidence_type": "AGENT_BULL",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "news.article.0"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T17:54:16.367507+00:00",
+        "provenance": {
+          "agent_run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "INTERPRETATION",
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "fact_references": [
+                {
+                  "evidence_id": "kronos.direction",
+                  "field_key": "forecast_direction"
+                }
+              ],
+              "support_type": "INTERPRETIVE",
+              "text": "Forecast evidence may support a constructive case, with limited certainty."
+            },
+            {
+              "claim_type": "INTERPRETATION",
+              "evidence_ids": [
+                "news.article.0"
+              ],
+              "fact_references": [
+                {
+                  "evidence_id": "news.article.0",
+                  "field_key": "news_title"
+                }
+              ],
+              "support_type": "INTERPRETIVE",
+              "text": "News context may support a constructive interpretation."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ],
+          "stance_or_risk": "BULLISH"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "BullAgent",
+        "strength": 0.5,
+        "strength_label": "MEDIUM",
+        "summary": "Bull Agent presents a bullish.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "agent.bear",
+        "evidence_type": "AGENT_BEAR",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "technicals.trend"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T17:54:16.721587+00:00",
+        "provenance": {
+          "agent_run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "INTERPRETATION",
+              "evidence_ids": [
+                "technicals.trend"
+              ],
+              "fact_references": [
+                {
+                  "evidence_id": "technicals.trend",
+                  "field_key": "technical_trend"
+                }
+              ],
+              "support_type": "INTERPRETIVE",
+              "text": "Technical evidence appears insufficient for a strong downside case."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ],
+          "stance_or_risk": "UNCERTAIN"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "BearAgent",
+        "strength": 0.5,
+        "strength_label": "MEDIUM",
+        "summary": "Bear Agent presents a uncertain.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "agent.risk",
+        "evidence_type": "AGENT_RISK",
+        "freshness": "FRESH",
+        "lineage_ids": [
+          "kronos.direction",
+          "kronos.forecast_pct_change",
+          "news.article.1"
+        ],
+        "metadata": {
+          "confidence_semantics": "argument_support_not_prediction_probability",
+          "deduplication_reason": "Agent output interprets cited primary evidence."
+        },
+        "observed_at": "2026-10-09T17:54:17.053661+00:00",
+        "provenance": {
+          "agent_run_id": "5b33c44194ae49d004a6100db695c84c",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "claims": [
+            {
+              "claim_type": "INTERPRETATION",
+              "evidence_ids": [
+                "kronos.forecast_pct_change"
+              ],
+              "fact_references": [
+                {
+                  "evidence_id": "kronos.forecast_pct_change",
+                  "field_key": "forecast_return_pct"
+                }
+              ],
+              "support_type": "INTERPRETIVE",
+              "text": "Forecast evidence may not generalize; limited historical support warrants caution."
+            },
+            {
+              "claim_type": "INTERPRETATION",
+              "evidence_ids": [
+                "news.article.1"
+              ],
+              "fact_references": [
+                {
+                  "evidence_id": "news.article.1",
+                  "field_key": "news_relevance"
+                }
+              ],
+              "support_type": "INTERPRETIVE",
+              "text": "Contextual news may not translate into price impact."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            },
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "stance_or_risk": "HIGH"
+        },
+        "role": "DERIVED",
+        "schema_version": "evidence_item_v1",
+        "source_component": "RiskAgent",
+        "strength": 0.5,
+        "strength_label": "MEDIUM",
+        "summary": "Risk Agent reports high risk.",
+        "symbol": "NSE:TESTCO"
+      },
+      {
+        "confidence_semantics": "RULE_BASED_EVIDENCE_SUPPORT_NOT_PROBABILITY",
+        "contributes_to_direction": false,
+        "direction": "UNKNOWN",
+        "evidence_id": "pipeline.health",
+        "evidence_type": "DATA_QUALITY",
+        "freshness": "UNKNOWN",
+        "lineage_ids": [
+          "pipeline.health"
+        ],
+        "metadata": {},
+        "observed_at": null,
+        "provenance": {
+          "schema_version": null
+        },
+        "quality": "PASS",
+        "raw_value": {
+          "failed_stages": [],
+          "warning_stages": []
+        },
+        "role": "META",
+        "schema_version": "evidence_item_v1",
+        "source_component": "ProductPipeline",
+        "strength": 0.0,
+        "strength_label": "LOW",
+        "summary": "Pipeline stages are healthy.",
+        "symbol": "NSE:TESTCO"
+      }
+    ],
+    "evidence_quality": "GOOD",
+    "fusion_run_id": "61931e2f25ab2962c84fc9b34951f6bd",
+    "fusion_version": "evidence_fusion_v1",
+    "generated_at": "2026-10-09T17:54:17.347726+00:00",
+    "latency_ms": 0,
+    "missing_evidence": [],
+    "opposing_evidence": [],
+    "result_hash": "b76b2aaaa160c93275f5370de4262fbd26d94944240858ced1ee1eac907f7de5",
+    "risk_level": "HIGH",
+    "risks": [
+      {
+        "evidence_ids": [
+          "kronos.forecast_pct_change"
+        ],
+        "risk_level": "HIGH",
+        "source": "RiskAgent",
+        "text": "Forecast evidence may not generalize; limited historical support warrants caution."
+      },
+      {
+        "evidence_ids": [
+          "news.article.1"
+        ],
+        "risk_level": "HIGH",
+        "source": "RiskAgent",
+        "text": "Contextual news may not translate into price impact."
+      },
+      {
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "risk_level": "HIGH",
+        "source": "RiskAgent",
+        "text": "Forecast realization remains uncertain."
+      },
+      {
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "risk_level": "HIGH",
+        "source": "RiskAgent",
+        "text": "Forecast evidence may not generalize beyond this scenario."
+      }
+    ],
+    "schema_version": "fusion_output_v1",
+    "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+    "source_lineage": [
+      {
+        "evidence_id": "market_data.quality",
+        "lineage_ids": [
+          "market_data.quality"
+        ],
+        "provenance": {
+          "bronze_sha256": "b2bc05d1f3c1e845f03dd3b6119e2b3d8981d742856b955547eec0748c4cfaa8",
+          "cache_status": "miss",
+          "input_sha256": "564f5ddbd73b5e4d072decccbaa0cb3d98180fb9acdc10237636da54e7244443",
+          "provider": "synthetic",
+          "silver_sha256": "5113a934ca5671660bd0aa1ca476002191ba7cb3b8a96e7557a35aeb44b899d9"
+        },
+        "role": "META",
+        "source_component": "MarketDataService"
+      },
+      {
+        "evidence_id": "kronos.direction",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "provenance": {
+          "config": {
+            "forecast_rows": 24,
+            "input_rows": 256,
+            "sample_count": 1,
+            "sampling_T": 0.85,
+            "sampling_top_k": 0,
+            "sampling_top_p": 0.9
+          },
+          "forecast_fingerprint": "4e31c184a562e55f019334ecaf1b8620fd77a1e5bf21cda0b3880549b9069d3f",
+          "forecast_sha256": "bbe687f7523aa91a02c947babad96d8c4a84cc385ff11bb53b6ad4533428bd88",
+          "model_id": "NeoQuasar/Kronos-base"
+        },
+        "role": "PRIMARY",
+        "source_component": "Kronos"
+      },
+      {
+        "evidence_id": "technicals.trend",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "provenance": {
+          "gold_sha256": "e9f2bd4afbc5ae7091c6afc5c4b9f6aa88a3a31cade5d076b2566b2000b418ed",
+          "version": "synthetic_technical_v1"
+        },
+        "role": "PRIMARY",
+        "source_component": "TechnicalIntelligence"
+      },
+      {
+        "evidence_id": "technicals.regime",
+        "lineage_ids": [
+          "technicals.regime",
+          "technicals.trend"
+        ],
+        "provenance": {
+          "gold_sha256": "e9f2bd4afbc5ae7091c6afc5c4b9f6aa88a3a31cade5d076b2566b2000b418ed",
+          "version": "synthetic_technical_v1"
+        },
+        "role": "PRIMARY",
+        "source_component": "TechnicalIntelligence"
+      },
+      {
+        "evidence_id": "news.impact_score",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "provenance": {
+          "evidence_sha256": "e1804d19e6422aef115036ba195173d9ae641931a16806a2349fd2951bd9c9a4",
+          "formula_version": "synthetic_news_impact_v1",
+          "gold_sha256": "ae7a1a964e56454c51f029a4f4417d74b79880c1afc2b7f6cf4115bb4c5bfa90",
+          "provider": "synthetic",
+          "providers_used": [
+            "synthetic"
+          ],
+          "source_urls": [
+            "https://example.org/synthetic/A/story-0",
+            "https://example.org/synthetic/A/story-1",
+            "https://example.org/synthetic/A/story-2",
+            "https://example.org/synthetic/A/story-3",
+            "https://example.org/synthetic/A/story-4",
+            "https://example.org/synthetic/A/story-5",
+            "https://example.org/synthetic/A/story-6",
+            "https://example.org/synthetic/A/story-7"
+          ]
+        },
+        "role": "PRIMARY",
+        "source_component": "NewsImpact"
+      },
+      {
+        "evidence_id": "agent.bull",
+        "lineage_ids": [
+          "kronos.direction",
+          "news.article.0"
+        ],
+        "provenance": {
+          "agent_run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "role": "DERIVED",
+        "source_component": "BullAgent"
+      },
+      {
+        "evidence_id": "agent.bear",
+        "lineage_ids": [
+          "kronos.direction",
+          "technicals.trend"
+        ],
+        "provenance": {
+          "agent_run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "role": "DERIVED",
+        "source_component": "BearAgent"
+      },
+      {
+        "evidence_id": "agent.risk",
+        "lineage_ids": [
+          "kronos.direction",
+          "kronos.forecast_pct_change",
+          "news.article.1"
+        ],
+        "provenance": {
+          "agent_run_id": "5b33c44194ae49d004a6100db695c84c",
+          "cached": true,
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161"
+        },
+        "role": "DERIVED",
+        "source_component": "RiskAgent"
+      },
+      {
+        "evidence_id": "pipeline.health",
+        "lineage_ids": [
+          "pipeline.health"
+        ],
+        "provenance": {
+          "schema_version": null
+        },
+        "role": "META",
+        "source_component": "ProductPipeline"
+      }
+    ],
+    "summary": "The bullish research view reflects Kronos is bullish, TechnicalIntelligence is bullish, NewsImpact is bullish. High risk lowers the support level without reversing direction.",
+    "support_level": "LOW",
+    "supporting_evidence": [
+      {
+        "direction": "BULLISH",
+        "evidence_id": "kronos.direction",
+        "lineage_ids": [
+          "kronos.direction"
+        ],
+        "source_component": "Kronos",
+        "summary": "Kronos forecast direction is bullish."
+      },
+      {
+        "direction": "BULLISH",
+        "evidence_id": "technicals.trend",
+        "lineage_ids": [
+          "technicals.trend"
+        ],
+        "source_component": "TechnicalIntelligence",
+        "summary": "Deterministic technical trend is bullish."
+      },
+      {
+        "direction": "BULLISH",
+        "evidence_id": "news.impact_score",
+        "lineage_ids": [
+          "news.event.0",
+          "news.event.1",
+          "news.event.2",
+          "news.event.3",
+          "news.event.4",
+          "news.event.5",
+          "news.event.6",
+          "news.event.7",
+          "news.impact_score"
+        ],
+        "source_component": "NewsImpact",
+        "summary": "Rule-based news impact is bullish."
+      }
+    ],
+    "symbol": "NSE:TESTCO",
+    "view": "BULLISH"
+  },
+  "health": {
+    "agent_details": {
+      "bear": {
+        "attempt_refs": [
+          "dd8a4e11e8366cb136a7001fa4ad080b.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 186,
+        "run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+        "status": "SUCCESS"
+      },
+      "bull": {
+        "attempt_refs": [
+          "fa4f078f71bbed08cc0b3632b93832f3.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 2328,
+        "run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+        "status": "SUCCESS"
+      },
+      "risk": {
+        "attempt_refs": [
+          "5b33c44194ae49d004a6100db695c84c.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "error_code": null,
+        "failure_stage": null,
+        "latency_ms": 171,
+        "run_id": "5b33c44194ae49d004a6100db695c84c",
+        "status": "SUCCESS"
+      }
+    },
+    "agents_completed": 3,
+    "cache_status": "hit",
+    "eligible": true,
+    "errors": [],
+    "last_update": "2026-10-09T17:54:17.227699+00:00",
+    "latency_ms": 3155,
+    "openai_available": true,
+    "provider": "OpenAI",
+    "rows": 3,
+    "run_id": "85431e163059b80a9949e49defdf0e0e",
+    "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+    "status": "HEALTHY",
+    "team_status": "COMPLETE",
+    "warnings": []
+  },
+  "pipeline": {
+    "stages": {
+      "bronze": {
+        "cache_status": "fixture",
+        "errors": [],
+        "last_update": "2026-10-09T17:54:13.708264+00:00",
+        "provider": "synthetic",
+        "rows": 256,
+        "status": "HEALTHY",
+        "warnings": []
+      },
+      "gold": {
+        "cache_status": "fixture",
+        "errors": [],
+        "last_update": "2026-10-09T17:54:13.708264+00:00",
+        "provider": "synthetic",
+        "rows": 256,
+        "status": "HEALTHY",
+        "warnings": []
+      },
+      "news": {
+        "cache_status": "fixture",
+        "errors": [],
+        "last_update": "2026-10-09T17:54:13.708264+00:00",
+        "provider": "synthetic",
+        "rows": 8,
+        "status": "HEALTHY",
+        "warnings": []
+      },
+      "silver": {
+        "cache_status": "fixture",
+        "errors": [],
+        "last_update": "2026-10-09T17:54:13.708264+00:00",
+        "provider": "synthetic",
+        "rows": 256,
+        "status": "HEALTHY",
+        "warnings": []
+      }
+    }
+  },
+  "preflight": {
+    "harness_version": "agent_run_v4",
+    "input_bytes": 27091,
+    "max_retries_per_agent": 1,
+    "model": "gpt-5-mini",
+    "output_budget": {
+      "daily_max_output_tokens": 19200,
+      "limitations_required": true,
+      "max_claim_characters": 240,
+      "max_claims": {
+        "bear": 3,
+        "bull": 3,
+        "risk": 4
+      },
+      "max_output_tokens": 1600,
+      "status": "OK",
+      "target_tokens": [
+        600,
+        900
+      ],
+      "team_max_calls": 6,
+      "team_max_output_tokens": 9600,
+      "uncertainty_required": true
+    },
+    "prompt_versions": {
+      "bear": "bear_agent_prompt_v8",
+      "bull": "bull_agent_prompt_v9",
+      "risk": "risk_agent_prompt_v8"
+    },
+    "reasoning_rounds": 1,
+    "schema_version": "agent_output_v3",
+    "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+    "status": "PASS",
+    "tools": "none"
+  },
+  "team": {
+    "agents": {
+      "bear": {
+        "analyzed_at": "2026-10-09T17:54:16.721587+00:00",
+        "attempt_refs": [
+          "dd8a4e11e8366cb136a7001fa4ad080b.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 186,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "technicals.trend"
+              ],
+              "facts": [
+                {
+                  "display_text": "Technical trend: bullish",
+                  "evidence_id": "technicals.trend",
+                  "field_key": "technical_trend",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "TECHNICAL",
+                  "unit": "state",
+                  "value": "bullish"
+                }
+              ],
+              "interpretation": "Technical evidence appears insufficient for a strong downside case.",
+              "stance": "UNCERTAIN"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "stance": "UNCERTAIN",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "bear",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "technicals.trend",
+                  "field_key": "technical_trend"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "technicals.trend"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Technical evidence appears insufficient for a strong downside case."
+              },
+              "stance": "UNCERTAIN",
+              "support_level": "MEDIUM"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "UNCERTAIN",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "dd8a4e11e8366cb136a7001fa4ad080b",
+        "status": "SUCCESS"
+      },
+      "bull": {
+        "analyzed_at": "2026-10-09T17:54:16.367507+00:00",
+        "attempt_refs": [
+          "fa4f078f71bbed08cc0b3632b93832f3.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 2328,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "facts": [
+                {
+                  "display_text": "Kronos direction: Bullish",
+                  "evidence_id": "kronos.direction",
+                  "field_key": "forecast_direction",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "FORECAST",
+                  "unit": "state",
+                  "value": "up"
+                }
+              ],
+              "interpretation": "Forecast evidence may support a constructive case, with limited certainty.",
+              "stance": "BULLISH"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_ids": [
+                "news.article.0"
+              ],
+              "facts": [
+                {
+                  "display_text": "News title: TESTCO announced a service partnership.",
+                  "evidence_id": "news.article.0",
+                  "field_key": "news_title",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "NEWS",
+                  "unit": "text",
+                  "value": "TESTCO announced a service partnership."
+                }
+              ],
+              "interpretation": "News context may support a constructive interpretation.",
+              "stance": "BULLISH"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "stance": "BULLISH",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "bull",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "kronos.direction",
+                  "field_key": "forecast_direction"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "kronos.direction"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Forecast evidence may support a constructive case, with limited certainty."
+              },
+              "stance": "BULLISH",
+              "support_level": "MEDIUM"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "news.article.0",
+                  "field_key": "news_title"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "news.article.0"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "News context may support a constructive interpretation."
+              },
+              "stance": "BULLISH",
+              "support_level": "LOW"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "UNKNOWN",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "BULLISH",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "fa4f078f71bbed08cc0b3632b93832f3",
+        "status": "SUCCESS"
+      },
+      "risk": {
+        "analyzed_at": "2026-10-09T17:54:17.053661+00:00",
+        "attempt_refs": [
+          "5b33c44194ae49d004a6100db695c84c.1"
+        ],
+        "attempts": 1,
+        "cache_status": "STORED",
+        "cached": false,
+        "error_code": null,
+        "error_message": null,
+        "failure_stage": null,
+        "latency_ms": 171,
+        "presentation": {
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_ids": [
+                "kronos.forecast_pct_change"
+              ],
+              "facts": [
+                {
+                  "display_text": "Kronos forecast return: 1.2%",
+                  "evidence_id": "kronos.forecast_pct_change",
+                  "field_key": "forecast_return_pct",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "FORECAST",
+                  "unit": "percent",
+                  "value": 1.2
+                }
+              ],
+              "interpretation": "Forecast evidence may not generalize; limited historical support warrants caution.",
+              "stance": "RISK"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_ids": [
+                "news.article.1"
+              ],
+              "facts": [
+                {
+                  "display_text": "News relevance: 0.5",
+                  "evidence_id": "news.article.1",
+                  "field_key": "news_relevance",
+                  "renderer_version": "canonical_fact_renderer_v1",
+                  "source_family": "NEWS",
+                  "unit": "unitless",
+                  "value": 0.5
+                }
+              ],
+              "interpretation": "Contextual news may not translate into price impact.",
+              "stance": "RISK"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "renderer_version": "canonical_fact_renderer_v1",
+          "risk_level": "HIGH",
+          "schema_version": "agent_output_v3",
+          "stance": "RISK",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "report": {
+          "agent_type": "risk",
+          "arguments": [
+            {
+              "argument_id": "A1",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "kronos.forecast_pct_change",
+                  "field_key": "forecast_return_pct"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "kronos.forecast_pct_change"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Forecast evidence may not generalize; limited historical support warrants caution."
+              },
+              "stance": "RISK",
+              "support_level": "MEDIUM"
+            },
+            {
+              "argument_id": "A2",
+              "evidence_fact_refs": [
+                {
+                  "evidence_id": "news.article.1",
+                  "field_key": "news_relevance"
+                }
+              ],
+              "interpretation": {
+                "claim_type": "INTERPRETATION",
+                "evidence_ids": [
+                  "news.article.1"
+                ],
+                "support_type": "INTERPRETIVE",
+                "text": "Contextual news may not translate into price impact."
+              },
+              "stance": "RISK",
+              "support_level": "LOW"
+            }
+          ],
+          "limitations": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast evidence may not generalize beyond this scenario."
+            }
+          ],
+          "risk_level": "HIGH",
+          "schema_version": "agent_output_v3",
+          "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+          "stance": "RISK",
+          "support_level": "MEDIUM",
+          "uncertainty": [
+            {
+              "evidence_ids": [
+                "kronos.direction"
+              ],
+              "text": "Forecast realization remains uncertain."
+            }
+          ]
+        },
+        "run_id": "5b33c44194ae49d004a6100db695c84c",
+        "status": "SUCCESS"
+      }
+    },
+    "agents_completed": 3,
+    "api_calls": 3,
+    "latency_ms": 3155,
+    "run_id": "85431e163059b80a9949e49defdf0e0e",
+    "snapshot_id": "43e33a33699921337aee2ace2b67172358e0ebf1c14156fe27d0da88b2c25161",
+    "status": "SUCCESS",
+    "team_status": "COMPLETE"
+  }
+}

@@ -448,6 +448,7 @@ class NewsService:
         self._last_events = 0
         self._last_impact_status = "NOT_EVALUATED"
         self._last_update: str | None = None
+        self._last_response: dict[str, Any] = {}
 
     @staticmethod
     def official_name(symbol: str) -> str:
@@ -487,6 +488,8 @@ class NewsService:
         events = payload.get("events", [])
         self._last_count = sum(item.get("provenance", {}).get("provider") == TAVILY_NAME for item in events)
         self._last_update = payload.get("retrieved_at")
+        self._last_response = {"status": status, "provider": payload.get("provider"),
+                               "symbol": payload["symbol"], "rows": len(events), "cache_status": cache_status}
         providers_used = list(dict.fromkeys(item.get("provenance", {}).get("provider") for item in events))
         return {"symbol": payload["symbol"], "status": status,
                 "message": "No verified recent evidence." if not events else "Source-reported headlines; impact is not independently verified.",
@@ -511,9 +514,16 @@ class NewsService:
 
     def pipeline_stage(self) -> dict[str, Any]:
         health = self.tavily_health()
-        return {"status": health["status"], "rows": self._last_count, "last_update": health["last_success"],
-                "latency_ms": health["latency_ms"], "provider": TAVILY_NAME, "cache_status": "not_applicable",
-                "warnings": [health["reason"]] if health["reason"] else [], "errors": [],
+        last = self._last_response
+        age = (datetime.now(timezone.utc) - _utc(self._last_update)).total_seconds() if _utc(self._last_update) else None
+        status = {"FRESH": "HEALTHY", "NO_EVIDENCE": "HEALTHY", "UNAVAILABLE": "FAILED", "STALE": "STALE"}.get(last.get("status"), "READY")
+        if age is not None and age > CACHE_SECONDS and status != "FAILED":
+            status = "STALE"
+        return {"status": status, "rows": last.get("rows", 0), "last_update": self._last_update,
+                "latency_ms": health["latency_ms"] if last.get("provider") == TAVILY_NAME and last.get("cache_status") == "miss" else None,
+                "symbol": last.get("symbol"), "provider": last.get("provider"), "cache_status": last.get("cache_status", "not_applicable"),
+                "warnings": ["No verified recent evidence"] if last.get("status") == "NO_EVIDENCE" else [],
+                "errors": ["News providers unavailable"] if status == "FAILED" else [], "tavily_health": health,
                 "events_processed": self._last_events, "impact_status": self._last_impact_status,
                 "requests": health["requests"], "credits": health["credits"],
                 "last_failure": health["last_failure"], "consecutive_failures": health["consecutive_failures"]}

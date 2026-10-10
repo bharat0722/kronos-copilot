@@ -243,7 +243,7 @@ class FusionTests(unittest.TestCase):
         result = self.fuse(record)
         ledger = json.loads((Path(self.temp.name) / "runs" / f"{result['fusion_run_id']}.json").read_text())
         self.assertEqual(ledger["result_hash"], result["result_hash"])
-        self.assertIn(self.engine.health()["status"], {"HEALTHY", "DEGRADED"})
+        self.assertEqual(self.engine.health()["status"], "STALE")
 
     def test_inputs_remain_byte_identical(self) -> None:
         record = evidence_record()
@@ -259,7 +259,7 @@ class FusionTests(unittest.TestCase):
         record = evidence_record()
         fused = self.fuse(record)
         team = type("Team", (), {"result": lambda self, value: {"snapshot_id": value["snapshot_id"], "agents": {}},
-                                  "health": lambda self: {"status": "READY"}})()
+                                  "health": lambda self, record=None: {"status": "READY"}})()
         product = type("Pipeline", (), {"snapshot": lambda self: pipeline()})()
         news = type("News", (), {"pipeline_stage": lambda self: {"status": "HEALTHY"}})()
         engine = type("Fusion", (), {"fuse": lambda self, *args, **kwargs: fused,

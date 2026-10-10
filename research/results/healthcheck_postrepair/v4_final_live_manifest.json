@@ -1,0 +1,142 @@
+{
+  "agent_schema": "agent_output_v4",
+  "cache_policy": "Initial misses required; snapshot/role/model/prompt/schema/validator/config identity included.",
+  "catalogue_version": "admissible_evidence_catalogue_v1",
+  "config": {
+    "daily_call_limit": 12,
+    "max_input_bytes": 48000,
+    "max_output_tokens": 1600,
+    "model": "gpt-5-mini",
+    "reasoning_effort": "minimal",
+    "timeout_seconds": 30.0
+  },
+  "created_at": "2026-10-10T06:51:15.159395+00:00",
+  "external_calls_this_task": 0,
+  "fixtures": {
+    "A": {
+      "fixture_file_sha256": "fa3291519121d9af07fce8cbbccb9f43e4bf137cfc2d207485d674167a67cd50",
+      "fixture_id": "synthetic_production_v1_TESTCO",
+      "fixture_path": "research/results/healthcheck_postrepair/v4_live_fixtures/A.json",
+      "input_bytes": 18928,
+      "input_sha256": "24ab295007a82720b47352ac0a89efeba8fda7ff4e2852384cfdbe37d1b2da56",
+      "preflight": {
+        "harness_version": "agent_run_v4",
+        "input_bytes": 18928,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v9",
+          "bull": "bull_agent_prompt_v10",
+          "risk": "risk_agent_prompt_v9"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v4",
+        "snapshot_id": "d1a8eba748715245abbbfcb5d28dd5dd773da787b1f2c7b029945f75cb5a0a5b",
+        "status": "PASS",
+        "tools": "none",
+        "validator_version": "evidence_selection_validator_v1"
+      },
+      "snapshot_id": "d1a8eba748715245abbbfcb5d28dd5dd773da787b1f2c7b029945f75cb5a0a5b",
+      "synthetic_only": true
+    },
+    "B": {
+      "fixture_file_sha256": "90cf944645ebaf2e1264da7817b4e527b697946879abc6030a3237c1c5254a07",
+      "fixture_id": "synthetic_adversarial_v1_TESTCO",
+      "fixture_path": "research/results/healthcheck_postrepair/v4_live_fixtures/B.json",
+      "input_bytes": 19764,
+      "input_sha256": "efe029a548eb93d92a43684ddc61985bc30539ff406470ab0fdc85418d945cfe",
+      "preflight": {
+        "harness_version": "agent_run_v4",
+        "input_bytes": 19764,
+        "max_retries_per_agent": 1,
+        "model": "gpt-5-mini",
+        "output_budget": {
+          "daily_max_output_tokens": 19200,
+          "limitations_required": true,
+          "max_claim_characters": 240,
+          "max_claims": {
+            "bear": 3,
+            "bull": 3,
+            "risk": 4
+          },
+          "max_output_tokens": 1600,
+          "status": "OK",
+          "target_tokens": [
+            600,
+            900
+          ],
+          "team_max_calls": 6,
+          "team_max_output_tokens": 9600,
+          "uncertainty_required": true
+        },
+        "prompt_versions": {
+          "bear": "bear_agent_prompt_v9",
+          "bull": "bull_agent_prompt_v10",
+          "risk": "risk_agent_prompt_v9"
+        },
+        "reasoning_rounds": 1,
+        "schema_version": "agent_output_v4",
+        "snapshot_id": "2bf2f6c97e682ba67746882e47f45a91a02c275577298c09ed2b6467461cb0af",
+        "status": "PASS",
+        "tools": "none",
+        "validator_version": "evidence_selection_validator_v1"
+      },
+      "snapshot_id": "2bf2f6c97e682ba67746882e47f45a91a02c275577298c09ed2b6467461cb0af",
+      "synthetic_only": true
+    }
+  },
+  "freshness": "If expired, timestamp-only refresh with semantic-equivalence proof and new freeze BEFORE provider execution; never silently refreeze.",
+  "historical_hashes": {
+    "v3_dual_live_confirmation.json": "249473f34721ddc6259698991904b1becede7e4cccf1bcf107ff9e8fa382be8f",
+    "v3_live_A.json": "d4791c5a5d9d3201f8f951304e958d149c490182bf6dc9606aee567b035e7373",
+    "v3_live_B.json": "25c07866fbac9287e09a18c3306ad8c03900a5856f94df4fdf982374da7fb500",
+    "v3_typed_prose_repair.json": "30df547a61af749e9c58a8de41f9b5ad30b1e35819f10369a62b90488ad19812",
+    "v3_typed_prose_repair.md": "dab06c392e4f707ebf24b34da72dc0c0c485477408e69aa9d29908925addb8fa"
+  },
+  "loop_limit": 1,
+  "max_calls": 12,
+  "max_retries": 1,
+  "max_workflows": 2,
+  "prompt_versions": {
+    "bear": "bear_agent_prompt_v9",
+    "bull": "bull_agent_prompt_v10",
+    "risk": "risk_agent_prompt_v9"
+  },
+  "renderer_version": "evidence_selection_renderer_v1",
+  "requires_fresh_authorization": true,
+  "schema_version": "v4_final_dual_live_manifest_v1",
+  "source_hashes": {
+    "app/agent_output_v3.py": "08acb1c622381142bca847ff29a18b4959de1b3289bc0f46e5757e4154a2b86d",
+    "app/agent_output_v4.py": "274616ba51ca45396fb5c6e79ec1150976fdc61ed4e6eb2130ac6f1f58318a1c",
+    "app/agent_research.py": "d5b6ddf83e1ee6771963ef1dadfa7281f8dca83cd6b5d4b793041174ddd389b1",
+    "app/dashboard.js": "947fe4fbfe5e61a00ddb99c66940a42dc6ae6c7af59e86c61111d718ce0e0cd2",
+    "app/evidence_fusion.py": "6091eac0bc34007c2178be0e53f26e2b6df20a5fdcf3204bf0f6bc88e2c5a6ea",
+    "app/evidence_snapshot.py": "9f17cbdef3ba023a497f9ca2a818b60f923ef963c9266ccaa29bcc8505b4753f",
+    "app/server.py": "93dcf921deb5459af4d83e44cf4fd0d1fd4c3adadbd86059ba94eb4dbcf36d49",
+    "app/structured_claims.py": "1d7799701d771c6f9c256230adb09b917cc0314ee7cef512b6deebd7aa9ce6b0",
+    "app/usage_budget.py": "f8ea5caea7f6798ca02d7ecb4f33de17f4cbc69a6f87c53dbf9bf975bf87eb9f",
+    "research/tests/fixtures/dual_retest_fixtures.py": "3d9da119b7e0826092178a1bff2edccaecc175765c18ca45b776a2954b3cff8d"
+  },
+  "success": "All three valid selections including legitimate abstention; bad optional prose may FALLBACK without retry/failure.",
+  "tools": "NONE",
+  "validator": "evidence_selection_validator_v1"
+}

@@ -1,0 +1,1198 @@
+{
+  "case_count": 24,
+  "cases": [
+    {
+      "agent": "bear",
+      "attempt": 1,
+      "attempt_id": "1015d20a70009ae6bc35bab30cde162b.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "rsi"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "ema20"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "ema50"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "technical_signal"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "ab4facf8b5aa3487fa5d8d54ddde61fad52c19f6ed41385ba4843aa1dea3fc7c",
+        "claim_text": "Multiple technical indicators are labeled bullish in the snapshot.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 2,
+      "attempt_id": "1015d20a70009ae6bc35bab30cde162b.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "rsi"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "ema20"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "ema50"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "technical_signal"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "63eddc32c5eaf70230f4f51696a1601133aa8518e21050e4e7e6367fbde75155",
+        "claim_text": "Multiple technical indicators are marked bullish in the snapshot.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 1,
+      "attempt_id": "1425cbfefd0e1c973ba085fa015ae753.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "899871a0f135eb0ba9e3be733d95300df0cdb49a67960d1d9bc1aabea12cfba7",
+        "claim_text": "Kronos direction is 'up'.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 2,
+      "attempt_id": "1425cbfefd0e1c973ba085fa015ae753.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.regime",
+          "field_key": "market_regime"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: invalid_state_value",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "claim_text": "",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.regime"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": "up",
+          "field_key": "market_regime",
+          "unit": "state",
+          "value": "TRENDING_BULL"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 1,
+      "attempt_id": "38d7f86067f347339aa9cdd32e4d3a0d.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "Claim cites an incompatible evidence type",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST",
+          "RESEARCH_VIEW"
+        ],
+        "agent": "risk",
+        "claim_id": "model_risks.0",
+        "claim_sha256": "43ab2ca1e29effd79fd74309afd039c594623b3e63562e51b520899af4653bf0",
+        "claim_text": "Kronos' upside direction conflicts with a bearish technical trend; model support is limited by research_view noting low confidence and conflicting evidence.",
+        "claim_type": "RISK",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.confidence",
+          "research_view.contradicting_evidence"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "incompatible_evidence_type",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": null,
+          "unit": null,
+          "value": null
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DERIVED",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 2,
+      "attempt_id": "38d7f86067f347339aa9cdd32e4d3a0d.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "technicals.trend",
+          "field_key": "technical_trend"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: unsupported_field_key",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST",
+          "TECHNICAL"
+        ],
+        "agent": "risk",
+        "claim_id": "conflicts.0",
+        "claim_sha256": "9069d359da9b8eed31d6383f32e0c799cfddf4f5e3df98be8c5a01002a3ee2c9",
+        "claim_text": "Kronos forecast direction is 'up' while technicals.trend is 'bearish', an explicit directional conflict.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction",
+          "technicals.trend"
+        ],
+        "evidence_type": "MULTI_SOURCE",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": null,
+          "unit": null,
+          "value": null
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 1,
+      "attempt_id": "492b46753dc84c8498ef511910d77456.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "rsi"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "ema20"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.1",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "ema50"
+        },
+        {
+          "evidence_id": "technicals.indicator.2",
+          "field_key": "technical_signal"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "b40051ead430201cafe03810f389588687a8447436d55a0b38c1730b68302405",
+        "claim_text": "Technicals show a bullish regime and multiple bullish indicators.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.regime",
+          "technicals.indicator.0",
+          "technicals.indicator.1",
+          "technicals.indicator.2",
+          "technicals.indicator.3",
+          "technicals.indicator.5"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 2,
+      "attempt_id": "492b46753dc84c8498ef511910d77456.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "news.article.0",
+          "field_key": "news_title"
+        },
+        {
+          "evidence_id": "news.article.0",
+          "field_key": "news_relevance"
+        },
+        {
+          "evidence_id": "news.article.0",
+          "field_key": "news_source_quality"
+        },
+        {
+          "evidence_id": "news.event.0",
+          "field_key": "news_event_headline"
+        },
+        {
+          "evidence_id": "news.event.0",
+          "field_key": "news_event_impact"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "NEWS"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "ede6278fe1af2aa1804151637ae1f7fefd307e45447287fff1e7ca56268b5697",
+        "claim_text": "News impact is limited to a single product partnership announcement with modest positive impact.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "news.article.0",
+          "news.event.0"
+        ],
+        "evidence_type": "NEWS",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 1,
+      "attempt_id": "5122573114a19fb29a9b1ede01c2a0be.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price"
+        },
+        {
+          "evidence_id": "kronos.forecast_pct_change",
+          "field_key": "forecast_return_pct"
+        }
+      ],
+      "historical_rejection": "Numerical claim lacks matching structured evidence",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_sha256": "eaee34fb981d23765781e48b61fa2a7fb11dd76c8005fcad083818504658e1f9",
+        "claim_text": "Kronos forecast is up with forecast_pct_change 1.2% and forecast_final_close 101.2, but small magnitude limits upside buffer relative to observations.",
+        "evidence_ids": [
+          "kronos.forecast_pct_change",
+          "kronos.forecast_final_close"
+        ],
+        "failure_reason": "field_or_unit_mismatch",
+        "numbers_found": [
+          "1.2%",
+          "101.2"
+        ],
+        "schema_version": "rejected_claim_diagnostic_v1",
+        "supported_numbers": [
+          {
+            "evidence_id": "kronos.forecast_pct_change",
+            "field": "forecast_pct_change",
+            "kind": "forecast_pct",
+            "unit": "percent",
+            "value": "1.2"
+          },
+          {
+            "evidence_id": "kronos.forecast_final_close",
+            "field": "forecast_final_close",
+            "kind": "price",
+            "unit": "number",
+            "value": "101.2"
+          }
+        ],
+        "unsupported_numbers": [
+          "101.2"
+        ],
+        "validator_version": "numerical_grounding_v4"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 2,
+      "attempt_id": "5122573114a19fb29a9b1ede01c2a0be.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price"
+        },
+        {
+          "evidence_id": "kronos.forecast_pct_change",
+          "field_key": "forecast_return_pct"
+        },
+        {
+          "evidence_id": "kronos.last_observed_close",
+          "field_key": "observed_price"
+        }
+      ],
+      "historical_rejection": "Numerical claim lacks matching structured evidence",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_sha256": "5c5baa46cac55b10f9003862770b40041a618fac132aa44f4547034a53652b8f",
+        "claim_text": "Kronos forecast_direction is up and forecast_pct_change is 1.2%, which may be reversed if realised price diverges from the model.",
+        "evidence_ids": [
+          "kronos.direction",
+          "kronos.forecast_pct_change",
+          "kronos.forecast_final_close",
+          "kronos.last_observed_close"
+        ],
+        "failure_reason": "field_or_unit_mismatch",
+        "numbers_found": [
+          "1.2%"
+        ],
+        "schema_version": "rejected_claim_diagnostic_v1",
+        "supported_numbers": [
+          {
+            "evidence_id": "kronos.forecast_pct_change",
+            "field": "forecast_pct_change",
+            "kind": "forecast_pct",
+            "unit": "percent",
+            "value": "1.2"
+          },
+          {
+            "evidence_id": "kronos.forecast_final_close",
+            "field": "forecast_final_close",
+            "kind": "price",
+            "unit": "number",
+            "value": "101.2"
+          },
+          {
+            "evidence_id": "kronos.last_observed_close",
+            "field": "last_observed_close",
+            "kind": "price",
+            "unit": "number",
+            "value": "100.0"
+          }
+        ],
+        "unsupported_numbers": [
+          "1.2%"
+        ],
+        "validator_version": "numerical_grounding_v4"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 1,
+      "attempt_id": "67c08f7315de8a22aea6949b1c24f3ea.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price"
+        },
+        {
+          "evidence_id": "kronos.forecast_pct_change",
+          "field_key": "forecast_return_pct"
+        }
+      ],
+      "historical_rejection": "Numerical claim lacks matching structured evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_sha256": "a2045a2719913a01050d52bc0ff3057b771d07f0fabddd590522b237c0124dd1",
+        "claim_text": "Kronos direction is up and forecast_final_close is 101.2 (forecast_pct_change 1.2).",
+        "evidence_ids": [
+          "kronos.direction",
+          "kronos.forecast_final_close",
+          "kronos.forecast_pct_change"
+        ],
+        "failure_reason": "field_or_unit_mismatch",
+        "numbers_found": [
+          "101.2",
+          "1.2"
+        ],
+        "schema_version": "rejected_claim_diagnostic_v1",
+        "supported_numbers": [
+          {
+            "evidence_id": "kronos.forecast_final_close",
+            "field": "forecast_final_close",
+            "kind": "price",
+            "unit": "number",
+            "value": "101.2"
+          },
+          {
+            "evidence_id": "kronos.forecast_pct_change",
+            "field": "forecast_pct_change",
+            "kind": "forecast_pct",
+            "unit": "percent",
+            "value": "1.2"
+          }
+        ],
+        "unsupported_numbers": [
+          "101.2",
+          "1.2"
+        ],
+        "validator_version": "numerical_grounding_v3"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 2,
+      "attempt_id": "67c08f7315de8a22aea6949b1c24f3ea.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "kronos.forecast_final_close",
+          "field_key": "forecast_final_price"
+        },
+        {
+          "evidence_id": "kronos.model_id",
+          "field_key": "model_identity"
+        }
+      ],
+      "historical_rejection": "Numerical claim lacks matching structured evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_sha256": "627eb586db00e921d06f694d6963281434dd20708fa8574d6dd4b8034a910d72",
+        "claim_text": "Kronos direction is up, forecast_final_close equals 101.2 (FORECAST).",
+        "evidence_ids": [
+          "kronos.direction",
+          "kronos.forecast_final_close",
+          "kronos.model_id"
+        ],
+        "failure_reason": "field_or_unit_mismatch",
+        "numbers_found": [
+          "101.2"
+        ],
+        "schema_version": "rejected_claim_diagnostic_v1",
+        "supported_numbers": [
+          {
+            "evidence_id": "kronos.forecast_final_close",
+            "field": "forecast_final_close",
+            "kind": "price",
+            "unit": "number",
+            "value": "101.2"
+          }
+        ],
+        "unsupported_numbers": [
+          "101.2"
+        ],
+        "validator_version": "numerical_grounding_v3"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 1,
+      "attempt_id": "8be39799c48f559ae813c2d758876fcc.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "cf9c5164c74fd8c2f3fca3fb2d831bba4fa36c976e149b3ce2527f8a42fab8bf",
+        "claim_text": "Kronos forecast direction is up.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": "up",
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 2,
+      "attempt_id": "8be39799c48f559ae813c2d758876fcc.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: invalid_state_value",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "claim_text": "",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": "up",
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 1,
+      "attempt_id": "9e7aa4893b72cd2e4c9526e060bd2a41.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.trend",
+          "field_key": "technical_trend"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "d9b59c5519651dba3d5abe33795c4b4f04d31ef38d3cacd9d2950efcb45bf991",
+        "claim_text": "Technicals.trend is labeled bullish in the snapshot.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.trend"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    },
+    {
+      "agent": "bull",
+      "attempt": 2,
+      "attempt_id": "9e7aa4893b72cd2e4c9526e060bd2a41.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "rsi"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_signal"
+        },
+        {
+          "evidence_id": "technicals.indicator.0",
+          "field_key": "technical_strength"
+        },
+        {
+          "evidence_id": "technicals.trend",
+          "field_key": "technical_trend"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "bull",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "5b7664555aec00dcab9228d3206a26f75c63c5b6b92564ccb2c3dbd82b7f1910",
+        "claim_text": "Technicals block lists trend as 'bullish' and multiple indicators report 'bullish' signals.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.trend",
+          "technicals.indicator.0"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 1,
+      "attempt_id": "a996b046c34fae64d344b9a759e69ecc.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "kronos.forecast_pct_change",
+          "field_key": "forecast_return_pct"
+        }
+      ],
+      "historical_rejection": "Interpretation must use interpretive framing and support",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.2",
+        "claim_sha256": "5b43ce082d481245896be64ece78e909c9ae7a23e2cd4ebab9b17a733cf26230",
+        "claim_text": "Kronos forecasts a small upward move, which conflicts with bearish technicals.",
+        "claim_type": "INTERPRETATION",
+        "evidence_ids": [
+          "kronos.direction",
+          "kronos.forecast_pct_change"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unlabelled_interpretation",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": null,
+          "unit": null,
+          "value": null
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 2,
+      "attempt_id": "a996b046c34fae64d344b9a759e69ecc.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.regime",
+          "field_key": "market_regime"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden",
+      "historical_snapshot_id": "85a1fc15db5e05d68f78d20b1344a8ad6b0189ac42912c0c5b4804464b6b2138",
+      "offline_replay_snapshot_id": "6bf33716c423e5d2b65ce45e94298d5b1d1dafd8d9249308a0e554412dd2a0eb",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "0ef668b8ef57dd6dac1d9b6a81021575582e481043e9f27faed32def3ebe12bd",
+        "claim_text": "Technicals report a bearish trend in a HIGH_VOLATILITY regime.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.trend",
+          "technicals.regime"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": "market_regime",
+          "unit": "state",
+          "value": "HIGH_VOLATILITY"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_B.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 1,
+      "attempt_id": "bf2092495f3a1e971ee4886755a11101.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "899871a0f135eb0ba9e3be733d95300df0cdb49a67960d1d9bc1aabea12cfba7",
+        "claim_text": "Kronos direction is 'up'.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 2,
+      "attempt_id": "bf2092495f3a1e971ee4886755a11101.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden",
+      "historical_snapshot_id": "3f874d6d31bca36f829404093a01fafabbcd4b592d17e3deb48663e30b1081b4",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "cf9c5164c74fd8c2f3fca3fb2d831bba4fa36c976e149b3ce2527f8a42fab8bf",
+        "claim_text": "Kronos forecast direction is up.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "structured_fact": {
+          "direction": null,
+          "field_key": "forecast_direction",
+          "unit": "state",
+          "value": "up"
+        },
+        "structured_validator_version": "structured_claim_grounding_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "final_live_A.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 1,
+      "attempt_id": "ce73d690adde610be16b4214b96d8e24.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "technicals.regime",
+          "field_key": "market_regime"
+        },
+        {
+          "evidence_id": "technicals.trend",
+          "field_key": "technical_trend"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "TECHNICAL"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.1",
+        "claim_sha256": "666a3ba9957011fa28ca5cf80c68226b4957425880b8dcb7f325e6841e821ee6",
+        "claim_text": "Technicals regime is TRENDING_BULL with bullish indicators.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "technicals.regime",
+          "technicals.trend"
+        ],
+        "evidence_type": "TECHNICAL",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "bear",
+      "attempt": 2,
+      "attempt_id": "ce73d690adde610be16b4214b96d8e24.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "Direct qualitative fact is not present in cited evidence",
+      "historical_snapshot_id": "b26ba306eb25260085510a6bea122b165c9c247dd6d53281bb8997ae3838f0f5",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "actual_evidence_families": [
+          "FORECAST"
+        ],
+        "agent": "bear",
+        "claim_id": "key_factors.0",
+        "claim_sha256": "cf9c5164c74fd8c2f3fca3fb2d831bba4fa36c976e149b3ce2527f8a42fab8bf",
+        "claim_text": "Kronos forecast direction is up.",
+        "claim_type": "FACT",
+        "evidence_ids": [
+          "kronos.direction"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "unsupported_direct_fact",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DIRECT",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_retest_A_production.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 1,
+      "attempt_id": "cf385b9c5865d024671a121445a6f3bb.1",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        },
+        {
+          "evidence_id": "kronos.model_id",
+          "field_key": "model_identity"
+        }
+      ],
+      "historical_rejection": "Claim cites an incompatible evidence type",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "risk_factors.0",
+        "claim_sha256": "df3e4a89422388ae52623ed78732c4a5409554186b2de93ca9c9e10755b890f3",
+        "claim_text": "Model forecast up is contradicted by research view stating 'Conflicting evidence'.",
+        "claim_type": "INTERPRETATION",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.why",
+          "kronos.model_id"
+        ],
+        "evidence_type": "RESEARCH_VIEW",
+        "failure_reason": "incompatible_evidence_type",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "INTERPRETIVE",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    },
+    {
+      "agent": "risk",
+      "attempt": 2,
+      "attempt_id": "cf385b9c5865d024671a121445a6f3bb.2",
+      "backend_owned_equivalent_pass": true,
+      "canonical_fact_refs": [
+        {
+          "evidence_id": "kronos.direction",
+          "field_key": "forecast_direction"
+        }
+      ],
+      "historical_rejection": "Claim cites an incompatible evidence type",
+      "historical_snapshot_id": "141d6b9cb3e9868a2d68b81497af9cc2147801ec92120e992444d2ca0407b1cf",
+      "offline_replay_snapshot_id": "80ce204c8ecdbc4b0389b67aafce9bf5b00cc538c86a6b7bfb417e98b10db10a",
+      "ownership_violation_rejected": true,
+      "retained_diagnostic": {
+        "agent": "risk",
+        "claim_id": "model_risks.0",
+        "claim_sha256": "89200873e1594448270396f4ea4ef5496d1608c466ccfc5031c706fa1c36ed06",
+        "claim_text": "Model forecast direction is 'up' but research_view flags conflicting evidence and a primary risk that forecasts may not match market path.",
+        "claim_type": "INTERPRETATION",
+        "evidence_ids": [
+          "kronos.direction",
+          "research_view.primary_risk",
+          "research_view.why"
+        ],
+        "evidence_type": "FORECAST",
+        "failure_reason": "incompatible_evidence_type",
+        "schema_version": "claim_support_diagnostic_v1",
+        "support_type": "DERIVED",
+        "validator_version": "qualitative_grounding_v1"
+      },
+      "scope": "Offline-authored structural equivalent. Not a regenerated model response or reconstruction of discarded output.",
+      "source": "live_three_agent_confirmation.json"
+    }
+  ],
+  "external_calls": 0,
+  "historical_failure_counts": {
+    "Claim cites an incompatible evidence type": 3,
+    "Direct qualitative fact is not present in cited evidence": 8,
+    "FACT requires an exact structured value present in cited evidence: fact_prose_forbidden": 5,
+    "FACT requires an exact structured value present in cited evidence: invalid_state_value": 2,
+    "FACT requires an exact structured value present in cited evidence: unsupported_field_key": 1,
+    "Interpretation must use interpretive framing and support": 1,
+    "Numerical claim lacks matching structured evidence": 4
+  },
+  "limitation": "Historical API failures without retained claim diagnostics are not claim replays. Existing mocked response-stage tests cover them.",
+  "schema_version": "v3_live_failure_replay_v1",
+  "source_hashes": {
+    "final_live_A.json": "99045473dcef13c4da6fea515fb2ca18701fbf3d889002ed4b22f1b305482828",
+    "final_live_B.json": "7c8b9932c74a03bfe089164a4a598ddb0c70e54b5f9ef18e44255efa84709a36",
+    "live_retest_A_production.json": "e26d1e612f0252525268b27353d459f3017c78199096d66dad91ce8b92d3fd5e",
+    "live_three_agent_confirmation.json": "2c3acac665b917aa57b32a968745ac6f0534b48cacf7e61e3e45cd91a6fa54ea"
+  },
+  "status": "PASS"
+}

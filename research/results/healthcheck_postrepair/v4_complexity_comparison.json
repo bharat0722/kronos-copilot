@@ -1,0 +1,43 @@
+{
+  "expected_output": "6 top-level fields, <=3/4 ID/use/rank entries; estimated 150-350 tokens vs prior observed 659-1337. Estimate, not measured live.",
+  "fixture_input_bytes": {
+    "A": {
+      "v3_input_bytes": 27091,
+      "v4_input_bytes": 18928
+    },
+    "B": {
+      "v3_input_bytes": 27505,
+      "v4_input_bytes": 19764
+    }
+  },
+  "fusion_weights": "UNCHANGED",
+  "legacy_footprint": "Total repository code grows because legacy contracts are preserved; current acceptance path is simpler.",
+  "new_providers": "NONE",
+  "prompt_characters": {
+    "bear": {
+      "v3": 1368,
+      "v4": 709
+    },
+    "bull": {
+      "v3": 1368,
+      "v4": 710
+    },
+    "risk": {
+      "v3": 1365,
+      "v4": 709
+    }
+  },
+  "schema_properties": {
+    "v3": 24,
+    "v4": 9
+  },
+  "semantic_acceptance_heuristics": {
+    "definition": "Prose factual/number assertions, prose safety rejection and authored stance entailment are blocking in v3; no prose predicate gates v4 selections.",
+    "v3": 3,
+    "v4": 0
+  },
+  "validator_conditional_branches": {
+    "v3": 14,
+    "v4": 10
+  }
+}

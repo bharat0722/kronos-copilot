@@ -1,0 +1,24 @@
+{
+  "schema_version": "agent_team_state_v1",
+  "identity": "snapshot_id plus version-safe validated cache",
+  "owner": "AgentTeam",
+  "storage": [
+    "teams/<snapshot_id>.json",
+    "team_latest.json",
+    "runs/",
+    "attempts/"
+  ],
+  "states": {
+    "NOT_RUN": "No accepted/attempted current analysis and not eligible or unconfigured",
+    "READY": "Fresh valid configured current snapshot, no attempted analysis",
+    "RUNNING": "Active process execution for this snapshot",
+    "PARTIAL": "At least one but fewer than three accepted current outputs",
+    "COMPLETE": "Three accepted current version outputs",
+    "FAILED": "Durable attempted/interrupted run with no accepted current outputs"
+  },
+  "legacy_status": "Kept for compatibility; team_status is canonical",
+  "restart": "Recover valid cache and durable failed/interrupted role records, never silently reset failed to ready",
+  "freshness": "Historical COMPLETE/PARTIAL/FAILED preserved; eligible false and operational STALE when aged",
+  "cache_publication": "Grounding validation, durable ledger, then usable cache/publish",
+  "cancellation": "Internal cancellation stops later roles/attempts; browser abort cannot cancel an in-flight paid SDK request"
+}

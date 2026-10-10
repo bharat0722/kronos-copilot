@@ -1,0 +1,18 @@
+{
+  "currency_policy": "Native price unit never implies INR/USD; explicit currency requires cited currency metadata.",
+  "direction_policy": "Only forecast_return_pct permits signed return or positive downside magnitude. Negative upside is rejected; no arbitrary conversions.",
+  "fact_text_policy": "Empty text, UI renders validated tuple. Interpretation fields null; cautious prose with strict numeric and known-state checks.",
+  "numeric_policy": "Exact finite JSON number, Decimal equality; bool and string numbers forbidden.",
+  "schema_version": "unit_direction_contract_v1",
+  "state_policy": "Exact source string with state/text unit; no prose, fuzzy matching or implicit state mapping.",
+  "units": [
+    "state",
+    "text",
+    "percent",
+    "price",
+    "unitless",
+    "volume_units",
+    "INR",
+    "USD"
+  ]
+}

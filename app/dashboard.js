@@ -514,7 +514,7 @@
   async function loadPipelineStatus() {
     const sequence = ++state.pipelineSequence;
     try {
-      const payload = await fetchJson('/api/pipeline');
+      const payload = await fetchJson(`/api/pipeline${state.agentSnapshotId ? `?id=${encodeURIComponent(state.agentSnapshotId)}` : ''}`);
       if (sequence === state.pipelineSequence) renderPipelineStatus(payload);
     } catch {
       if (sequence === state.pipelineSequence) renderPipelineStatus({ stages: {
@@ -621,6 +621,7 @@
 
   function resetAgents(message = 'Waiting for a matching evidence snapshot.') {
     state.agentSequence += 1;
+    state.agentTeamStatus = 'NOT_RUN';
     state.agentSnapshotId = null;
     state.agentAvailable = true;
     elements['agent-section'].hidden = !state.currentResult || state.currentResult.mode === 'validation';
@@ -705,30 +706,69 @@
   }
 
   function renderAgents(payload) {
-    const claimText = (value) => typeof value === 'string' ? value : value?.text || '';
+    const claimText = (value) => {
+        if (typeof value === 'string') return value;
+        if (!['FACT', 'NUMERICAL_FACT'].includes(value?.claim_type)) return value?.text || '';
+        const aliases = {forecast_pct_change: 'forecast_return_pct', forecast_pct: 'forecast_return_pct',
+            forecast_percentage: 'forecast_return_pct', forecast_final_close: 'forecast_final_price',
+            last_observed_close: 'observed_price'};
+        const key = aliases[value.field_key] || value.field_key;
+        return `${key} = ${value.value} ${value.unit || ''}${value.direction ? ` (${value.direction})` : ''}`;
+    };
     state.agentAvailable = payload.available !== false;
     const complete = Object.values(payload.agents || {}).filter((entry) => entry.report).length;
+    const teamStatus = payload.team_status || (complete === 3 ? 'COMPLETE' : complete ? 'PARTIAL' : payload.status);
+    state.agentTeamStatus = teamStatus;
+    const stale = Object.values(payload.agents || {}).some((entry) => ['STALE_EVIDENCE', 'STALE_SNAPSHOT'].includes(entry.error_code));
     elements['agent-status'].textContent = payload.status === 'UNAVAILABLE'
       ? 'AI Research Team unavailable. The forecast and evidence remain available.'
       : complete === 3 ? `${payload.status === 'CACHED' ? 'Saved' : 'New'} analysis for this evidence snapshot.`
         : complete ? `${complete} of 3 analyses available. Unfinished agents can be retried.`
-          : 'Ready to analyze the saved evidence.';
-    elements['agent-run'].disabled = state.agentRunning || !state.agentAvailable;
+          : stale ? 'Evidence changed. Refresh the research view before running agents.'
+            : teamStatus === 'FAILED' ? 'Analysis failed. No accepted team result. Failure details are retained.'
+            : teamStatus === 'RUNNING' ? 'Analysis is running on the laptop.'
+              : payload.eligible === false ? 'Evidence expired. Refresh the research view before running agents.'
+                : 'Ready to analyze the saved evidence.';
+    state.agentEligible = payload.eligible !== false;
+    if (!state.agentEligible && (complete || teamStatus === 'FAILED'))
+      elements['agent-status'].textContent += ' Evidence expired; refresh before a new run.';
+    elements['agent-run'].disabled = state.agentRunning || !state.agentAvailable || !state.agentEligible || teamStatus === 'RUNNING';
     document.querySelectorAll('.agent-card').forEach((card) => {
       const kind = card.dataset.agent;
       const entry = payload.agents?.[kind] || {};
       const report = entry.report;
+      const presentation = ['agent_output_v3', 'agent_output_v4'].includes(report?.schema_version) ? entry.presentation : null;
+      const riskClaims = ['risk_factors', 'conflicts', 'model_risks', 'data_risks', 'event_risks']
+        .flatMap((field) => report?.[field] || []);
       card.querySelector('[data-role="status"]').textContent = entry.status === 'CACHED' ? 'Saved'
         : entry.status === 'SUCCESS' ? 'Complete' : entry.status === 'AGENT_FAILED' ? 'Failed'
           : entry.status === 'CANCELLED' ? 'Cancelled' : 'Not run';
       const argument = kind === 'risk'
-        ? (report?.risk_factors?.map(claimText).filter(Boolean).join(' ') || (report ? 'Risk assessment unknown.' : 'No analysis yet.'))
+        ? (riskClaims.map(claimText).filter(Boolean).join(' ') ||
+          (report ? `Risk assessment: ${String(report.risk_level || 'UNKNOWN').toLowerCase()}.` : 'No analysis yet.'))
         : claimText(report?.argument) || 'No analysis yet.';
-      card.querySelector('[data-role="argument"]').textContent = argument;
+      const failed = ['AGENT_FAILED', 'CANCELLED'].includes(entry.status);
+      card.querySelector('[data-role="argument"]').textContent = failed
+        ? `No accepted analysis. ${String(entry.failure_stage || entry.error_code || 'Analysis failed').replaceAll('_', ' ').toLowerCase()}.`
+        : presentation ? `${report?.schema_version === 'agent_output_v4' && presentation.explanation_status === 'VALID_UNVERIFIED' ? 'Optional perspective (unverified)' : 'Research context'}: ${presentation.arguments.map((arg) => arg.interpretation).join(' ') || 'Insufficient evidence.'}` : argument;
       const evidence = card.querySelector('[data-role="evidence"]');
       evidence.replaceChildren();
-      const factors = kind === 'risk' ? report?.risk_factors : report?.key_factors;
-      (factors || []).slice(0, 3).forEach((factor) => {
+      if (presentation) {
+        if (report?.schema_version === 'agent_output_v4') {
+          presentation.selected_evidence.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.short_backend_label}: ${item.use.toLowerCase()} · ${item.direction.toLowerCase().replaceAll('_', ' ')}`;
+            evidence.appendChild(li);
+          });
+        }
+        presentation.arguments.forEach((arg) => arg.facts.forEach((fact) => {
+          const item = document.createElement('li');
+          item.textContent = report?.schema_version === 'agent_output_v4' ? fact.display_text : `${fact.display_text} [${fact.evidence_id}]`;
+          evidence.append(item);
+        }));
+      }
+      const factors = kind === 'risk' ? riskClaims : report?.key_factors;
+      (presentation ? [] : factors || []).slice(0, 3).forEach((factor) => {
         const item = document.createElement('li');
         item.textContent = `${claimText(factor)} [${(factor?.evidence_ids || []).join(', ')}]`;
         evidence.append(item);
@@ -738,8 +778,15 @@
       const confidence = kind === 'risk' ? report?.confidence_in_risk_assessment : report?.confidence_in_argument;
       card.querySelector('[data-role="confidence"]').textContent = Number.isFinite(confidence)
         ? `Argument confidence: ${Math.round(confidence * 100)}% · not prediction accuracy` : '';
+      if (presentation) {
+        card.querySelector('[data-role="limitations"]').textContent =
+          `Limitations: ${presentation.limitations.map((note) => note.text).join(' ')} Uncertainty: ${presentation.uncertainty.map((note) => note.text).join(' ')}`;
+        card.querySelector('[data-role="confidence"]').textContent =
+          `Support: ${presentation.support_level.toLowerCase()} · qualitative, not probability${kind === 'risk' ? ` · risk: ${presentation.risk_level.toLowerCase()}` : ''}`;
+      }
       card.querySelector('[data-role="time"]').textContent = entry.analyzed_at
-        ? `${entry.cached ? 'Saved' : 'Analyzed'} ${shortDateTimeLabel(entry.analyzed_at)}` : '';
+        ? `${entry.cached ? 'Saved' : 'Analyzed'} ${shortDateTimeLabel(entry.analyzed_at)}`
+        : failed ? `${entry.attempts || 0} attempts${entry.run_id ? ` · run ${String(entry.run_id).slice(0, 12)}` : ''}` : '';
     });
   }
 
@@ -759,26 +806,34 @@
 
   async function runAgents() {
     const snapshotId = state.agentSnapshotId;
-    if (!snapshotId || state.agentRunning) return;
+    if (!snapshotId || state.agentRunning || state.agentTeamStatus === 'RUNNING') return;
     state.agentRunning = true;
     elements['agent-run'].disabled = true;
     elements['agent-run'].dataset.loading = 'true';
     elements['agent-status'].textContent = 'Analyzing saved evidence. Forecast values will not change.';
     const sequence = state.agentSequence;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 210000);
     try {
       const payload = await fetchJson('/api/agents/run', { method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ snapshot_id: snapshotId }) });
       if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) {
         renderAgents(payload);
         loadFusion(snapshotId);
       }
     } catch (error) {
-      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId)
-        elements['agent-status'].textContent = error.message || 'AI Research Team unavailable.';
+      if (sequence === state.agentSequence && state.agentSnapshotId === snapshotId) {
+        if (error.name === 'AbortError') {
+          elements['agent-status'].textContent = 'Browser wait ended. The bounded laptop run may still be active; checking saved status.';
+          loadCachedAgents(snapshotId);
+        } else elements['agent-status'].textContent = error.message || 'AI Research Team unavailable.';
+      }
     } finally {
+      clearTimeout(timeout);
       state.agentRunning = false;
       elements['agent-run'].dataset.loading = 'false';
-      if (state.agentSnapshotId) elements['agent-run'].disabled = !state.agentAvailable;
+      if (state.agentSnapshotId) elements['agent-run'].disabled = !state.agentAvailable || state.agentEligible === false || state.agentTeamStatus === 'RUNNING';
       loadPipelineStatus();
     }
   }
@@ -909,6 +964,8 @@
   }
 
   function syncControlsToResult(result) {
+    if (result.normalized_symbol) elements['ticker-input'].value = result.normalized_symbol.replace(/\.(NS|BO)$/, '');
+    updateQuickTickerState();
     const source = result.source_type === 'csv' ? 'csv' : 'live';
     const mode = result.mode === 'validation' ? 'validation' : 'live';
     const horizon = String(result.forecast_rows || result.prediction_length || 75);
@@ -918,6 +975,8 @@
     if (sourceInput) sourceInput.checked = true;
     if (modeInput) modeInput.checked = true;
     if (horizonInput) horizonInput.checked = true;
+    const exchangeInput = document.querySelector(`input[name="exchange"][value="${result.exchange === 'BSE' ? 'BSE' : 'NSE'}"]`);
+    if (exchangeInput) exchangeInput.checked = true;
     state.forecastMode = mode;
     state.horizonBars = Number(horizon);
     setSourceMode(source);
@@ -1353,7 +1412,7 @@
     state.forecastMode = selectedMode();
     state.horizonBars = selectedHorizon();
     const horizonText = state.horizonBars === 24 ? '2 hours' : state.horizonBars === 120 ? '120 market bars' : 'Next 75 market bars';
-    if (elements['local-note']) elements['local-note'].textContent = `About 5 trading days → ${horizonText}`;
+    if (elements['local-note']) elements['local-note'].textContent = `New request: about 5 trading days → ${horizonText}. Saved forecast remains unchanged until run.`;
     if (state.phase !== 'loading') {
       setRequestStatus('ready', state.forecastMode === 'validation'
         ? `Model validation selected. Kronos will hide the final ${state.horizonBars} bars, predict them, then compare with actuals.`

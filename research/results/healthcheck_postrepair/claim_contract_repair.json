@@ -1,0 +1,240 @@
+{
+  "schema_version": "claim_contract_repair_v1",
+  "status": "PASS",
+  "mode": "OFFLINE",
+  "branch": "monad-metropolis",
+  "generated_at": "2026-10-09T13:24:51.342846+00:00",
+  "roles": {
+    "bull": "GREEN_OFFLINE",
+    "bear": "GREEN_OFFLINE",
+    "risk": "GREEN_OFFLINE"
+  },
+  "prompt_versions_before": {
+    "bull": "bull_agent_prompt_v6",
+    "bear": "bear_agent_prompt_v5",
+    "risk": "risk_agent_prompt_v5"
+  },
+  "prompt_versions_after": {
+    "bull": "bull_agent_prompt_v7",
+    "bear": "bear_agent_prompt_v6",
+    "risk": "risk_agent_prompt_v6"
+  },
+  "schema_version_unchanged": "agent_output_v2",
+  "validator_function_hashes_unchanged": {
+    "_claim_schema": "3f835346e14fd8e35d4cfb11a0e89cf2f56e0b622330fef864faf089b799c873",
+    "output_schema": "fe56342330bb8a8e67e930e271ccccfa6ebae7ab7f7bef461ebd635cd679022d",
+    "_numeric_sources": "560c2e24bbf0181a82a98494bac125582946b352353d7673d2aa71b61906631d",
+    "_check_numeric_claim": "d40c422e71d9329f48c2fec9477bf25a431cfc5bd14b83dc252944ea8127b91a",
+    "_direct_fact_supported": "91273511ac10ee595db589f7ee0b600f6b015bec1fd0b601b2af35410bcaf94b",
+    "_validate_claim": "c1324d87971bf50cf1e118a571cdf36a8293bd9d7dd9963978773e1ad4b61a0c",
+    "validate_output": "8e1a194259296dd92d6ebb052fa0cf369b284a20a1293b7434eafb896da837b2",
+    "output_budget": "9d8392a4784e5956041698e62415fe34dbca10e7a261aefd944045583cefde8d",
+    "validate_concise": "ad5cd2da605b8ab19bdd875319b8af31b6cb9b745c5aa846efd9fcd75ca31863",
+    "assert_fresh_snapshot": "d64929a3a81436f8891c220b5ba8b7515f9f9c649f9ca20eb86fc3627cfd9639"
+  },
+  "preserved_artifacts_verified": 27,
+  "production_source_changes": [
+    "app\\agent_research.py"
+  ],
+  "files_changed_this_task": [
+    "app/agent_research.py",
+    "research/tests/test_phase7_2e_numeric_grounding.py",
+    "research/tests/test_phase7_2f1_bull_only.py",
+    "research/tests/test_phase7_3b_agent_output_v2.py",
+    "research/tests/test_claim_contract_repair.py",
+    "research/tests/fixtures/claim_contract_live_rejections.json",
+    "tools/run_offline_health_tests.py"
+  ],
+  "file_sha256": {
+    "app/agent_research.py": "2f22d1b5aeb9c18993e7f54d015ebc36a82f4d99f731b3dc2d15f9e1c4c4b68c",
+    "research/tests/test_phase7_2e_numeric_grounding.py": "88327bf2992a91061cd2ffb96da7b96f8e020e1ab8d214919aa31de4e6bf0048",
+    "research/tests/test_phase7_2f1_bull_only.py": "a4f18508a1ad54084d372fc31660774f64da894b063534be335047c19679ee39",
+    "research/tests/test_phase7_3b_agent_output_v2.py": "68ab4ad50c3cef38712f13ed1086bb491d380d3f7708edeabb53bce99b99d049",
+    "research/tests/test_claim_contract_repair.py": "06eecb820b8fc0de4fe181382414780b4c3ddb44dc2c343265c850361ad9c79a",
+    "research/tests/fixtures/claim_contract_live_rejections.json": "b2e33db73f675fe60d5895bd9d95e0c8fe606aa77877424b66f09d10efd53bf3",
+    "tools/run_offline_health_tests.py": "affe65d8cf68b38d425b49d08302e6da55be044b6e18f8506671b828b954f0ed"
+  },
+  "checks": {
+    "fact_contract": "PASS",
+    "interpretation_contract": "PASS",
+    "support_type_contract": "PASS",
+    "evidence_family_compatibility": "PASS",
+    "mixed_family_policy": "PASS",
+    "numerical_grounding": "PASS",
+    "reference_validation": "PASS",
+    "claim_traceability": "PASS",
+    "cache_version_safety": "PASS",
+    "ledger_diagnostics": "PASS",
+    "live_failure_replay": "PASS",
+    "production_sized_synthetic_team": "PASS",
+    "architecture": "PASS"
+  },
+  "taxonomy_counts": {
+    "FACT_MISCLASSIFIED_AS_DIRECT": 4,
+    "INTERPRETATION_MISLABELED_AS_FACT": 0,
+    "MIXED_EVIDENCE_FAMILY": 2,
+    "EVIDENCE_TYPE_MISMATCH": 0,
+    "NUMERICAL_SUPPORT_MISMATCH": 0,
+    "OTHER": 0
+  },
+  "tests": {
+    "run": 218,
+    "passed": 217,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "blocked_external_attempts": 0,
+    "external_calls": 0,
+    "failure_details": []
+  },
+  "browser_qa": [
+    {
+      "name": "desktop",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u2192 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    },
+    {
+      "name": "phone",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 390,
+      "scrollWidth": 390,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u2192 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    },
+    {
+      "name": "ipad",
+      "failure": "Analysis failed. No accepted team result. Failure details are retained.",
+      "failureDetailsVisible": true,
+      "complete": "Saved analysis for this evidence snapshot.",
+      "partial": "2 of 3 analyses available. Unfinished agents can be retried.",
+      "risk": "Failed",
+      "staleDisabled": true,
+      "secretAbsent": true,
+      "authFlow": true,
+      "requests": 1,
+      "width": 834,
+      "scrollWidth": 834,
+      "ticker": "TESTCO",
+      "helper": "New request: about 5 trading days \u2192 120 market bars. Saved forecast remains unchanged until run.",
+      "canvases": 8,
+      "nonblank": true,
+      "errors": [],
+      "external": [],
+      "pass": true
+    }
+  ],
+  "gstack": {
+    "status": "PARTIAL",
+    "repository_version": "1.91.2.0",
+    "review": "Documentation-guided local two-pass review of scoped baseline diff using review/checklist.md; no supported blocking finding.",
+    "qa": "Local Playwright fallback-style report-only regression with intercepted synthetic APIs; not native gstack browser execution.",
+    "security": "Existing offline auth/cross-site/static/cost/injection regressions passed; scoped host review, not a completed CSO workflow.",
+    "cso_workflow": "NOT ASSESSED: trusted installed gstack-cso-launcher/.exe absent; no repository launcher bypass.",
+    "preamble": "Not executed: bash unavailable, and shared startup performs update/sync network work forbidden by OFFLINE mode.",
+    "outside_model_review": "NOT RUN: external models prohibited",
+    "fetch_update_telemetry_sync": "NOT RUN: external calls prohibited",
+    "findings": [
+      {
+        "disposition": "RESOLVED",
+        "issue": "Four direct-fact wording failures",
+        "evidence": "All original failures rejected, authored explicit interpretations pass under unchanged validator."
+      },
+      {
+        "disposition": "RESOLVED",
+        "issue": "Two single-family declarations cite multiple families",
+        "evidence": "Originals reject; split risks and explicit existing MULTI_SOURCE cases pass."
+      },
+      {
+        "disposition": "NON-BLOCKER",
+        "issue": "Native CSO and outside-model coverage unavailable in this offline scope"
+      },
+      {
+        "disposition": "NON-BLOCKER",
+        "issue": "Existing QA synthetic pandas/NumPy generic timedelta deprecation warning; unchanged fixture helper, no runtime failure"
+      }
+    ],
+    "supported_blockers": [],
+    "durable_learning": "Direct FACT validation uses non-stopword string-token containment, not a paraphrase verifier; steer cautious conclusions into typed interpretations and declare families from ID prefixes."
+  },
+  "production_sized_mock": {
+    "fixture_id": "synthetic_production_v1_TESTCO",
+    "snapshot_id": "ef7814bf8d95162cbe25427da1f2828fad202be53491ee5af51aabd3037980e3",
+    "input_bytes": 41477,
+    "team_result": "3/3",
+    "team_state": "COMPLETE",
+    "mock_requests": 3,
+    "external_requests": 0,
+    "ledger": "PASS",
+    "cache": "PASS",
+    "reload": "PASS",
+    "agent_to_fusion": "PASS",
+    "immutable": true
+  },
+  "effective_config": {
+    "model": "gpt-5-mini",
+    "reasoning_effort": "minimal",
+    "max_output_tokens": 1600,
+    "timeout_seconds": 30.0,
+    "daily_call_limit": 12,
+    "max_input_bytes": 48000
+  },
+  "max_loops": 1,
+  "max_retries": 1,
+  "tools": "NONE",
+  "live_three_agent_retest_ready": true,
+  "live_provider_success_proven": false,
+  "monad_development_permission": false,
+  "existing_live_gate_preserved": "RED/NO; new offline repair does not rewrite failed-live evidence.",
+  "safety": {
+    "openai_calls": 0,
+    "other_llm_calls": 0,
+    "yahoo_calls": 0,
+    "tavily_calls": 0,
+    "monad_calls": 0,
+    "kronos_inference": 0,
+    "kronos_training": 0,
+    "model_weight_changes": 0,
+    "validation_reruns": 0,
+    "locked_test_target_accesses": 0,
+    "monad_code_added": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "remaining_offline_blockers": [],
+  "limitations": [
+    "Mock success proves contract compatibility and deterministic downstream behavior, not compliance of the next actual model output.",
+    "Only first-failing sanitized claims survived the earlier live run; full rejected outputs are not available for complete replay.",
+    "Universal qualitative semantic entailment is not claimed; existing Phase 7 typed/lineage/framing/numerical checks remain unchanged.",
+    "Native CSO/security scanner and outside-model review were not performed."
+  ],
+  "next_action": "Obtain fresh authorization for exactly one final production-like synthetic three-agent OpenAI retest."
+}

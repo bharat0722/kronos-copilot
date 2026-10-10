@@ -1,0 +1,30 @@
+{
+  "schema_version": "pipeline_health_postrepair_v1",
+  "operational_states": {
+    "HEALTHY": "Successful component execution; not measured financial alpha",
+    "READY": "Configured but not yet run",
+    "RUNNING": "Active bounded work",
+    "DEGRADED": "Operational partial/quality warning",
+    "FAILED": "Operational failure without accepted result",
+    "STALE": "Expired or wrong-snapshot historical status"
+  },
+  "stages": {
+    "source": "Provider-result status and provenance; aged capture stale",
+    "bronze": "Persisted native payload/hash; old healthy/degraded stale",
+    "silver": "Canonical quality PASS/WARN/FAIL with row/source metadata; old healthy/degraded stale",
+    "gold": "Completed deterministic features/model references; partial output remains explicit",
+    "intelligence": "Successful Gold completion HEALTHY, research-only limitation separate",
+    "news": "Whole Tavily/Yahoo/RSS result: fresh/no-evidence HEALTHY, unavailable FAILED, aged >900s STALE; Tavily health separate",
+    "agents": "Snapshot-specific team mapping: complete healthy, partial degraded, failed failed, active running, expired stale",
+    "fusion": "Recorded deterministic run HEALTHY irrespective of MIXED/insufficient financial view; age >3600s or wrong current snapshot STALE"
+  },
+  "separate_fields": [
+    "research_status",
+    "input_completeness",
+    "limitations",
+    "warnings",
+    "research_view"
+  ],
+  "unknown_values": "Null, never fabricated zero latency; fallback news does not inherit Tavily latency",
+  "fusion_rules": "evidence_fusion_v1 unchanged"
+}

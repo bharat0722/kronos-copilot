@@ -1,7 +1,7 @@
 """Deterministic, lineage-aware fusion of existing Kronos Copilot evidence.
 
 The engine consumes immutable EvidenceSnapshotV1 records and optional cached
-agent_output_v2 reports. It never calls a provider, model, or agent.
+versioned typed agent reports. It never calls a provider, model, or agent.
 """
 
 from __future__ import annotations
@@ -19,6 +19,10 @@ from pathlib import Path
 from typing import Any
 
 from app.evidence_snapshot import canonical_bytes, snapshot_id
+from app.structured_claims import OUTPUT_SCHEMA_VERSION as AGENT_SCHEMA_VERSION
+from app import agent_output_v3 as v3
+from app import agent_output_v4 as v4
+from app.agent_research import evidence_catalog
 
 
 FUSION_VERSION = "evidence_fusion_v1"
@@ -294,7 +298,8 @@ def _normalize_snapshot(record: dict[str, Any], as_of: datetime) -> tuple[list[d
     return items, missing
 
 
-def _agent_items(agent_result: dict[str, Any] | None, symbol: str, as_of: datetime) -> tuple[list[dict[str, Any]], list[str]]:
+def _agent_items(agent_result: dict[str, Any] | None, symbol: str, as_of: datetime,
+                 catalog: dict[str, Any] | None = None, expected_snapshot: str | None = None) -> tuple[list[dict[str, Any]], list[str]]:
     items: list[dict[str, Any]] = []
     missing: list[str] = []
     agents = (agent_result or {}).get("agents") or {}
@@ -304,6 +309,24 @@ def _agent_items(agent_result: dict[str, Any] | None, symbol: str, as_of: dateti
         if not isinstance(report, dict):
             missing.append(f"AGENT_{name.upper()}")
             continue
+        schema_version = report.get("schema_version", AGENT_SCHEMA_VERSION)
+        if schema_version not in {AGENT_SCHEMA_VERSION, "agent_output_v2", v3.SCHEMA_VERSION, v4.SCHEMA_VERSION}:
+            missing.append(f"AGENT_{name.upper()}")
+            continue
+        if schema_version in {v3.SCHEMA_VERSION, v4.SCHEMA_VERSION}:
+            try:
+                if expected_snapshot != (agent_result or {}).get("snapshot_id"):
+                    raise ValueError("Agent snapshot mismatch")
+                if schema_version == v3.SCHEMA_VERSION:
+                    v3.validate(report, name, expected_snapshot, catalog or {})
+                    report = v3.fusion_report(report, catalog or {})
+                else:
+                    if report.get('snapshot_id') != expected_snapshot or report.get('agent_type') != name:
+                        raise ValueError('Agent selection ownership mismatch')
+                    report = v4.fusion_report(report, catalog or {})
+            except (ValueError, KeyError, TypeError):
+                missing.append(f"AGENT_{name.upper()}")
+                continue
         analyzed_at = entry.get("analyzed_at")
         if name == "risk":
             direction = "UNKNOWN"
@@ -330,9 +353,10 @@ def _agent_items(agent_result: dict[str, Any] | None, symbol: str, as_of: dateti
             raw_value={"stance_or_risk": raw_label, "claims": claims}, direction=direction,
             strength=confidence, quality="PASS", freshness=_freshness("AGENT", analyzed_at, as_of),
             provenance={"snapshot_id": (agent_result or {}).get("snapshot_id"),
-                        "schema_version": "agent_output_v2", "cached": bool(entry.get("cached"))},
+                        "schema_version": schema_version, "cached": bool(entry.get("cached")),
+                        "agent_run_id": entry.get("run_id")},
             lineage_ids=lineage or [f"agent.{name}"], contributes=False, summary=summary,
-            metadata={"confidence_semantics": "argument_support_not_prediction_probability",
+            metadata={"action": report.get('action'), "confidence_semantics": "argument_support_not_prediction_probability",
                       "deduplication_reason": "Agent output interprets cited primary evidence."},
         ))
     return items, missing
@@ -401,6 +425,12 @@ def _agreements(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def _risk(agent_result: dict[str, Any] | None, items: list[dict[str, Any]], conflicts: list[dict[str, Any]]) -> tuple[str, list[dict[str, Any]]]:
     risk_report = (((agent_result or {}).get("agents") or {}).get("risk") or {}).get("report") or {}
+    if risk_report.get('schema_version', AGENT_SCHEMA_VERSION) not in {AGENT_SCHEMA_VERSION, 'agent_output_v2', v3.SCHEMA_VERSION, v4.SCHEMA_VERSION}:
+        risk_report = {}
+    if risk_report.get("schema_version") in {v3.SCHEMA_VERSION, v4.SCHEMA_VERSION}:
+        validated = next((item for item in items if item['evidence_type'] == 'AGENT_RISK'), None)
+        risk_report = ({"risk_level": validated['raw_value']['stance_or_risk'],
+                        "risk_factors": validated['raw_value']['claims']} if validated else {})
     level = str(risk_report.get("risk_level") or "UNKNOWN").upper()
     if level not in {"LOW", "MODERATE", "HIGH", "VERY_HIGH", "UNKNOWN"}:
         level = "UNKNOWN"
@@ -536,6 +566,15 @@ class EvidenceFusionEngine:
         identity = {"fusion_version": FUSION_VERSION, "snapshot_id": snapshot_digest,
                     "agent_output_hashes": agent_hashes,
                     "evidence_items_hash": _digest(items)}
+        versions = {entry.get('report', {}).get('schema_version')
+                    for entry in ((agent_result or {}).get('agents') or {}).values()
+                    if isinstance(entry, dict) and isinstance(entry.get('report'), dict)}
+        if v4.SCHEMA_VERSION in versions:
+            identity['agent_adapter_version'] = v4.VALIDATOR_VERSION
+        elif any(entry.get('report', {}).get('schema_version') == v3.SCHEMA_VERSION
+               for entry in ((agent_result or {}).get('agents') or {}).values()
+               if isinstance(entry, dict) and isinstance(entry.get('report'), dict)):
+            identity['agent_adapter_version'] = v3.VALIDATOR_VERSION
         return _digest(identity)
 
     def _read_cache(self, key: str) -> dict[str, Any] | None:
@@ -557,7 +596,7 @@ class EvidenceFusionEngine:
         moment = (as_of or _utc_now()).astimezone(timezone.utc)
         items, missing = _normalize_snapshot(record, moment)
         symbol = str(record["evidence"]["instrument"]["canonical_symbol"])
-        agent_items, agent_missing = _agent_items(agent_result, symbol, moment)
+        agent_items, agent_missing = _agent_items(agent_result, symbol, moment, evidence_catalog(record["evidence"]), record['snapshot_id'])
         items.extend(agent_items)
         missing.extend(agent_missing)
         pipeline_item = _pipeline_item(pipeline, symbol, moment)
@@ -619,13 +658,15 @@ class EvidenceFusionEngine:
         try:
             latest = json.loads((self.root / "latest.json").read_text(encoding="utf-8"))
             view = latest.get("output_view")
-            status = "DEGRADED" if view in {"MIXED", "INSUFFICIENT_EVIDENCE"} or latest.get("missing_evidence") else "HEALTHY"
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(latest["created_at"])).total_seconds()
+            status = "STALE" if age > 3600 or age < 0 else "HEALTHY"
             warnings = []
             if latest.get("missing_evidence"):
                 warnings.append("Missing evidence: " + ", ".join(latest["missing_evidence"]))
             if latest.get("conflicts"):
                 warnings.append(f"{len(latest['conflicts'])} evidence conflict(s)")
-            return {"status": status, "rows": len(latest.get("input_evidence_ids") or []),
+            return {"status": status, "research_view": view, "research_status": "NOT_HISTORICALLY_CALIBRATED",
+                    "snapshot_id": latest.get("snapshot_id"), "rows": len(latest.get("input_evidence_ids") or []),
                     "last_update": latest.get("created_at"), "latency_ms": latest.get("latency_ms"),
                     "provider": "local deterministic fusion", "cache_status": str(latest.get("cache_status", "")).lower(),
                     "warnings": warnings, "errors": [], "fusion_run_id": latest.get("fusion_run_id"),

@@ -1,0 +1,192 @@
+{
+  "aliases": {
+    "forecast_final_close": "forecast_final_price",
+    "forecast_pct": "forecast_return_pct",
+    "forecast_pct_change": "forecast_return_pct",
+    "forecast_percentage": "forecast_return_pct",
+    "last_observed_close": "observed_price"
+  },
+  "currency_policy": "Native price unit never implies INR/USD; explicit currency requires cited currency metadata.",
+  "direction_policy": "Only forecast_return_pct permits signed return or positive downside magnitude. Negative upside is rejected; no arbitrary conversions.",
+  "fact_text_policy": "Empty text, UI renders validated tuple. Interpretation fields null; cautious prose with strict numeric and known-state checks.",
+  "indicator_fields": {
+    "atr": [
+      [
+        "ATR14",
+        "ATR"
+      ],
+      "price"
+    ],
+    "ema20": [
+      [
+        "EMA20"
+      ],
+      "price"
+    ],
+    "ema50": [
+      [
+        "EMA50"
+      ],
+      "price"
+    ],
+    "macd": [
+      [
+        "MACD"
+      ],
+      "price"
+    ],
+    "macd_signal": [
+      [
+        "MACD signal",
+        "MACD_SIGNAL"
+      ],
+      "price"
+    ],
+    "roc": [
+      [
+        "ROC10",
+        "ROC"
+      ],
+      "percent"
+    ],
+    "rsi": [
+      [
+        "RSI14"
+      ],
+      "unitless"
+    ],
+    "sma20": [
+      [
+        "SMA20"
+      ],
+      "price"
+    ],
+    "sma50": [
+      [
+        "SMA50"
+      ],
+      "price"
+    ],
+    "volume_sma": [
+      [
+        "Volume SMA20",
+        "VOLUME_SMA"
+      ],
+      "volume_units"
+    ],
+    "volume_spike": [
+      [
+        "Volume spike",
+        "VOLUME_SPIKE"
+      ],
+      "unitless"
+    ]
+  },
+  "numeric_policy": "Exact finite JSON number, Decimal equality; bool and string numbers forbidden.",
+  "object_fields": {
+    "news_event_headline": [
+      "news.event.",
+      "headline",
+      "text"
+    ],
+    "news_event_impact": [
+      "news.event.",
+      "impact",
+      "unitless"
+    ],
+    "news_relevance": [
+      "news.article.",
+      "relevance",
+      "unitless"
+    ],
+    "news_source_quality": [
+      "news.article.",
+      "source_quality",
+      "unitless"
+    ],
+    "news_title": [
+      "news.article.",
+      "title",
+      "text"
+    ],
+    "technical_signal": [
+      "technicals.indicator.",
+      "signal",
+      "state"
+    ],
+    "technical_strength": [
+      "technicals.indicator.",
+      "strength",
+      "unitless"
+    ]
+  },
+  "scalar_fields": {
+    "data_quality": [
+      "state",
+      [
+        "market_data.quality"
+      ]
+    ],
+    "forecast_direction": [
+      "state",
+      [
+        "kronos.direction"
+      ]
+    ],
+    "forecast_final_price": [
+      "price",
+      [
+        "kronos.forecast_final_close"
+      ]
+    ],
+    "forecast_return_pct": [
+      "percent",
+      [
+        "kronos.forecast_pct_change"
+      ]
+    ],
+    "market_regime": [
+      "state",
+      [
+        "technicals.regime"
+      ]
+    ],
+    "news_impact": [
+      "unitless",
+      [
+        "news.impact_score"
+      ]
+    ],
+    "observed_price": [
+      "price",
+      [
+        "kronos.last_observed_close",
+        "market_data.last_observed_close"
+      ]
+    ],
+    "technical_trend": [
+      "state",
+      [
+        "technicals.trend"
+      ]
+    ],
+    "volume": [
+      "volume_units",
+      [
+        "market_data.volume"
+      ]
+    ]
+  },
+  "schema_version": "structured_claim_grounding_v1",
+  "state_policy": "Exact source string with state/text unit; no prose, fuzzy matching or implicit state mapping.",
+  "units": [
+    "state",
+    "text",
+    "percent",
+    "price",
+    "unitless",
+    "volume_units",
+    "INR",
+    "USD"
+  ]
+}

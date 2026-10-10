@@ -1,0 +1,53 @@
+{
+  "schema_version": "agent_budget_contract_v1",
+  "model": "gpt-5-mini",
+  "prompt_versions": {
+    "bull": "bull_agent_prompt_v6",
+    "bear": "bear_agent_prompt_v5",
+    "risk": "risk_agent_prompt_v5"
+  },
+  "output_schema": "agent_output_v2",
+  "budget": {
+    "status": "OK",
+    "max_output_tokens": 1600,
+    "target_tokens": [
+      600,
+      900
+    ],
+    "max_claims": {
+      "bull": 3,
+      "bear": 3,
+      "risk": 4
+    },
+    "max_claim_characters": 240,
+    "team_max_calls": 6,
+    "team_max_output_tokens": 9600,
+    "daily_max_output_tokens": 19200,
+    "limitations_required": true,
+    "uncertainty_required": true
+  },
+  "claims_total_including_limitations_and_uncertainty": {
+    "bull": 3,
+    "bear": 3,
+    "risk": 4
+  },
+  "claim_text_characters_max": 240,
+  "reasoning_effort": "minimal",
+  "tools": "NONE",
+  "loop_limit": 1,
+  "retry_limit": 1,
+  "sdk_max_retries": 0,
+  "timeout_seconds": 30,
+  "max_input_bytes": 48000,
+  "daily_call_cap": 12,
+  "retry_token_escalation": false,
+  "actual_live_consumption_measured": false,
+  "normal_output_design_target_tokens": [
+    600,
+    900
+  ],
+  "worst_case_team_calls": 6,
+  "worst_case_team_output_tokens": 9600,
+  "worst_case_daily_output_tokens": 19200,
+  "money_cost": "Unknown without authorized current pricing; token ceilings are not a USD estimate"
+}

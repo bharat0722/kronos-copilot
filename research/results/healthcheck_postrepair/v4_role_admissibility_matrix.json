@@ -1,0 +1,35 @@
+{
+  "actions": {
+    "bear": [
+      "PRESENT_CASE",
+      "ABSTAIN"
+    ],
+    "bull": [
+      "PRESENT_CASE",
+      "ABSTAIN"
+    ],
+    "risk": [
+      "FLAG_RISK",
+      "ABSTAIN"
+    ]
+  },
+  "bear": {
+    "bearish": "SUPPORT",
+    "bullish": "COUNTER",
+    "risk_or_neutral": "RISK"
+  },
+  "bull": {
+    "bearish": "COUNTER",
+    "bullish": "SUPPORT",
+    "risk_or_neutral": "RISK"
+  },
+  "counter_evidence": "Explicit use=COUNTER within the same total selection limit; not hidden in prose.",
+  "duplicate_policy": "REJECT",
+  "limits": {
+    "bear": 3,
+    "bull": 3,
+    "risk": 4
+  },
+  "priorities": "Unique consecutive 1..N in array order; ranking perfection not judged",
+  "risk": "RISK for operational/quality/freshness/forecast limitations or directional sources; no authored direction"
+}

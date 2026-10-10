@@ -1,0 +1,41 @@
+{
+  "schema_version": "observability_postrepair_v1",
+  "owner": "AgentTeam durable attempt and team records",
+  "fields": [
+    "run_id",
+    "snapshot_id",
+    "agent_type",
+    "attempt",
+    "started_at",
+    "finished_at",
+    "status",
+    "model",
+    "prompt_version",
+    "max_output_tokens",
+    "latency_ms",
+    "failure_stage",
+    "sanitized_error",
+    "request_id",
+    "response_id",
+    "response_status",
+    "completion_reason",
+    "token_usage",
+    "retry",
+    "budget_reserved",
+    "sdk_attempted",
+    "cache_status",
+    "attempt_refs"
+  ],
+  "unknown_usage": "Null; never zero when unreturned",
+  "truncation": "OUTPUT_TRUNCATED and max_output_tokens provider reason",
+  "public_health": "Safe role detail/attempt refs, aggregate counts, snapshot and team run IDs; no raw response or filesystem paths",
+  "not_persisted": [
+    "API keys",
+    "LAN code",
+    "Authorization",
+    "environment values",
+    "hidden reasoning",
+    "chain-of-thought"
+  ],
+  "durability_limit": "Disk failure may prevent recording; fail closed instead of publishing usable success"
+}

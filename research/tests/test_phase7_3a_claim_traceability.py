@@ -1,6 +1,7 @@
 """Offline characterization tests for the Phase 7.3A qualitative-grounding audit."""
 
 from __future__ import annotations
+from research.tests.legacy_agent_harness import LegacyAgentTeam
 
 import copy
 import unittest
@@ -13,7 +14,7 @@ from app.agent_research import (
     output_schema,
     validate_output,
 )
-from research.tests.test_phase7_agents import evidence, snapshot, typed_claim, valid_report
+from research.tests.test_phase7_agents import evidence, snapshot, typed_claim, structured_fact, valid_report
 
 
 class Phase73AClaimTraceabilityTests(unittest.TestCase):
@@ -24,8 +25,7 @@ class Phase73AClaimTraceabilityTests(unittest.TestCase):
 
     def test_direct_supported_qualitative_fact_passes(self):
         report = valid_report("bull", self.digest)
-        report["key_factors"] = [typed_claim("Kronos direction is up.", ["kronos.direction"],
-                                             claim_type="FACT", support_type="DIRECT")]
+        report["key_factors"] = [structured_fact("forecast_direction", "up", "state", ["kronos.direction"])]
         self.assertEqual(validate_output(report, "bull", self.digest, self.catalog), report)
 
     def test_irrelevant_direct_qualitative_citation_is_rejected(self):
@@ -38,9 +38,7 @@ class Phase73AClaimTraceabilityTests(unittest.TestCase):
 
     def test_supported_numerical_fact_passes(self):
         report = valid_report("bull", self.digest)
-        report["key_factors"] = [typed_claim("The forecast change is 1.2%.",
-                                             ["kronos.forecast_pct_change"],
-                                             claim_type="NUMERICAL_FACT", support_type="DIRECT")]
+        report["key_factors"] = [structured_fact("forecast_return_pct", 1.2, "percent", ["kronos.forecast_pct_change"])]
         self.assertEqual(validate_output(report, "bull", self.digest, self.catalog), report)
 
     def test_unsupported_number_is_rejected(self):
@@ -95,7 +93,7 @@ class Phase73AClaimTraceabilityTests(unittest.TestCase):
         schema = output_schema("bull", allowed_evidence_ids(self.catalog))
         properties = schema["properties"]["key_factors"]["items"]["properties"]
         self.assertEqual(set(properties), {"text", "claim_type", "support_type", "evidence_type",
-                                           "evidence_ids", "confidence", "material"})
+                                           "evidence_ids", "confidence", "material", "field_key", "value", "unit", "direction"})
         self.assertIn("FACT", properties["claim_type"]["enum"])
         self.assertIn("INTERPRETATION", properties["claim_type"]["enum"])
 

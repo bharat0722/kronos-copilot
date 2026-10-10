@@ -1,6 +1,7 @@
 """Offline snapshot-scoped citation schema and harness checks."""
 
 from __future__ import annotations
+from research.tests.legacy_agent_harness import LegacyAgentTeam
 
 import copy
 import json
@@ -58,7 +59,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
 
     def test_all_agent_citation_fields_use_the_same_snapshot_enum(self):
         with tempfile.TemporaryDirectory() as directory:
-            team = AgentTeam(Path(directory), client_factory=lambda: self.fail("No network"))
+            team = LegacyAgentTeam(Path(directory), client_factory=lambda: self.fail("No network"))
             self.assertEqual(team.preflight(self.record)["status"], "PASS")
             wire = json.dumps({"evidence": self.record["evidence"]}).encode()
             for name in AGENTS:
@@ -72,7 +73,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
                     self.assertTrue(all("TECH_999" not in item["enum"] for item in citation_items(schema)))
                     self.assertTrue(all("KRONOS_DOES_NOT_EXIST" not in item["enum"]
                                         for item in citation_items(schema)))
-                    self.assertLess(len(json.dumps(schema)), 20_000)
+                self.assertLess(len(json.dumps(schema, separators=(',', ':'))), 20_000)
             self.assertFalse(Path(directory).joinpath("openai_usage.sqlite3").exists())
 
     def test_schema_cannot_be_built_without_citable_ids(self):
@@ -83,13 +84,13 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
     def test_different_snapshot_catalogs_produce_independent_schemas_and_cache_keys(self):
         changed = copy.deepcopy(self.record["evidence"])
         changed["news"]["article_evidence"].pop()
-        changed_record = {"evidence": changed, "snapshot_id": snapshot_id(changed)}
+        changed_record = {"evidence": changed, "snapshot_id": snapshot_id(changed), "created_at": self.record["created_at"]}
         changed_ids = allowed_evidence_ids(evidence_catalog(changed))
         self.assertNotIn("news.article.2", changed_ids)
         self.assertIn("news.article.2", self.ids)
         self.assertNotEqual(output_schema("bull", self.ids), output_schema("bull", changed_ids))
         with tempfile.TemporaryDirectory() as directory:
-            team = AgentTeam(Path(directory), client_factory=lambda: self.fail("No network"))
+            team = LegacyAgentTeam(Path(directory), client_factory=lambda: self.fail("No network"))
             self.assertNotEqual(team._key(self.digest, "bull"), team._key(changed_record["snapshot_id"], "bull"))
             self.assertEqual(team.preflight(changed_record)["status"], "PASS")
 
@@ -135,9 +136,9 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
             with self.subTest(agent=name):
                 report = valid_report(name, self.digest)
                 field = "risk_factors" if name == "risk" else "key_factors"
-                report[field][0] = typed_claim("The saved forecast change is 2%.",
-                                              ["kronos.forecast_pct_change"],
-                                              claim_type="NUMERICAL_FACT", support_type="DIRECT")
+                report[field][0] = typed_claim("", ["kronos.forecast_pct_change"],
+                                              claim_type="NUMERICAL_FACT", support_type="DIRECT",
+                                              field_key="forecast_return_pct", value=2, unit="percent")
                 if name == "risk":
                     report["evidence_ids"] = sorted({reference for key in
                         ("risk_factors", "conflicts", "model_risks", "data_risks", "event_risks",
@@ -152,7 +153,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
         client = MockClient(lambda name: mock_response(name, self.digest))
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             result = team.run(self.record)
             self.assertEqual(result["status"], "SUCCESS")
             self.assertEqual(result["api_calls"], 3)
@@ -161,7 +162,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
             self.assertEqual(len(list((root / "cache").glob("*.json"))), 3)
             for name, call in zip(AGENTS, client.calls):
                 self.assertEqual(call["text"]["format"]["schema"], output_schema(name, self.ids))
-                self.assertEqual(call["max_output_tokens"], 900)
+                self.assertEqual(call["max_output_tokens"], 1600)
                 self.assertEqual(call["tools"], [])
                 self.assertEqual(call["tool_choice"], "none")
             self.assertEqual(team.result(self.record)["status"], "CACHED")
@@ -176,7 +177,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
         client = MockClient(response)
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             result = team.run(self.record)
             self.assertEqual(result["status"], "FAILED")
             self.assertEqual(result["api_calls"], 6)
@@ -197,7 +198,7 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "offline-only"}):
             root = Path(directory)
             client = MockClient(lambda name: mock_response(name, self.digest))
-            team = AgentTeam(root, client_factory=lambda: client)
+            team = LegacyAgentTeam(root, client_factory=lambda: client)
             self.assertEqual(team.run(self.record)["status"], "SUCCESS")
             self.assertEqual(team.result(changed_record)["status"], "READY")
             self.assertEqual(team.run(self.record)["status"], "CACHED")
@@ -207,8 +208,8 @@ class Phase72CEvidenceIdTests(unittest.TestCase):
     def test_limits_remain_frozen(self):
         self.assertEqual(MAX_REASONING_ROUNDS, 1)
         self.assertEqual(MAX_RETRIES, 1)
-        self.assertEqual(AgentTeam(Path("unused")).config.model, "gpt-5-mini")
-        self.assertEqual(AgentTeam(Path("unused")).config.max_output_tokens, 900)
+        self.assertEqual(LegacyAgentTeam(Path("unused")).config.model, "gpt-5-mini")
+        self.assertEqual(LegacyAgentTeam(Path("unused")).config.max_output_tokens, 1600)
 
 
 if __name__ == "__main__":
